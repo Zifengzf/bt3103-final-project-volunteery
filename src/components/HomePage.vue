@@ -83,14 +83,53 @@
           name="psw"
           required
         /><br />
+        
+        <button class="orglogin" v-on:click="orgdisplaySignup()">Switch to Organization Login</button><br>
 
         <button class="orange" type="submit">LOGIN</button>
+        <span class="psw">
+          <a href="#" style="color: #6b93fa">Forgot password?</a>
+        </span>
+      </div>
+    </form>
+  </div>
+
+  <div id="id01b" class="modal">
+    <form class="modal-content animate" action="/action_page.php" method="post" style="background-color: #ff9213;">
+      <div class="imgcontainer">
+        <span
+          onclick="document.getElementById('id01b').style.display='none'"
+          class="close"
+          title="Close Modal"
+          >&times;</span
+        >
+        <img src="@/assets/whiteBackground.png" alt="Avatar" class="avatar" />
+      </div>
+
+      <div class="container">
+        <div class="centeredtext" style="color: white; font-size: 24px">
+          ORGANIZATION LOGIN
+        </div>
+
+        <label for="uname"><b>Username</b></label>
+        <input type="text" placeholder="Enter Username" name="uname" required />
+
+        <label for="psw"><b>Password</b></label>
+        <input
+          type="password"
+          placeholder="Enter Password"
+          name="psw"
+          required
+        /><br />
+        <button class="vollogin" v-on:click="voldisplaySignup()">Switch to Volunteer Login</button><br>
+        <button class="ff9213" type="submit">LOGIN</button>
         <span class="psw"
-          ><a href="#" style="color: #6b93fa">Forgot password?</a></span
+          ><a href="#" style="color: white">Forgot password?</a></span
         >
       </div>
     </form>
   </div>
+
 
   <div id="id02" class="modal">
     <span
@@ -186,6 +225,14 @@ export default {
     displaySignup() {
       return (document.getElementById("id02").style.display = "block");
     },
+    orgdisplaySignup() {
+      document.getElementById("id01").style.display = "none"
+      document.getElementById("id01b").style.display = "block"
+    },
+    voldisplaySignup() {
+      document.getElementById("id01").style.display = "block"
+      document.getElementById("id01b").style.display = "none"
+    }
   },
 };
 </script>
@@ -242,6 +289,32 @@ button {
 button.orange {
   background-color: #ff9213;
   color: white;
+}
+
+.orglogin {
+  text-decoration: none;
+  color: #6b93fa;
+  font-size: 70%;
+  border-radius: 10px;
+  padding: 0;
+  margin: 0;
+  border: none;
+  cursor: pointer;
+  background-color: #fff9e9;
+  width: 160px;
+}
+
+.vollogin {
+  text-decoration: none;
+  color: white;
+  font-size: 70%;
+  border-radius: 10px;
+  padding: 0;
+  margin: 0;
+  border: none;
+  cursor: pointer;
+  background-color: #ff9213;
+  width: 160px;
 }
 
 .topnav {
