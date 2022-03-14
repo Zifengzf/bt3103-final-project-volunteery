@@ -3,6 +3,8 @@
     <router-link to="/">HomePage</router-link>
     ||
     <router-link to="/about">About</router-link>
+    ||
+    <router-link to="/myapplications">My Applications</router-link>
   </div>
   <router-view />
 </template>
