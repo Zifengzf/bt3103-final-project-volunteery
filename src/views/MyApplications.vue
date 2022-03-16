@@ -10,7 +10,7 @@
             font-family: Georgia, 'Times New Roman', Times, serif;
           "
         >
-          My Applications.
+          My Applications
         </div>
         <p style="color: black; text-align: center">
           “As you grow older, you will discover that you have two hands <br />
