@@ -57,7 +57,7 @@
   </div>
 
   <div id="id01" class="modal">
-    <form class="modal-content animate" action="/action_page.php" method="post">
+    <form class="modal-content animate">
       <div class="imgcontainer">
         <span
           onclick="document.getElementById('id01').style.display='none'"
@@ -74,19 +74,30 @@
         </div>
 
         <label for="uname"><b>Username</b></label>
-        <input type="text" placeholder="Enter Username" name="uname" required />
+        <input
+          type="text"
+          id="v_username"
+          placeholder="Enter Username"
+          name="uname"
+          required
+        />
 
         <label for="psw"><b>Password</b></label>
         <input
           type="password"
+          id="v_password"
           placeholder="Enter Password"
           name="psw"
           required
         /><br />
-        
-        <button class="orglogin" v-on:click="orgdisplaySignup()">Switch to Organization Login</button><br>
 
-        <button class="orange" type="submit">LOGIN</button>
+        <button class="orglogin" type="button" v-on:click="orgdisplaySignup()">
+          Switch to Organization Login</button
+        ><br />
+
+        <button class="orange" type="button" v-on:click="volunteerLogin()">
+          LOGIN
+        </button>
         <span class="psw">
           <a href="#" style="color: #6b93fa">Forgot password?</a>
         </span>
@@ -95,7 +106,7 @@
   </div>
 
   <div id="id01b" class="modal">
-    <form class="modal-content animate" action="/action_page.php" method="post" style="background-color: #ff9213;">
+    <form class="modal-content animate" style="background-color: #ff9213">
       <div class="imgcontainer">
         <span
           onclick="document.getElementById('id01b').style.display='none'"
@@ -121,7 +132,9 @@
           name="psw"
           required
         /><br />
-        <button class="vollogin" v-on:click="voldisplaySignup()">Switch to Volunteer Login</button><br>
+        <button class="vollogin" v-on:click="voldisplaySignup()">
+          Switch to Volunteer Login</button
+        ><br />
         <button class="ff9213" type="submit">LOGIN</button>
         <span class="psw"
           ><a href="#" style="color: white">Forgot password?</a></span
@@ -130,7 +143,6 @@
     </form>
   </div>
 
-
   <div id="id02" class="modal">
     <span
       onclick="document.getElementById('id02').style.display='none'"
@@ -138,7 +150,7 @@
       title="Close Modal"
       >&times;</span
     >
-    <form class="modal-content" action="/action_page.php">
+    <form class="modal-content">
       <div class="container">
         <h1>Sign Up</h1>
         <hr />
@@ -211,12 +223,15 @@
 </template>
 
 <script>
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
 var modal = document.getElementById("id01");
 window.onclick = function (event) {
   if (event.target == modal) {
     modal.style.display = "none";
   }
 };
+
 export default {
   methods: {
     displayLogin() {
@@ -226,17 +241,28 @@ export default {
       return (document.getElementById("id02").style.display = "block");
     },
     orgdisplaySignup() {
-      document.getElementById("id01").style.display = "none"
-      document.getElementById("id01b").style.display = "block"
+      document.getElementById("id01").style.display = "none";
+      document.getElementById("id01b").style.display = "block";
     },
     voldisplaySignup() {
-      document.getElementById("id01").style.display = "block"
-      document.getElementById("id01b").style.display = "none"
-    }
+      document.getElementById("id01").style.display = "block";
+      document.getElementById("id01b").style.display = "none";
+    },
+    volunteerLogin() {
+      var username = document.getElementById("v_username").value;
+      var password = document.getElementById("v_password").value;
+      const auth = getAuth();
+      signInWithEmailAndPassword(auth, username, password)
+        .then(() => {
+          this.$router.push({ name: "MyApplications" });
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
+    },
   },
 };
 </script>
-
 <style scoped>
 body {
   font-family: Arial, Helvetica, sans-serif;
