@@ -438,4 +438,9 @@ input:hover {
   padding: 10px;
   justify-content: space-evenly;
 }
+.topnav {
+  background-color: #fff9e9;
+  min-height: 50px;
+  overflow: hidden;
+}
 </style>
