@@ -179,11 +179,18 @@
         />
 
         <label for="email"><b>Email</b></label>
-        <input type="text" placeholder="Enter Email" name="email" required />
+        <input
+          type="text"
+          id="email"
+          placeholder="Enter Email"
+          name="email"
+          required
+        />
 
         <label for="psw"><b>Password</b></label>
         <input
           type="password"
+          id="signup_password"
           placeholder="Enter Password"
           name="psw"
           required
@@ -223,7 +230,11 @@
 </template>
 
 <script>
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+} from "firebase/auth";
 
 var modal = document.getElementById("id01");
 window.onclick = function (event) {
@@ -253,6 +264,18 @@ export default {
       var password = document.getElementById("v_password").value;
       const auth = getAuth();
       signInWithEmailAndPassword(auth, username, password)
+        .then(() => {
+          this.$router.push({ name: "MyApplications" });
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
+    },
+    userSignUp() {
+      var email = document.getElementById("email").value;
+      var password = document.getElementById("signup_password").value;
+      const auth = getAuth();
+      createUserWithEmailAndPassword(auth, email, password)
         .then(() => {
           this.$router.push({ name: "MyApplications" });
         })
