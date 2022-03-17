@@ -110,7 +110,6 @@
           </div>
         </div>
         <div class="listingbuttonsbox">
-          <p class="approvedstatus">{{ thing.status }}</p>
           <button class="learnmore" type="button">Learn More</button>
           <button class="applynow" type="button">Apply Now</button>
         </div>
@@ -156,8 +155,6 @@ export default {
             "Help the Home carry out services such as social-recreational activities for our Residents, gardening, cleaning and general maintenance, and other services so that our caregivers may focus on attending to the daily needs of our residents.",
           duration: "1",
           region: "East",
-          status: "Approved",
-          statusbox: "approvedstatus",
           title: "Chefs needed for CNY",
         },
         pear: {
@@ -165,8 +162,6 @@ export default {
             "Help the Home carry out services such as social-recreational activities for our Residents, gardening, cleaning and general maintenance, and other services so that our caregivers may focus on attending to the daily needs of our residents.",
           duration: "3",
           region: "South-West",
-          status: "Pending",
-          statusbox: "approvedstatus",
           title: "Accompany the Elderly",
         },
         cherry: {
@@ -174,8 +169,6 @@ export default {
             "Help the Home carry out services such as social-recreational activities for our Residents, gardening, cleaning and general maintenance, and other services so that our caregivers may focus on attending to the daily needs of our residents.",
           duration: "6",
           region: "North",
-          status: "Approved",
-          statusbox: "approvedstatus",
           title: "Walk pets for SPCA",
         },
       },
@@ -387,21 +380,6 @@ input:hover {
   align-items: center;
   margin-left: 10px;
   margin-right: 10px;
-}
-.pendingstatus {
-  background-color: #ffcb13;
-  display: block;
-  width: 120px;
-  color: white;
-  font-weight: bold;
-  font-size: 14px;
-  padding: 10px 10px 10px 10px;
-  visibility: visible;
-  float: right;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
 }
 .addlisting {
   display: block;
