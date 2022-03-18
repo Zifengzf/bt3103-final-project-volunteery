@@ -1,5 +1,5 @@
 <template>
-  <div class="topnav">
+  <!-- <div class="topnav">
     <img src="@/assets/volunteery_copy.png" alt="" style="margin-left: 0px" />
     <a
       href=""
@@ -12,7 +12,7 @@
       "
       >VIEW VOLUNTEERING OPPORTUNITIES</a
     >
-  </div>
+  </div> -->
 
   <div class="mainbanner">
     <div class="maintext">

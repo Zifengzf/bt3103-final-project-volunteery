@@ -1,5 +1,5 @@
 <template>
-
+  <NavBar/>
 <div style="background-color: #FFF9E9">
     <div class="mainbanner">
     <div class="maintext">
@@ -139,15 +139,14 @@
 </template>
 
 <script>
-//import ccxt from "ccxt";
-// import firebaseApp from "../firebase.js";
-// import {getFirestore} from "firebase/firestore";
-// import {collection, getDocs} from "firebase/firestore";
+import NavBar from '@/components/NavBar.vue'
 
-// const db = getFirestore(firebaseApp);
 
 
 export default {
+    components: {
+      NavBar,
+    },
     data() {
       return {
         things: {
