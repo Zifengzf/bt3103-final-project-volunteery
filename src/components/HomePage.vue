@@ -216,7 +216,6 @@
           <button type="button" class="signupbtn" v-on:click="userSignUp()">
             Sign Up
           </button>
-          <button type="button" v-on:click="dataCheck()">Register Data</button>
           <button
             type="button"
             onclick="document.getElementById('id02').style.display='none'"
@@ -285,15 +284,20 @@ export default {
           console.log(error.message);
         });
     },
-    userSignUp() {
+    async userSignUp() {
       var name = document.getElementById("full_name").value;
       var nric = document.getElementById("nric").value;
       var nationality = document.getElementById("nationality").value;
       var email = document.getElementById("email").value;
       var password = document.getElementById("signup_password").value;
       const db = getFirestore(firebaseApp);
-      console.log(db);
-      console.log(name + nric + nationality);
+      await setDoc(doc(db, "volunteers", email), {
+        name: name,
+        nric: nric,
+        nationality: nationality,
+        email: email,
+        password: password,
+      });
       const auth = getAuth();
       createUserWithEmailAndPassword(auth, email, password)
         .then(() => {
@@ -302,23 +306,6 @@ export default {
         .catch((error) => {
           console.log(error.message);
         });
-    },
-    async dataCheck() {
-      var name = document.getElementById("full_name").value;
-      var nric = document.getElementById("nric").value;
-      var nationality = document.getElementById("nationality").value;
-      var email = document.getElementById("email").value;
-      var password = document.getElementById("signup_password").value;
-      const db = getFirestore(firebaseApp);
-      console.log(db);
-      console.log(name + nric + nationality + email + password);
-      await setDoc(doc(db, "volunteers", email), {
-        name: name,
-        nric: nric,
-        nationality: nationality,
-        email: email,
-        password: password,
-      });
     },
   },
 };
