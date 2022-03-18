@@ -1,19 +1,6 @@
 <template>
-  <div class="topnav">
-    <img src="@/assets/volunteery_copy.png" alt="" style="margin-left: 0px" />
-    <a
-      href=""
-      style="
-        font-size: 15px;
-        color: #d3b566;
-        float: right;
-        margin-top: 20px;
-        margin-right: 15px;
-      "
-      >VIEW VOLUNTEERING OPPORTUNITIES</a
-    >
-  </div>
-  <div style="background-color: #fff9e9">
+  <NavBar/>
+<div style="background-color: #FFF9E9">
     <div class="mainbanner">
       <div class="maintext">
         <div
@@ -155,14 +142,13 @@
 </template>
 
 <script>
-//import ccxt from "ccxt";
-// import firebaseApp from "../firebase.js";
-// import {getFirestore} from "firebase/firestore";
-// import {collection, getDocs} from "firebase/firestore";
+import NavBar from '@/components/NavBar.vue'
 
-// const db = getFirestore(firebaseApp);
 
 export default {
+  components: {
+    NavBar,
+  },
   data() {
     return {
       things: {
