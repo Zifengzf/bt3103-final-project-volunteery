@@ -57,7 +57,7 @@
   </div>
 
   <div id="id01" class="modal">
-    <form class="modal-content animate" action="/action_page.php" method="post">
+    <form class="modal-content animate">
       <div class="imgcontainer">
         <span
           onclick="document.getElementById('id01').style.display='none'"
@@ -74,19 +74,30 @@
         </div>
 
         <label for="uname"><b>Username</b></label>
-        <input type="text" placeholder="Enter Username" name="uname" required />
+        <input
+          type="text"
+          id="v_username"
+          placeholder="Enter Username"
+          name="uname"
+          required
+        />
 
         <label for="psw"><b>Password</b></label>
         <input
           type="password"
+          id="v_password"
           placeholder="Enter Password"
           name="psw"
           required
         /><br />
-        
-        <button class="orglogin" v-on:click="orgdisplaySignup()">Switch to Organization Login</button><br>
 
-        <button class="orange" type="submit">LOGIN</button>
+        <button class="orglogin" type="button" v-on:click="orgdisplaySignup()">
+          Switch to Organization Login</button
+        ><br />
+
+        <button class="orange" type="button" v-on:click="volunteerLogin()">
+          LOGIN
+        </button>
         <span class="psw">
           <a href="#" style="color: #6b93fa">Forgot password?</a>
         </span>
@@ -95,7 +106,7 @@
   </div>
 
   <div id="id01b" class="modal">
-    <form class="modal-content animate" action="/action_page.php" method="post" style="background-color: #ff9213;">
+    <form class="modal-content animate" style="background-color: #ff9213">
       <div class="imgcontainer">
         <span
           onclick="document.getElementById('id01b').style.display='none'"
@@ -112,24 +123,34 @@
         </div>
 
         <label for="uname"><b>Username</b></label>
-        <input type="text" placeholder="Enter Username" name="uname" required />
+        <input
+          type="text"
+          id="o_username"
+          placeholder="Enter Username"
+          name="uname"
+          required
+        />
 
         <label for="psw"><b>Password</b></label>
         <input
           type="password"
           placeholder="Enter Password"
+          id="o_password"
           name="psw"
           required
         /><br />
-        <button class="vollogin" v-on:click="voldisplaySignup()">Switch to Volunteer Login</button><br>
-        <button class="ff9213" type="submit">LOGIN</button>
+        <button class="vollogin" v-on:click="voldisplaySignup()">
+          Switch to Volunteer Login</button
+        ><br />
+        <button class="ff9213" type="button" v-on:click="organizationLogin()">
+          LOGIN
+        </button>
         <span class="psw"
           ><a href="#" style="color: white">Forgot password?</a></span
         >
       </div>
     </form>
   </div>
-
 
   <div id="id02" class="modal">
     <span
@@ -138,7 +159,7 @@
       title="Close Modal"
       >&times;</span
     >
-    <form class="modal-content" action="/action_page.php">
+    <form class="modal-content" id="userForm">
       <div class="container">
         <h1>Sign Up</h1>
         <hr />
@@ -148,30 +169,26 @@
         <p>Or enter your details manually</p>
 
         <label for="name"><b>Full Name</b></label>
-        <input type="text" placeholder="Enter Name" name="name" required />
+        <input type="text" placeholder="Enter Name" id="name" required />
 
-        <label for="mactricnum"><b>NRIC/FIN</b></label>
-        <input
-          type="text"
-          placeholder="Enter NRIC/FUN"
-          name="mactricnum"
-          required
-        />
+        <label for="nric"><b>NRIC/FIN</b></label>
+        <input type="text" placeholder="Enter NRIC/FUN" id="nric" required />
 
-        <label for="major"><b>Nationality</b></label>
+        <label for="nationality"><b>Nationality</b></label>
         <input
           type="text"
           placeholder="Enter Nationality"
-          name="major"
+          id="nationality"
           required
         />
 
         <label for="email"><b>Email</b></label>
-        <input type="text" placeholder="Enter Email" name="email" required />
+        <input type="text" id="email" placeholder="Enter Email" required />
 
         <label for="psw"><b>Password</b></label>
         <input
           type="password"
+          id="signup_password"
           placeholder="Enter Password"
           name="psw"
           required
@@ -196,7 +213,9 @@
         </label>
 
         <div class="clearfix">
-          <button type="submit" class="signupbtn">Sign Up</button>
+          <button type="button" class="signupbtn" v-on:click="userSignUp()">
+            Sign Up
+          </button>
           <button
             type="button"
             onclick="document.getElementById('id02').style.display='none'"
@@ -211,12 +230,19 @@
 </template>
 
 <script>
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+} from "firebase/auth";
+
 var modal = document.getElementById("id01");
 window.onclick = function (event) {
   if (event.target == modal) {
     modal.style.display = "none";
   }
 };
+
 export default {
   methods: {
     displayLogin() {
@@ -226,17 +252,52 @@ export default {
       return (document.getElementById("id02").style.display = "block");
     },
     orgdisplaySignup() {
-      document.getElementById("id01").style.display = "none"
-      document.getElementById("id01b").style.display = "block"
+      document.getElementById("id01").style.display = "none";
+      document.getElementById("id01b").style.display = "block";
     },
     voldisplaySignup() {
-      document.getElementById("id01").style.display = "block"
-      document.getElementById("id01b").style.display = "none"
-    }
+      document.getElementById("id01").style.display = "block";
+      document.getElementById("id01b").style.display = "none";
+    },
+    volunteerLogin() {
+      var username = document.getElementById("v_username").value;
+      var password = document.getElementById("v_password").value;
+      const auth = getAuth();
+      signInWithEmailAndPassword(auth, username, password)
+        .then(() => {
+          this.$router.push({ name: "MyApplications" });
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
+    },
+    organizationLogin() {
+      var username = document.getElementById("o_username").value;
+      var password = document.getElementById("o_password").value;
+      const auth = getAuth();
+      signInWithEmailAndPassword(auth, username, password)
+        .then(() => {
+          this.$router.push({ name: "MyApplications" });
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
+    },
+    userSignUp() {
+      var email = document.getElementById("email").value;
+      var password = document.getElementById("signup_password").value;
+      const auth = getAuth();
+      createUserWithEmailAndPassword(auth, email, password)
+        .then(() => {
+          this.$router.push({ name: "MyApplications" });
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
+    },
   },
 };
 </script>
-
 <style scoped>
 body {
   font-family: Arial, Helvetica, sans-serif;

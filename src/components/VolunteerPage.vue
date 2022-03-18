@@ -1,6 +1,19 @@
 <template>
-  <NavBar/>
-<div style="background-color: #FFF9E9">
+  <div class="topnav">
+    <img src="@/assets/volunteery_copy.png" alt="" style="margin-left: 0px" />
+    <a
+      href=""
+      style="
+        font-size: 15px;
+        color: #d3b566;
+        float: right;
+        margin-top: 20px;
+        margin-right: 15px;
+      "
+      >VIEW VOLUNTEERING OPPORTUNITIES</a
+    >
+  </div>
+  <div style="background-color: #fff9e9">
     <div class="mainbanner">
       <div class="maintext">
         <div
@@ -11,13 +24,13 @@
             font-family: Georgia, 'Times New Roman', Times, serif;
           "
         >
-          My Applications
+          Volunteer
         </div>
-        <p style="color: black; text-align: center">
+        <!-- <p style="color: black; text-align: center">
           “As you grow older, you will discover that you have two hands <br />
           — one for helping yourself, the other for helping others.”, <br />
           —Audrey Hepburn
-        </p>
+        </p> -->
         <br />
       </div>
     </div>
@@ -57,21 +70,6 @@
         style="font-size: 18px; padding: 10px"
       />
     </div>
-    <!-- <div style='padding: 10px 90px 20px 0px'>
-      <button class="addlisting" type="button" style='padding: 0 0 0 10'>Add Listing</button>
-    </div> -->
-    <!-- <table id="table" class="auto-index">
-        <tr>
-            <th>S.No</th>
-            <th>Coin</th>
-            <th>Ticker</th>
-            <th>Buy_Price</th>
-            <th>Buy_Quantity</th>
-            <th>Current_Price</th>
-            <th>Profit</th>
-            <th>Options</th>
-        </tr>
-    </table> -->
     <div v-for="thing in things" :key="thing">
       <br />
       <div class="listingbox">
@@ -112,9 +110,8 @@
           </div>
         </div>
         <div class="listingbuttonsbox">
-          <p class="approvedstatus">{{ thing.status }}</p>
-          <button class="editlisting" type="button">Edit Listing</button>
-          <button class="applicants" type="button">Applicants</button>
+          <button class="learnmore" type="button">Learn More</button>
+          <button class="applynow" type="button">Apply Now</button>
         </div>
       </div>
     </div>
@@ -142,13 +139,14 @@
 </template>
 
 <script>
-import NavBar from '@/components/NavBar.vue'
+//import ccxt from "ccxt";
+// import firebaseApp from "../firebase.js";
+// import {getFirestore} from "firebase/firestore";
+// import {collection, getDocs} from "firebase/firestore";
 
+// const db = getFirestore(firebaseApp);
 
 export default {
-  components: {
-    NavBar,
-  },
   data() {
     return {
       things: {
@@ -157,8 +155,6 @@ export default {
             "Help the Home carry out services such as social-recreational activities for our Residents, gardening, cleaning and general maintenance, and other services so that our caregivers may focus on attending to the daily needs of our residents.",
           duration: "1",
           region: "East",
-          status: "Approved",
-          statusbox: "approvedstatus",
           title: "Chefs needed for CNY",
         },
         pear: {
@@ -166,8 +162,6 @@ export default {
             "Help the Home carry out services such as social-recreational activities for our Residents, gardening, cleaning and general maintenance, and other services so that our caregivers may focus on attending to the daily needs of our residents.",
           duration: "3",
           region: "South-West",
-          status: "Pending",
-          statusbox: "approvedstatus",
           title: "Accompany the Elderly",
         },
         cherry: {
@@ -175,8 +169,6 @@ export default {
             "Help the Home carry out services such as social-recreational activities for our Residents, gardening, cleaning and general maintenance, and other services so that our caregivers may focus on attending to the daily needs of our residents.",
           duration: "6",
           region: "North",
-          status: "Approved",
-          statusbox: "approvedstatus",
           title: "Walk pets for SPCA",
         },
       },
@@ -389,36 +381,6 @@ input:hover {
   margin-left: 10px;
   margin-right: 10px;
 }
-.approvedstatus {
-  background-color: #008b16;
-  display: block;
-  width: 120px;
-  color: white;
-  font-weight: bold;
-  font-size: 14px;
-  padding: 10px 10px 10px 10px;
-  visibility: visible;
-  float: right;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
-}
-.pendingstatus {
-  background-color: #ffcb13;
-  display: block;
-  width: 120px;
-  color: white;
-  font-weight: bold;
-  font-size: 14px;
-  padding: 10px 10px 10px 10px;
-  visibility: visible;
-  float: right;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
-}
 .addlisting {
   display: block;
   width: 120px;
@@ -434,7 +396,7 @@ input:hover {
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
 }
-.editlisting {
+.learnmore {
   display: block;
   width: 120px;
   background-color: #ff9213;
@@ -449,11 +411,11 @@ input:hover {
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
 }
-.editlisting:hover {
+.learnmore:hover {
   background-color: #fff9e9;
   color: black;
 }
-.applicants {
+.applynow {
   display: block;
   width: 120px;
   background-color: #ff9213;
@@ -468,7 +430,7 @@ input:hover {
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
 }
-.applicants:hover {
+.applynow:hover {
   background-color: #fff9e9;
   color: black;
 }
