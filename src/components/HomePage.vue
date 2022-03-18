@@ -169,7 +169,7 @@
         <p>Or enter your details manually</p>
 
         <label for="name"><b>Full Name</b></label>
-        <input type="text" placeholder="Enter Name" id="name" required />
+        <input type="text" placeholder="Enter Name" id="full_name" required />
 
         <label for="nric"><b>NRIC/FIN</b></label>
         <input type="text" placeholder="Enter NRIC/FUN" id="nric" required />
@@ -216,6 +216,7 @@
           <button type="button" class="signupbtn" v-on:click="userSignUp()">
             Sign Up
           </button>
+          <button type="button" v-on:click="dataCheck()">Register Data</button>
           <button
             type="button"
             onclick="document.getElementById('id02').style.display='none'"
@@ -235,7 +236,8 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
 } from "firebase/auth";
-
+import firebaseApp from "@/main.js";
+import { getFirestore, setDoc, doc } from "firebase/firestore";
 var modal = document.getElementById("id01");
 window.onclick = function (event) {
   if (event.target == modal) {
@@ -284,8 +286,14 @@ export default {
         });
     },
     userSignUp() {
+      var name = document.getElementById("full_name").value;
+      var nric = document.getElementById("nric").value;
+      var nationality = document.getElementById("nationality").value;
       var email = document.getElementById("email").value;
       var password = document.getElementById("signup_password").value;
+      const db = getFirestore(firebaseApp);
+      console.log(db);
+      console.log(name + nric + nationality);
       const auth = getAuth();
       createUserWithEmailAndPassword(auth, email, password)
         .then(() => {
@@ -294,6 +302,23 @@ export default {
         .catch((error) => {
           console.log(error.message);
         });
+    },
+    async dataCheck() {
+      var name = document.getElementById("full_name").value;
+      var nric = document.getElementById("nric").value;
+      var nationality = document.getElementById("nationality").value;
+      var email = document.getElementById("email").value;
+      var password = document.getElementById("signup_password").value;
+      const db = getFirestore(firebaseApp);
+      console.log(db);
+      console.log(name + nric + nationality + email + password);
+      await setDoc(doc(db, "volunteers", email), {
+        name: name,
+        nric: nric,
+        nationality: nationality,
+        email: email,
+        password: password,
+      });
     },
   },
 };
