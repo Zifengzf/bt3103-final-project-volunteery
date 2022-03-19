@@ -169,7 +169,7 @@
         <p>Or enter your details manually</p>
 
         <label for="name"><b>Full Name</b></label>
-        <input type="text" placeholder="Enter Name" id="name" required />
+        <input type="text" placeholder="Enter Name" id="full_name" required />
 
         <label for="nric"><b>NRIC/FIN</b></label>
         <input type="text" placeholder="Enter NRIC/FUN" id="nric" required />
@@ -235,7 +235,8 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
 } from "firebase/auth";
-
+import firebaseApp from "@/main.js";
+import { getFirestore, setDoc, doc } from "firebase/firestore";
 var modal = document.getElementById("id01");
 window.onclick = function (event) {
   if (event.target == modal) {
@@ -283,9 +284,20 @@ export default {
           console.log(error.message);
         });
     },
-    userSignUp() {
+    async userSignUp() {
+      var name = document.getElementById("full_name").value;
+      var nric = document.getElementById("nric").value;
+      var nationality = document.getElementById("nationality").value;
       var email = document.getElementById("email").value;
       var password = document.getElementById("signup_password").value;
+      const db = getFirestore(firebaseApp);
+      await setDoc(doc(db, "volunteers", email), {
+        name: name,
+        nric: nric,
+        nationality: nationality,
+        email: email,
+        password: password,
+      });
       const auth = getAuth();
       createUserWithEmailAndPassword(auth, email, password)
         .then(() => {
