@@ -72,7 +72,7 @@
             <th>Options</th>
         </tr>
     </table> -->
-    <div v-for="thing in things" :key="thing">
+    <!-- <div v-for="thing in things" :key="thing">
       <br />
       <div class="listingbox">
         <img
@@ -117,7 +117,7 @@
           <button class="applicants" type="button">Applicants</button>
         </div>
       </div>
-    </div>
+    </div> -->
     <div v-for="(result, index) in results" :key="result">
       <div class="card">
         <div class="card-section">
@@ -139,11 +139,73 @@
       </div>
     </div>
   </div>
+  <div id="chat" class="container">
+  <form @submit.prevent="storeMessage">
+    <br>
+    <button class="btn btn-primary">View Applications</button>
+  </form>
+  <br>
+  <!-- Messages -->
+  <div v-for="message in messages" class="card" :key="message">
+    <div class="card-body">
+      <div class="listingbox">
+        <img
+          class="imgbox"
+          src="https://media.istockphoto.com/photos/volunteers-serving-hot-meal-to-people-in-community-soup-kitchen-picture-id482802211?k=20&m=482802211&s=612x612&w=0&h=wZtnwsE0iQOqzXp8z99blyjq16JLCeyRDeV0UuOZmkA="
+          alt="Listing Pic"
+          style="float: left"
+        />
+        <div class="listingpara" style="float: left">
+          <p class="listingtitle">{{ message.title }}</p>
+          <p class="listinginfo">{{ message.content }}</p>
+          <div class="listingdetails">
+            <div class="infobox">
+            <img
+              id="profpic"
+              src="../assets/location.png"
+              alt="Profile Pic"
+              height="30"
+              width="30"
+            />
+            <p>Region: {{ message.region }}</p>
+            </div>
+            <img
+              id="profpic"
+              src="../assets/calendar.png"
+              alt="Profile Pic"
+              height="30"
+              width="30"
+            />
+            <p>Duration : {{ message.duration }} months</p>
+            <img
+              id="profpic"
+              src="../assets/vacancy.png"
+              alt="Profile Pic"
+              height="30"
+              width="30"
+            />
+            <p>Vacancy: 7 / 30 left</p>
+          </div>
+        </div>
+        <div class="listingbuttonsbox">
+          <p class="approvedstatus">{{ message.status }}</p>
+          <button class="editlisting" type="button">Edit Listing</button>
+          <button class="applicants" type="button">Applicants</button>
+        </div>
+      </div>
+      <br>
+    </div>
+  </div>
+</div>
 </template>
 
 <script>
 import NavBar from '@/components/NavBar.vue'
+import firebaseApp from "../firebase.js";
+import { getFirestore } from "firebase/firestore";
+import { collection , getDocs, query } from "firebase/firestore";
 
+const db = getFirestore(firebaseApp);
 
 export default {
   components: {
@@ -182,6 +244,9 @@ export default {
       },
       results: [],
       cities: [],
+      messages: [],
+      messageText: '',
+      nickname: 'hootlex'
     };
   },
   mounted() {
@@ -227,6 +292,16 @@ export default {
     //this.retrieveemployees()
   },
   methods: {
+    async storeMessage () {
+        const q = query(collection(db,"Applications"))
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+        let yy = doc.data()
+        this.messages.push({content: yy.Content, duration: yy.Duration, 
+        region: yy.Region, status: yy.Status, title: yy.Title})
+        this.messageText = ''
+      })
+    }
     // async retrieveemployees() {
     //   let z = await getDocs(collection(db, "Applications"))
     //   z.forEach(response => {
