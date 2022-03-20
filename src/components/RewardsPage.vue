@@ -12,12 +12,12 @@
       <div class="acheivementStatus">Achievement Status</div>
       <br>
       <div class="abouttext, center">
-        <h1 class="rank"> SLIVER </h1>
+        <h1 class="rank"> {{ tier }} </h1>
         <div id="point-meter" class="centeredtext">
-          <div id="achieved" class="centeredtext">33</div>
+          <div id="achieved" class="centeredtext">{{ pointsAttained }}</div>
           <div id="notachieved" class="centeredtext"></div>
         </div>
-        <p id="getPoints"> Get 17 more points to unlock next tier!</p>
+        <p id="getPoints"> Get {{ remainingPoints }} more points to unlock next tier!</p>
       </div>
     </div>
 
@@ -108,7 +108,12 @@
 </template>
 
 <script>
+// import firebaseApp from "@/firebase.js";
+// import { getFirestore } from "firebase/firestore";
+// import { collection , getDocs, query } from "firebase/firestore";
+// import { getAuth } from "firebase/auth";
 
+// const db = getFirestore(firebaseApp);
 
 // var xValues = ["Week 1","Week 2","Week 3","Week 4","Week 5","Week 6","Week 7","Week 8"];
 // var yValues = [7,11,11,16,19,21,25,32];
@@ -116,10 +121,17 @@ export default {
   data() {
     return {
       chartdata: {'01-2021': 7, '02-2021': 11, '03-2021': 11, '04-2021': 16, '05-2021': 19, '06-2021': 21},
+      tier: "SLIVER",
+      pointsAttained: 33,
+      remainingPoints: 17
     }
       // chartdata: null
     
   },
+  mounted() {
+    // const db = getFirestore(firebaseApp);
+    // const auth = getAuth();
+  }
 //    mounted() {
 //      this.renderChart({
 //        labels: xValues,
@@ -253,7 +265,7 @@ export default {
   font-family: Sansation;
   font-style: normal;
   font-weight: normal;
-  font-size: 12px;
+  font-size: 16px;
   line-height: 13px;
   float: right;
   margin-right: 30px;
