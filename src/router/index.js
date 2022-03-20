@@ -3,6 +3,8 @@ import Home from "@/views/Home.vue";
 import About from "@/views/About.vue";
 import Volunteer from "@/views/Volunteer.vue";
 import MyApplications from "@/views/MyApplications.vue";
+import Reward from "@/views/Reward.vue";
+
 
 const routes = [
   {
@@ -19,6 +21,11 @@ const routes = [
     path: "/volunteer",
     name: "Volunteer",
     component: Volunteer,
+  },
+  {
+    path: "/reward",
+    name: "Reward",
+    component: Reward,
   },
   {
     path: "/myapplications",

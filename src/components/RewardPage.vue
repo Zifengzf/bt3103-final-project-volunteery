@@ -1,7 +1,8 @@
 <template>
   <div class="mainbanner">
     <div class="maintext">
-      <div style="color:#FF9213; text-align: center; font-size: 50px; font-family: 'Ribeye Marrow'; -webkit-text-stroke: solid 2px white; ">MY REWARDS</div>
+      <div style="color:#FF9213; text-align: center; font-size: 50px; font-family: 'Ribeye Marrow'; -webkit-text-stroke: solid 2px white; ">
+          MY REWARDS</div>
     </div>
   </div>
 
@@ -18,18 +19,21 @@
         </div>
         <p id="getPoints"> Get 17 more points to unlock next tier!</p>
       </div>
-  </div>
-<!-- 
-  <div class="right">
-    <canvas id="myChart" class=center></canvas>
-  <div> -->
-  
-  <div class="listingcontainer">
-      <div class="acheivementStatus">Claim Rewards</div><br>
+    </div>
 
-      <div class="reward"> 
+    <div class="right">
+      <line-chart class="chart" width=500px :data = 'chartdata' :options = "chartoptions"></line-chart>
+    </div>
+  </div>
+
+  <div class="listingcontainer">
+    <div class="acheivementStatus">Claim Rewards</div>
+    <div class="acheivementStatus2">Points Available: 20</div>
+
+    <div class="reward"> 
         <div class="imgcontainer">
-            <img class="divimg2" src="famousamos2.png">
+            <br><br>
+            <img class="divimg2" src= "../assets/famousamos2.png">
         </div>
         <div class="textcontainer" style="Sansation">
           <h4 class="centeredtext"><span style="font-size:150%"><br>Famous Amos<br></span>
@@ -37,15 +41,16 @@
             <span style="color:#FFCB13">20 POINTS</span></h4>
         </div>
         <div class="buttonclass">
-          <br><br><br><br><br><br><br><br><br><br>
-          <a class="redeemclass">Redeem</a>
-          <!-- <button class="redeem_btn ">REDEEM</button> -->
+          <br><br><br><br><br><br><br><br>
+          <a class="redeemclass"
+            onclick="document.getElementById('id01').style.display='block'">Redeem</a>          <!-- <button class="redeem_btn ">REDEEM</button> -->
         </div>    
-      </div>
+    </div>
 
     <div class="reward"> 
       <div class="imgcontainer">
-          <img class="divimg2" src="seveneleven.png">
+          <br><br>
+          <img class="divimg2" src="../assets/seveneleven.png">
       </div>
       <div class="textcontainer" style="Sansation">
         <h4 class="centeredtext"><span style="font-size:150%"><br>7-Eleven <br></span>
@@ -53,15 +58,17 @@
           <span style="color:#FFCB13">25 POINTS</span></h4>
       </div>
       <div class="buttonclass">
-        <br><br><br><br><br><br><br><br><br><br>
-        <a class="redeemclass">Redeem</a>
-        <!-- <button class="redeem_btn ">REDEEM</button> -->
+        <br><br><br><br><br><br><br><br>
+        <a class="redeemclass"
+          onclick="document.getElementById('id01').style.display='block'">Redeem</a>
+                  <!-- <button class="redeem_btn ">REDEEM</button> -->
       </div>    
     </div>
 
     <div class="reward"> 
       <div class="imgcontainer">
-          <img class="divimg2" src="koi.jpeg">
+          <br><br>
+          <img class="divimg2" src="../assets/koi.jpeg">
       </div>
       <div class="textcontainer" style="Sansation">
         <h4 class="centeredtext"><span style="font-size:150%"><br>KOI <br></span>
@@ -69,22 +76,324 @@
           <span style="color:#FFCB13">25 POINTS</span></h4>
       </div>
       <div class="buttonclass">
-        <br><br><br><br><br><br><br><br><br><br>
-        <a class="redeemclass">Redeem</a>
+        <br><br><br><br><br><br><br><br>
+        <a class="redeemclass"
+          onclick="document.getElementById('id01').style.display='block'">Redeem</a>
         <!-- <button class="redeem_btn ">REDEEM</button> -->
       </div>    
     </div>
+  </div>
 
+  <div id="id01" class="modal">
+    <div class="modal-content animate">
+      <div class="imgcontainer2">
+        <span
+          onclick="document.getElementById('id01').style.display='none'"
+          class="close"
+          title="Close Modal"
+          >&times;
+        </span>
+      </div>
+      <div class="container">
+        <div class="centeredtext" style="color: #ff9213; font-size: 24px">
+          <br><br>Please scan QR code to redeem reward!
+          <div class="qrcode">
+            <img class="divimg2" src= "../assets/qrcode.webp">
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 
 </template>
 
 <script>
-export default {
+var xValues = ["Week 1","Week 2","Week 3","Week 4","Week 5","Week 6","Week 7","Week 8"];
+var yValues = [7,11,11,16,19,21,25,32];
+// import LineChart from '../LineChart.js'
 
+export default {
+  data() {
+    return {
+      chartdata: {'01-2021': 7, '02-2021': 11, '03-2021': 11, '04-2021': 16, '05-2021': 19, '06-2021': 21},
+      barChartOptions: {
+          backgroundColor: "rgba(255,246,215,0)"},
+        scales: {
+            yAxes: [{
+              ticks: {min: 6, max:35},
+              gridLines: {
+                color: "rgba(255,246,215,0)",
+                zeroLineColor: "rgba(255,146,19,1)",
+              }
+            }],
+            xAxes: [{
+              gridLines: {
+                color: "rgba(255,246,215,0)",
+                zeroLineColor: "rgba(255,146,19,1)",}
+            }],
+          }
+      }
+      // chartdata: null
+    
+  },
+   mounted() {
+     this.renderChart({
+       labels: xValues,
+       datasets: [{
+         label: 'Data One',
+         backgroundColor: "rgba(255,229,163,1.0)",
+         borderColor: "rgba(255,146,19,1)",
+         lineTension: 0,
+         fill: true,
+         borderWidth: 3,
+         data: yValues,
+       }]}, {responsive: true, maintainAspectRatio: false}) 
+   }
 }
+  //   this.fillData()
+  // },
+  // methods: {
+  //   fillData() {
+  //     this.chartdata = {
+  //       datasets: {
+  //         label: 'Data One',
+  //         backgroundColor: '#f87979',
+  //         data: yValues
+  //       }
+  //     }
+  //   }
+  // }
+
 </script>
 
 <style>
+.modal {
+  display: block; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: #fff9e9; /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  padding-top: 60px;
+}
+.modal-content {
+  background-color: #fff9e9;
+  margin: 10% auto 15% auto; /* 10% from the top, 15% from the bottom and centered */
+  border: 1px solid #888;
+  border-radius: 25px;
+  width: 60%; /* Could be more or less, depending on screen size */
+}
+.animate {
+  -webkit-animation: animatezoom 0.6s;
+  animation: animatezoom 0.6s;
+}
+.close {
+  position: relative;
+  right: 0px;
+  top: 0;
+  color: #000;
+  font-size: 35px;
+  font-weight: bold;
+}
 
+.close:hover,
+.close:focus {
+  color: red;
+  cursor: pointer;
+}
+.centeredtext {
+  text-align: center;
+}
+.mainbanner {
+  background-image: url("../assets/trees.jpg");
+  background-size: cover;
+  position: relative;
+  width: 100%;
+  min-height: 435px;
+  padding-top: 0%;
+  padding-bottom: 0%;
+}
+.maintext {
+  margin: 0;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  -ms-transform: translate(-50%, -30%);
+  transform: translate(-50%, -30%);
+}
+.bottombanner {
+  background-color: #fff9e9;
+  min-height: 500px;
+}
+.acheivementStatus {
+  font-family: Sansation;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 26px;
+  line-height: 29px;
+  color: #FF9213;
+  margin-top: 2%;
+  margin-left: 2%;
+  text-align: left
+}
+.acheivementStatus2 {
+  font-family: Sansation;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 29px;
+  color: black;
+  margin-left: 2%;
+  text-align: left
+}
+.rank {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
+  font-family: Sansation;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 26px;
+  line-height: 29px;
+  text-align: center;
+  color: #A8A8A8;
+}
+#achieved {
+  background: #FF9213;
+  color: #FFF6D7;
+}
+#notachieved {
+  background: #FFF6D7
+}
+#point-meter {
+  border: 4px solid #FF9213;
+  border-radius: 30px;
+  overflow: hidden;
+  display: grid;
+  margin-left: 30px;
+  margin-right: 30px;
+  grid-template-columns: 33fr 17fr;
+  font-family: Sansation;
+}
+#getPoints {
+  font-family: Sansation;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 13px;
+  float: right;
+  margin-right: 30px;
+}
+.left {
+  float: left;
+  width: 40%; 
+  margin-left: 30px;
+  margin-top: 30px;
+}
+.right {
+  float: right;
+  width: 50%; 
+  margin: 30px;
+}
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
+  /* text-align: center; */
+}
+
+.listingcontainer {
+  background-color: #FFE5A3;
+  border: 6px solid #FFD466;
+  position: absolute;
+  top: 860px;
+  width: 94%;
+  height: 500px;
+  border-radius: 23px;
+  margin-left: 20px;
+}
+
+.imgcontainer {
+  width: 142px;
+  height: 142px;
+  padding: 0px;
+  left: 30px;
+  /* border: 1px solid black; */
+  overflow: hidden;
+  float: left;
+}
+.imgcontainer2 {
+  width: 142px;
+  height: 40px;
+  padding: 0px;
+  left: 30px;
+  /* border: 1px solid black; */
+  overflow: hidden;
+  float: right;
+}
+.textcontainer {
+  width: 210px;
+  height: 142px;
+  float: right;
+  margin-right: 20px;
+  object-fit: contain;
+}
+.qrcode {
+  max-width: 500px;
+  max-height: 500px;
+  object-fit: contain;
+  margin: auto;
+  display: block
+}
+.divimg2 {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  margin: auto;
+  display: block
+}
+
+.buttonclass {
+  float: center;
+}
+
+.redeemclass {
+  background-color: #FF9213;
+  box-shadow: 4px 3px 4px rgba(0, 0, 0, 0.25);
+  width: 300px;
+  height: 42px;
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-align: center;
+  margin-left: 35%;
+}
+
+.reward {
+  background-color: #FFF6D7;
+  border-radius: 33px;
+  width: 400px;
+  height: 230px;
+  float: left;
+  margin: 25px;
+}
+
+.float {
+  width: 255px;
+  height: 180px;
+  padding: 20px;
+  margin: 10px;
+  border-radius: 5px;
+  /* border: 1px solid black; */
+  background-color: blue;
+  overflow: hidden;
+  float: left
+}
 </style>
