@@ -1,18 +1,4 @@
 <template>
-  <div class="topnav">
-    <img src="@/assets/volunteery_copy.png" alt="" style="margin-left: 0px" />
-    <a
-      href=""
-      style="
-        font-size: 15px;
-        color: #d3b566;
-        float: right;
-        margin-top: 20px;
-        margin-right: 15px;
-      "
-      >VIEW VOLUNTEERING OPPORTUNITIES</a
-    >
-  </div>
   <div style="background-color: #fff9e9">
     <div class="mainbanner">
       <div class="maintext">
