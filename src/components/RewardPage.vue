@@ -166,7 +166,7 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
 .modal {
   display: block; /* Hidden by default */
   position: fixed; /* Stay in place */
