@@ -5,9 +5,9 @@
           MY REWARDS</div>
     </div>
   </div>
-
+  
   <div class="bottombanner">
-    <div class = "left">
+    <div>
       <div style="color:#fff9e9">Placeholder to takeup space</div>
       <div class="acheivementStatus">Achievement Status</div>
       <br>
@@ -21,9 +21,9 @@
       </div>
     </div>
 
-    <div class="right">
-      <line-chart class="chart" width=500px :data = 'chartdata' :options = "chartoptions"></line-chart>
-    </div>
+    <!-- <div style="background-color:blue">
+      <line-chart class="chart" width=500px :data = 'chartdata'></line-chart>
+    </div> -->
   </div>
 
   <div class="listingcontainer">
@@ -41,8 +41,8 @@
             <span style="color:#FFCB13">20 POINTS</span></h4>
         </div>
         <div class="buttonclass">
-          <br><br><br><br><br><br><br><br>
-          <a class="redeemclass"
+        <br><br><br><br><br><br><br><br><br><br>
+        <a class="redeemclass"
             onclick="document.getElementById('id01').style.display='block'">Redeem</a>          <!-- <button class="redeem_btn ">REDEEM</button> -->
         </div>    
     </div>
@@ -58,7 +58,7 @@
           <span style="color:#FFCB13">25 POINTS</span></h4>
       </div>
       <div class="buttonclass">
-        <br><br><br><br><br><br><br><br>
+        <br><br><br><br><br><br><br><br><br><br>
         <a class="redeemclass"
           onclick="document.getElementById('id01').style.display='block'">Redeem</a>
                   <!-- <button class="redeem_btn ">REDEEM</button> -->
@@ -76,7 +76,7 @@
           <span style="color:#FFCB13">25 POINTS</span></h4>
       </div>
       <div class="buttonclass">
-        <br><br><br><br><br><br><br><br>
+        <br><br><br><br><br><br><br><br><br><br>
         <a class="redeemclass"
           onclick="document.getElementById('id01').style.display='block'">Redeem</a>
         <!-- <button class="redeem_btn ">REDEEM</button> -->
@@ -108,67 +108,37 @@
 </template>
 
 <script>
-var xValues = ["Week 1","Week 2","Week 3","Week 4","Week 5","Week 6","Week 7","Week 8"];
-var yValues = [7,11,11,16,19,21,25,32];
-// import LineChart from '../LineChart.js'
 
+
+// var xValues = ["Week 1","Week 2","Week 3","Week 4","Week 5","Week 6","Week 7","Week 8"];
+// var yValues = [7,11,11,16,19,21,25,32];
 export default {
   data() {
     return {
       chartdata: {'01-2021': 7, '02-2021': 11, '03-2021': 11, '04-2021': 16, '05-2021': 19, '06-2021': 21},
-      barChartOptions: {
-          backgroundColor: "rgba(255,246,215,0)"},
-        scales: {
-            yAxes: [{
-              ticks: {min: 6, max:35},
-              gridLines: {
-                color: "rgba(255,246,215,0)",
-                zeroLineColor: "rgba(255,146,19,1)",
-              }
-            }],
-            xAxes: [{
-              gridLines: {
-                color: "rgba(255,246,215,0)",
-                zeroLineColor: "rgba(255,146,19,1)",}
-            }],
-          }
-      }
+    }
       // chartdata: null
     
   },
-   mounted() {
-     this.renderChart({
-       labels: xValues,
-       datasets: [{
-         label: 'Data One',
-         backgroundColor: "rgba(255,229,163,1.0)",
-         borderColor: "rgba(255,146,19,1)",
-         lineTension: 0,
-         fill: true,
-         borderWidth: 3,
-         data: yValues,
-       }]}, {responsive: true, maintainAspectRatio: false}) 
-   }
+//    mounted() {
+//      this.renderChart({
+//        labels: xValues,
+//        datasets: [{
+//          label: 'Data One',
+//          backgroundColor: "rgba(255,229,163,1.0)",
+//          borderColor: "rgba(255,146,19,1)",
+//          lineTension: 0,
+//          fill: true,
+//          borderWidth: 3,
+//          data: yValues,
+//        }]}, {responsive: true, maintainAspectRatio: false}) 
+//    }
 }
-  //   this.fillData()
-  // },
-  // methods: {
-  //   fillData() {
-  //     this.chartdata = {
-  //       datasets: {
-  //         label: 'Data One',
-  //         backgroundColor: '#f87979',
-  //         data: yValues
-  //       }
-  //     }
-  //   }
-  // }
-
 </script>
 
-<style scoped>
+<style>
 .modal {
-  display: block; /* Hidden by default */
+  display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
   left: 0;
@@ -199,7 +169,6 @@ export default {
   font-size: 35px;
   font-weight: bold;
 }
-
 .close:hover,
 .close:focus {
   color: red;
@@ -307,7 +276,6 @@ export default {
   width: 90%;
   /* text-align: center; */
 }
-
 .listingcontainer {
   background-color: #FFE5A3;
   border: 6px solid #FFD466;
@@ -318,7 +286,6 @@ export default {
   border-radius: 23px;
   margin-left: 20px;
 }
-
 .imgcontainer {
   width: 142px;
   height: 142px;
@@ -360,7 +327,7 @@ export default {
 }
 
 .buttonclass {
-  float: center;
+  float: bottom center;
 }
 
 .redeemclass {

@@ -1,20 +1,19 @@
 <template>
   <NavBar/>
-  <RewardPage/>
+  <RewardsPage/>
 
 </template>
 
 <script>
 import NavBar from '@/components/NavBar.vue'
-import RewardPage from '@/components/RewardPage.vue'
-
+import RewardsPage from '@/components/RewardsPage.vue'
 
 export default {
   name: "RewardPage",
 
   components: {
     NavBar,
-    RewardPage,
+    RewardsPage
   },
 };
 </script>
