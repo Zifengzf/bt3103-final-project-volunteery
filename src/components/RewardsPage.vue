@@ -1,8 +1,7 @@
 <template>
   <div class="mainbanner">
     <div class="maintext">
-      <div style="color:#FF9213; text-align: center; font-size: 50px; font-family: 'Ribeye Marrow'; -webkit-text-stroke: solid 2px white; ">
-          MY REWARDS</div>
+      <div style="color:#FF9213; text-align: center; font-size: 50px; font-family: 'Ribeye Marrow'; -webkit-text-stroke: solid 2px white; ">MY REWARDS</div>
     </div>
   </div>
   
@@ -25,15 +24,17 @@
       <line-chart class="chart" width=500px :data = 'chartdata'></line-chart>
     </div> -->
   </div>
-
+<!-- 
+  <div class="right">
+    <canvas id="myChart" class=center></canvas>
+  <div> -->
+  
   <div class="listingcontainer">
-    <div class="acheivementStatus">Claim Rewards</div>
-    <div class="acheivementStatus2">Points Available: 20</div>
+      <div class="acheivementStatus">Claim Rewards</div><br>
 
-    <div class="reward"> 
+      <div class="reward"> 
         <div class="imgcontainer">
-            <br><br>
-            <img class="divimg2" src= "../assets/famousamos2.png">
+            <img class="divimg2" src="famousamos2.png">
         </div>
         <div class="textcontainer" style="Sansation">
           <h4 class="centeredtext"><span style="font-size:150%"><br>Famous Amos<br></span>
@@ -45,12 +46,11 @@
         <a class="redeemclass"
             onclick="document.getElementById('id01').style.display='block'">Redeem</a>          <!-- <button class="redeem_btn ">REDEEM</button> -->
         </div>    
-    </div>
+      </div>
 
     <div class="reward"> 
       <div class="imgcontainer">
-          <br><br>
-          <img class="divimg2" src="../assets/seveneleven.png">
+          <img class="divimg2" src="seveneleven.png">
       </div>
       <div class="textcontainer" style="Sansation">
         <h4 class="centeredtext"><span style="font-size:150%"><br>7-Eleven <br></span>
@@ -67,8 +67,7 @@
 
     <div class="reward"> 
       <div class="imgcontainer">
-          <br><br>
-          <img class="divimg2" src="../assets/koi.jpeg">
+          <img class="divimg2" src="koi.jpeg">
       </div>
       <div class="textcontainer" style="Sansation">
         <h4 class="centeredtext"><span style="font-size:150%"><br>KOI <br></span>
@@ -82,28 +81,8 @@
         <!-- <button class="redeem_btn ">REDEEM</button> -->
       </div>    
     </div>
-  </div>
 
-  <div id="id01" class="modal">
-    <div class="modal-content animate">
-      <div class="imgcontainer2">
-        <span
-          onclick="document.getElementById('id01').style.display='none'"
-          class="close"
-          title="Close Modal"
-          >&times;
-        </span>
-      </div>
-      <div class="container">
-        <div class="centeredtext" style="color: #ff9213; font-size: 24px">
-          <br><br>Please scan QR code to redeem reward!
-          <div class="qrcode">
-            <img class="divimg2" src= "../assets/qrcode.webp">
-          </div>
-        </div>
-      </div>
     </div>
-  </div>
 
 </template>
 
@@ -354,25 +333,8 @@ export default {
   text-align: center;
   margin-left: 35%;
 }
+</script>
 
-.reward {
-  background-color: #FFF6D7;
-  border-radius: 33px;
-  width: 400px;
-  height: 230px;
-  float: left;
-  margin: 25px;
-}
+<style>
 
-.float {
-  width: 255px;
-  height: 180px;
-  padding: 20px;
-  margin: 10px;
-  border-radius: 5px;
-  /* border: 1px solid black; */
-  background-color: blue;
-  overflow: hidden;
-  float: left
-}
 </style>
