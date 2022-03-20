@@ -1,6 +1,5 @@
 <template>
   <NavBar/>
-<div style="background-color: #FFF9E9">
     <div class="mainbanner">
       <div class="maintext">
         <div
@@ -138,12 +137,11 @@
         </div>
       </div>
     </div>
-  </div>
   <div id="chat" class="container">
-  <form @submit.prevent="storeMessage">
+  <!-- <form @submit.prevent="storeMessage">
     <br>
     <button class="btn btn-primary">View Applications</button>
-  </form>
+  </form> -->
   <br>
   <!-- Messages -->
   <div v-for="message in messages" class="card" :key="message">
@@ -166,9 +164,11 @@
               alt="Profile Pic"
               height="30"
               width="30"
+              style="display: inline-block;"
             />
-            <p>Region: {{ message.region }}</p>
+            <p class="specdetails">Region: {{ message.region }}</p>
             </div>
+            <div class="infobox">
             <img
               id="profpic"
               src="../assets/calendar.png"
@@ -176,7 +176,9 @@
               height="30"
               width="30"
             />
-            <p>Duration : {{ message.duration }} months</p>
+            <p class="specdetails">Duration : {{ message.duration }} months</p>
+            </div>
+            <div class="infobox">
             <img
               id="profpic"
               src="../assets/vacancy.png"
@@ -184,13 +186,13 @@
               height="30"
               width="30"
             />
-            <p>Vacancy: 7 / 30 left</p>
+            <p class="specdetails">Vacancy: 7 / 30 left</p>
+            </div>
           </div>
         </div>
         <div class="listingbuttonsbox">
           <p class="approvedstatus">{{ message.status }}</p>
-          <button class="editlisting" type="button">Edit Listing</button>
-          <button class="applicants" type="button">Applicants</button>
+          <button class="viewmore" type="button">View More</button>
         </div>
       </div>
       <br>
@@ -201,7 +203,7 @@
 
 <script>
 import NavBar from '@/components/NavBar.vue'
-import firebaseApp from "../firebase.js";
+import firebaseApp from "@/firebase.js";
 import { getFirestore } from "firebase/firestore";
 import { collection , getDocs, query } from "firebase/firestore";
 
@@ -250,6 +252,7 @@ export default {
     };
   },
   mounted() {
+    this.storeMessage();
     // async function display() {
     //     let z = await getDocs(collection(db, "Applications"))
     //     let ind = 1
@@ -386,7 +389,9 @@ form {
   align-items: center;
   margin: auto;
 }
-
+input {
+  font-size: 20px;
+}
 input:hover {
   box-shadow: 3px 3px purple;
   border-radius: 2px;
@@ -454,6 +459,16 @@ input:hover {
   flex-direction: row;
   justify-content: space-around;
 }
+.infobox {
+  width: 200px;
+  display: flex;
+}
+.specdetails {
+  display: inline-block;
+  padding-left: 10px;
+  font-size: 15px;
+  font-weight: bold;
+}
 .listingbuttonsbox {
   /* border: 1px solid gray; */
   float: right;
@@ -467,17 +482,18 @@ input:hover {
 .approvedstatus {
   background-color: #008b16;
   display: block;
-  width: 120px;
+  width: 150px;
   color: white;
   font-weight: bold;
-  font-size: 14px;
-  padding: 10px 10px 10px 10px;
+  font-size: 25px;
+  padding: 18px 5px 18px 5px;
   visibility: visible;
   float: right;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
+  text-align: center;
 }
 .pendingstatus {
   background-color: #ffcb13;
@@ -496,7 +512,7 @@ input:hover {
 }
 .addlisting {
   display: block;
-  width: 120px;
+  width: 150px;
   background-color: #ff9213;
   color: white;
   font-weight: bold;
@@ -509,14 +525,14 @@ input:hover {
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
 }
-.editlisting {
+.viewmore {
   display: block;
-  width: 120px;
+  width: 150px;
   background-color: #ff9213;
   color: white;
   font-weight: bold;
-  font-size: 14px;
-  padding: 10px 10px 10px 10px;
+  font-size: 20px;
+  padding: 18px 15px 18px 15px;
   visibility: visible;
   float: right;
   border-top-left-radius: 5px;
@@ -524,7 +540,7 @@ input:hover {
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
 }
-.editlisting:hover {
+.viewmore:hover {
   background-color: #fff9e9;
   color: black;
 }
@@ -551,9 +567,5 @@ input:hover {
   padding: 10px;
   justify-content: space-evenly;
 }
-.topnav {
-  background-color: #fff9e9;
-  min-height: 50px;
-  overflow: hidden;
-}
+
 </style>

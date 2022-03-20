@@ -56,51 +56,6 @@
         style="font-size: 18px; padding: 10px"
       />
     </div>
-    <div v-for="thing in things" :key="thing">
-      <br />
-      <div class="listingbox">
-        <img
-          class="imgbox"
-          src="https://media.istockphoto.com/photos/volunteers-serving-hot-meal-to-people-in-community-soup-kitchen-picture-id482802211?k=20&m=482802211&s=612x612&w=0&h=wZtnwsE0iQOqzXp8z99blyjq16JLCeyRDeV0UuOZmkA="
-          alt="Listing Pic"
-          style="float: left"
-        />
-        <div class="listingpara" style="float: left">
-          <p class="listingtitle">{{ thing.title }}</p>
-          <p class="listinginfo">{{ thing.content }}</p>
-          <div class="listingdetails">
-            <img
-              id="profpic"
-              src="../assets/calendar.png"
-              alt="Profile Pic"
-              height="30"
-              width="30"
-            />
-            <p>Region: {{ thing.region }}</p>
-            <img
-              id="profpic"
-              src="../assets/calendar.png"
-              alt="Profile Pic"
-              height="30"
-              width="30"
-            />
-            <p>Commitment Period: {{ thing.duration }} months</p>
-            <img
-              id="profpic"
-              src="../assets/vacancy.png"
-              alt="Profile Pic"
-              height="30"
-              width="30"
-            />
-            <p>Vacancy: 7 / 30 left</p>
-          </div>
-        </div>
-        <div class="listingbuttonsbox">
-          <button class="learnmore" type="button">Learn More</button>
-          <button class="applynow" type="button">Apply Now</button>
-        </div>
-      </div>
-    </div>
     <div v-for="(result, index) in results" :key="result">
       <div class="card">
         <div class="card-section">
@@ -121,16 +76,70 @@
         </div>
       </div>
     </div>
+    <br>
+    <div v-for="message in messages" class="card" :key="message">
+    <div class="card-body">
+      <div class="listingbox">
+        <img
+          class="imgbox"
+          src="https://media.istockphoto.com/photos/volunteers-serving-hot-meal-to-people-in-community-soup-kitchen-picture-id482802211?k=20&m=482802211&s=612x612&w=0&h=wZtnwsE0iQOqzXp8z99blyjq16JLCeyRDeV0UuOZmkA="
+          alt="Listing Pic"
+          style="float: left"
+        />
+        <div class="listingpara" style="float: left">
+          <p class="listingtitle">{{ message.title }}</p>
+          <p class="listinginfo">{{ message.content }}</p>
+          <div class="listingdetails">
+            <div class="infobox">
+            <img
+              id="profpic"
+              src="../assets/location.png"
+              alt="Profile Pic"
+              height="30"
+              width="30"
+              style="display: inline-block;"
+            />
+            <p class="specdetails">Region: {{ message.region }}</p>
+            </div>
+            <div class="infobox">
+            <img
+              id="profpic"
+              src="../assets/calendar.png"
+              alt="Profile Pic"
+              height="30"
+              width="30"
+            />
+            <p class="specdetails">Duration : {{ message.duration }} months</p>
+            </div>
+            <div class="infobox">
+            <img
+              id="profpic"
+              src="../assets/vacancy.png"
+              alt="Profile Pic"
+              height="30"
+              width="30"
+            />
+            <p class="specdetails">Vacancy: 7 / 30 left</p>
+            </div>
+          </div>
+        </div>
+        <div class="listingbuttonsbox">
+          <button class="viewmore" type="button">Learn More</button>
+          <button class="viewmore" type="button">Apply Now</button>
+        </div>
+      </div>
+      <br>
+    </div>
+  </div>
   </div>
 </template>
 
 <script>
-//import ccxt from "ccxt";
-// import firebaseApp from "../firebase.js";
-// import {getFirestore} from "firebase/firestore";
-// import {collection, getDocs} from "firebase/firestore";
+import firebaseApp from "@/firebase.js";
+import { getFirestore } from "firebase/firestore";
+import { collection , getDocs, query } from "firebase/firestore";
 
-// const db = getFirestore(firebaseApp);
+const db = getFirestore(firebaseApp);
 
 export default {
   data() {
@@ -160,9 +169,13 @@ export default {
       },
       results: [],
       cities: [],
+      messages: [],
+      messageText: '',
+      nickname: 'hootlex'
     };
   },
   mounted() {
+    this.storeMessage();
     // async function display() {
     //     let z = await getDocs(collection(db, "Applications"))
     //     let ind = 1
@@ -205,20 +218,16 @@ export default {
     //this.retrieveemployees()
   },
   methods: {
-    // async retrieveemployees() {
-    //   let z = await getDocs(collection(db, "Applications"))
-    //   z.forEach(response => {
-    //     console.log("pitstop");
-    //     console.log(response);
-    //     //let yy = response.data()
-    //     //this.employees = response.data;
-    //     //this.details = yy;
-    //     //console.log(yy);
-    //   })
-    //   .catch(e => {
-    //     console.log(e);
-    //   });
-    // }
+    async storeMessage () {
+        const q = query(collection(db,"Opportunities"))
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+        let yy = doc.data()
+        this.messages.push({content: yy.Content, duration: yy.Duration, 
+        region: yy.Region, status: yy.Status, title: yy.Title})
+        this.messageText = ''
+      })
+    }
   },
 };
 </script>
@@ -356,6 +365,35 @@ input:hover {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+}
+.infobox {
+  width: 200px;
+  display: flex;
+}
+.specdetails {
+  display: inline-block;
+  padding-left: 10px;
+  font-size: 15px;
+  font-weight: bold;
+}
+.viewmore {
+  display: block;
+  width: 150px;
+  background-color: #ff9213;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  padding: 18px 15px 18px 15px;
+  visibility: visible;
+  float: right;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.viewmore:hover {
+  background-color: #fff9e9;
+  color: black;
 }
 .listingbuttonsbox {
   /* border: 1px solid gray; */
