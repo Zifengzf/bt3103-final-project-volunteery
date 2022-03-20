@@ -1,6 +1,3 @@
-import { createApp } from "vue";
-import App from "./App.vue";
-import router from "./router/index.js";
 import { initializeApp } from "firebase/app";
 
 const firebaseConfig = {
@@ -14,5 +11,5 @@ const firebaseConfig = {
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
-createApp(App).use(router).mount("#app");
+
 export default firebaseApp;
