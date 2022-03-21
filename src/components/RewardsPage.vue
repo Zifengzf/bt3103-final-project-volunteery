@@ -84,8 +84,28 @@
         <!-- <button class="redeem_btn ">REDEEM</button> -->
       </div>    
     </div>
+  </div>
 
+  <div id="id01" class="modal">
+    <div class="modal-content animate">
+      <div class="imgcontainer2">
+        <span
+          onclick="document.getElementById('id01').style.display='none'"
+          class="close"
+          title="Close Modal"
+          >&times;
+        </span>
+      </div>
+      <div class="container">
+        <div class="centeredtext" style="color: #ff9213; font-size: 24px">
+          <br><br>Please scan QR code to redeem reward!
+          <div class="qrcode">
+            <img class="divimg2" src= "../assets/qrcode.webp">
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 
 </template>
 
