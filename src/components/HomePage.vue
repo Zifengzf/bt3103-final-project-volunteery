@@ -297,6 +297,8 @@ export default {
         nationality: nationality,
         email: email,
         password: password,
+        currentPoints: 0,
+        totalPoints: 0,
       });
       const auth = getAuth();
       createUserWithEmailAndPassword(auth, email, password)
