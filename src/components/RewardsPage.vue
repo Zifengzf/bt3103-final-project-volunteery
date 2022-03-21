@@ -169,7 +169,7 @@ export default {
   text-align: center;
 }
 .mainbanner {
-  background-image: url("../assets/trees.jpg");
+  background-image: url("../assets/trees_background.png");
   background-size: cover;
   position: relative;
   width: 100%;
@@ -333,8 +333,4 @@ export default {
   text-align: center;
   margin-left: 35%;
 }
-</script>
-
-<style>
-
 </style>
