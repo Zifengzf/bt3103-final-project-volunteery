@@ -1,7 +1,8 @@
 <template>
   <div class="mainbanner">
     <div class="maintext">
-      <div style="color:#FF9213; text-align: center; font-size: 50px; font-family: 'Ribeye Marrow'; -webkit-text-stroke: solid 2px white; ">MY REWARDS</div>
+      <div style="color:#FF9213; text-align: center; font-size: 50px; font-family: 'Ribeye Marrow'; -webkit-text-stroke: solid 2px white; ">
+          MY REWARDS</div>
     </div>
   </div>
   
@@ -11,12 +12,12 @@
       <div class="acheivementStatus">Achievement Status</div>
       <br>
       <div class="abouttext, center">
-        <h1 class="rank"> {{ tier }} </h1>
+        <h1 class="rank"> SLIVER </h1>
         <div id="point-meter" class="centeredtext">
-          <div id="achieved" class="centeredtext">{{ pointsAttained }}</div>
+          <div id="achieved" class="centeredtext">33</div>
           <div id="notachieved" class="centeredtext"></div>
         </div>
-        <p id="getPoints"> Get {{ remainingPoints }} more points to unlock next tier!</p>
+        <p id="getPoints"> Get 17 more points to unlock next tier!</p>
       </div>
     </div>
 
@@ -30,11 +31,13 @@
   <div> -->
   
   <div class="listingcontainer">
-      <div class="acheivementStatus">Claim Rewards</div><br>
+      <div class="acheivementStatus">Claim Rewards</div>
+      <div class="acheivementStatus2">Points Available: {{ remainingPoints }}</div>
+
 
       <div class="reward"> 
         <div class="imgcontainer">
-            <img class="divimg2" src="famousamos2.png">
+            <img style="padding:25px; width:140px; height:auto" class="divimg2" src="@/assets/famousamos2.png">
         </div>
         <div class="textcontainer" style="Sansation">
           <h4 class="centeredtext"><span style="font-size:150%"><br>Famous Amos<br></span>
@@ -50,7 +53,7 @@
 
     <div class="reward"> 
       <div class="imgcontainer">
-          <img class="divimg2" src="seveneleven.png">
+          <img style="padding:25px; width:140px; height:auto" class="divimg2" src="@/assets/seveneleven.png">
       </div>
       <div class="textcontainer" style="Sansation">
         <h4 class="centeredtext"><span style="font-size:150%"><br>7-Eleven <br></span>
@@ -67,7 +70,7 @@
 
     <div class="reward"> 
       <div class="imgcontainer">
-          <img class="divimg2" src="koi.jpeg">
+          <img style="padding:25px; width:140px; height:auto;" class="divimg2" src="@/assets/koi.jpeg">
       </div>
       <div class="textcontainer" style="Sansation">
         <h4 class="centeredtext"><span style="font-size:150%"><br>KOI <br></span>
@@ -128,6 +131,10 @@ export default {
 </script>
 
 <style>
+img.resize {
+    width: 100px; /* you can use % */
+    height: auto;
+}
 .modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
@@ -244,7 +251,7 @@ export default {
   font-family: Sansation;
   font-style: normal;
   font-weight: normal;
-  font-size: 16px;
+  font-size: 12px;
   line-height: 13px;
   float: right;
   margin-right: 30px;
@@ -332,5 +339,26 @@ export default {
   padding-bottom: 10px;
   text-align: center;
   margin-left: 35%;
+}
+
+.reward {
+  background-color: #FFF6D7;
+  border-radius: 33px;
+  width: 400px;
+  height: 230px;
+  float: left;
+  margin: 25px;
+}
+
+.float {
+  width: 255px;
+  height: 180px;
+  padding: 20px;
+  margin: 10px;
+  border-radius: 5px;
+  /* border: 1px solid black; */
+  background-color: blue;
+  overflow: hidden;
+  float: left
 }
 </style>
