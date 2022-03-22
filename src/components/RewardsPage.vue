@@ -32,7 +32,7 @@
   
   <div class="listingcontainer">
       <div class="acheivementStatus">Claim Rewards</div>
-      <div class="acheivementStatus2">Points Available: {{ remainingPoints }}</div>
+      <div class="acheivementStatus2">Points Available: {{ pointsAvailable }}</div>
 
 
       <div class="reward"> 
@@ -125,7 +125,8 @@ export default {
       chartdata: {'01-2021': 7, '02-2021': 11, '03-2021': 11, '04-2021': 16, '05-2021': 19, '06-2021': 21},
       tier: "SLIVER",
       pointsAttained: 33,
-      remainingPoints: 17
+      remainingPoints: 17,
+      pointsAvailable: 20
     }
       // chartdata: null
     
