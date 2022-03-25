@@ -236,7 +236,7 @@ import {
   createUserWithEmailAndPassword,
 } from "firebase/auth";
 import firebaseApp from "@/main.js";
-import { getFirestore, setDoc, doc } from "firebase/firestore";
+import { getFirestore, setDoc, doc, getDoc } from "firebase/firestore";
 var modal = document.getElementById("id01");
 window.onclick = function (event) {
   if (event.target == modal) {
@@ -291,23 +291,30 @@ export default {
       var email = document.getElementById("email").value;
       var password = document.getElementById("signup_password").value;
       const db = getFirestore(firebaseApp);
-      await setDoc(doc(db, "volunteers", email), {
-        name: name,
-        nric: nric,
-        nationality: nationality,
-        email: email,
-        password: password,
-        currentPoints: 0,
-        totalPoints: 0,
-      });
-      const auth = getAuth();
-      createUserWithEmailAndPassword(auth, email, password)
-        .then(() => {
-          this.$router.push({ name: "MyApplications" });
-        })
-        .catch((error) => {
-          console.log(error.message);
+      const docRef = doc(db, "volunteers", email);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        console.log("User already exists");
+        alert("User already exists");
+      } else {
+        await setDoc(doc(db, "volunteers", email), {
+          name: name,
+          nric: nric,
+          nationality: nationality,
+          email: email,
+          password: password,
+          currentPoints: 0,
+          totalPoints: 0,
         });
+        const auth = getAuth();
+        createUserWithEmailAndPassword(auth, email, password)
+          .then(() => {
+            this.$router.push({ name: "MyApplications" });
+          })
+          .catch((error) => {
+            console.log(error.message);
+          });
+      }
     },
   },
 };
