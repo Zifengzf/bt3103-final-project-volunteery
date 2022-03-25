@@ -12,12 +12,12 @@
       <div class="acheivementStatus">Achievement Status</div>
       <br>
       <div class="abouttext, center">
-        <h1 class="rank"> SLIVER </h1>
+        <h1 id="tier" class="rank"> SLIVER </h1>
         <div id="point-meter" class="centeredtext">
-          <div id="achieved" class="centeredtext">33</div>
+          <div id="achieved" class="centeredtext"> {{ pointsAttained }}</div>
           <div id="notachieved" class="centeredtext"></div>
         </div>
-        <p id="getPoints"> Get 17 more points to unlock next tier!</p>
+        <p id="getPoints"> Get {{ remainingPoints }} more points to unlock next tier!</p>
       </div>
     </div>
 
@@ -32,11 +32,13 @@
   
   <div class="listingcontainer">
       <div class="acheivementStatus">Claim Rewards</div>
-      <div class="acheivementStatus2">Points Available: {{ pointsAvailable }}</div>
+      <div id="ptsA" class="acheivementStatus2">Points Available: {{ pointsAvailable }}</div>
+      <!-- <div class="acheivementStatus2"><button @click="display()">UPDATE</button></div> -->
+
 
 
       <div class="reward"> 
-        <div class="imgcontainer">
+        <div class="imgcontainer" style='object-fit:contain;'>
             <img style="padding:25px; width:140px; height:auto" class="divimg2" src="@/assets/famousamos2.png">
         </div>
         <div class="textcontainer" style="Sansation">
@@ -52,7 +54,7 @@
       </div>
 
     <div class="reward"> 
-      <div class="imgcontainer">
+      <div class="imgcontainer" style='object-fit:contain'>
           <img style="padding:25px; width:140px; height:auto" class="divimg2" src="@/assets/seveneleven.png">
       </div>
       <div class="textcontainer" style="Sansation">
@@ -69,7 +71,7 @@
     </div>
 
     <div class="reward"> 
-      <div class="imgcontainer">
+      <div class="imgcontainer" style='object-fit:contain'>
           <img style="padding:25px; width:140px; height:auto;" class="divimg2" src="@/assets/koi.jpeg">
       </div>
       <div class="textcontainer" style="Sansation">
@@ -110,10 +112,10 @@
 </template>
 
 <script>
-// import firebaseApp from "@/firebase.js";
-// import { getFirestore } from "firebase/firestore";
-// import { collection , getDocs, query } from "firebase/firestore";
-// import { getAuth } from "firebase/auth";
+import firebaseApp from "@/firebase.js";
+import { getFirestore } from "firebase/firestore";
+import { doc , getDoc } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
 // const db = getFirestore(firebaseApp);
 
@@ -132,8 +134,63 @@ export default {
     
   },
   mounted() {
-    // const db = getFirestore(firebaseApp);
-    // const auth = getAuth();
+    const db = getFirestore(firebaseApp);
+    const auth = getAuth();
+    async function display() {
+      var user = auth.currentUser.email;
+      console.log('Current User', user)
+      const z = await getDoc(doc(db,'volunteers',user));
+      if (z.exists()) {
+        console.log('Document Data', z.data())
+        var userInfo = z.data()
+        var a = userInfo.totalPoints
+        var b = userInfo.currentPoints
+        console.log(a)
+        console.log(b)
+        alert('Updating User Points!')
+
+        document.getElementById("ptsA").innerHTML = "Points Available: " + b
+        document.getElementById("achieved").innerHTML = a
+        document.getElementById("tier").innerHTML = tier(a)
+        document.getElementById("getPoints").innerHTML = ptsNeeded(a)
+        document.getElementById("point-meter").style.gridTemplateColumns = ptsM(a);
+
+      }
+      console.log(z)
+    }
+    function tier(points) {
+      if (points < 50) {
+        return 'Sliver'
+      } else if (points < 80) {
+        return 'Gold'
+      } else {
+        return 'Platinum'
+      }
+    }
+    function ptsNeeded(points) {
+      if (points < 50) {
+        var ptsneededs = (50-points)
+        return "Get " + ptsneededs + " more points to unlock next tier!"
+      } else if (points < 80) {
+        var ptsneededg = (80-points)
+        return "Get " + ptsneededg + " more points to unlock next tier!"
+      } else {
+        return ''
+      }
+    }
+    function ptsM(points) {
+      if (points < 50) {
+        var ptsneededs = (50-points)
+        return points + "fr " + ptsneededs + "fr"
+      } else if (points < 80) {
+        var ptsneededg = (80-points)
+        return points + "fr " + ptsneededg + "fr"
+      } else {
+        return "60fr 30fr"
+      }
+    }
+    display()
+
   }
 //    mounted() {
 //      this.renderChart({
