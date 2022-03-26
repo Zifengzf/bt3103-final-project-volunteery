@@ -12,37 +12,46 @@
         >
           Volunteer
         </div>
-        <!-- <p style="color: black; text-align: center">
+        <p style="color: black; text-align: center">
           “As you grow older, you will discover that you have two hands <br />
           — one for helping yourself, the other for helping others.”, <br />
           —Audrey Hepburn
-        </p> -->
+        </p>
         <br />
       </div>
     </div>
     <br />
     <div class="filterandsort">
-      <label for="cars" style="font-size: 18px; padding: 10px"
+      <label for="filterbyregion" style="font-size: 18px; padding: 10px"
         >Filter by:</label
       >
-      <select name="cars" id="cars" style="font-size: 18px">
-        <option value="volvo">Region</option>
-        <option value="saab">North</option>
-        <option value="opel">North-East</option>
-        <option value="audi">East</option>
-        <option value="audi">South-East</option>
-        <option value="audi">South</option>
-        <option value="audi">South-West</option>
-        <option value="audi">West</option>
-        <option value="audi">North-West</option>
+      <select
+        v-model="selectedPosting"
+        name="filterbyregion"
+        id="filterbyregion"
+        style="font-size: 10px"
+      >
+        <option value="">--Region--</option>
+        <option value="north">North</option>
+        <option value="north-east">North-East</option>
+        <option value="east">East</option>
+        <option value="south-east">South-East</option>
+        <option value="south">South</option>
+        <option value="south-west">South-West</option>
+        <option value="west">West</option>
+        <option value="north-west">North-West</option>
       </select>
-      <select name="cars" id="cars" style="font-size: 18px">
-        <option value="volvo">Commitment Period</option>
-        <option value="saab">1 week</option>
-        <option value="opel">1 week - 1 month</option>
-        <option value="audi">1 month - 3 months</option>
-        <option value="audi">3 months - 6 months</option>
-        <option value="audi">6 months - 1 year</option>
+      <select
+        v-model="selectedPeriod"
+        name="filterbyperiod"
+        id="filterbyperiod"
+        style="font-size: 18px"
+      >
+        <option value="">Commitment Period</option>
+        <option value="1">1 month or less</option>
+        <option value="3">1 month - 3 months</option>
+        <option value="6">3 months - 6 months</option>
+        <option value="12">6 months - 1 year</option>
       </select>
       <label for="cars" style="font-size: 18px; padding: 10px">Sort by:</label>
       <select name="cars" id="cars" style="font-size: 18px">
@@ -50,11 +59,11 @@
         <option value="saab">Commitment Period</option>
         <option value="opel">Posted date</option>
       </select>
-      <input
+      <!-- <input
         type="submit"
-        value="Search"
+        value="NIL"
         style="font-size: 18px; padding: 10px"
-      />
+      /> -->
     </div>
     <div v-for="(result, index) in results" :key="result">
       <div class="card">
@@ -76,102 +85,84 @@
         </div>
       </div>
     </div>
-    <br>
-    <div v-for="message in messages" class="card" :key="message">
-    <div class="card-body">
-      <div class="listingbox">
-        <img
-          class="imgbox"
-          src="https://media.istockphoto.com/photos/volunteers-serving-hot-meal-to-people-in-community-soup-kitchen-picture-id482802211?k=20&m=482802211&s=612x612&w=0&h=wZtnwsE0iQOqzXp8z99blyjq16JLCeyRDeV0UuOZmkA="
-          alt="Listing Pic"
-          style="float: left"
-        />
-        <div class="listingpara" style="float: left">
-          <p class="listingtitle">{{ message.title }}</p>
-          <p class="listinginfo">{{ message.content }}</p>
-          <div class="listingdetails">
-            <div class="infobox">
-            <img
-              id="profpic"
-              src="../assets/location.png"
-              alt="Profile Pic"
-              height="30"
-              width="30"
-              style="display: inline-block;"
-            />
-            <p class="specdetails">Region: {{ message.region }}</p>
-            </div>
-            <div class="infobox">
-            <img
-              id="profpic"
-              src="../assets/calendar.png"
-              alt="Profile Pic"
-              height="30"
-              width="30"
-            />
-            <p class="specdetails">Duration : {{ message.duration }} months</p>
-            </div>
-            <div class="infobox">
-            <img
-              id="profpic"
-              src="../assets/vacancy.png"
-              alt="Profile Pic"
-              height="30"
-              width="30"
-            />
-            <p class="specdetails">Vacancy: 7 / 30 left</p>
+    <br />
+    <div v-for="message in filteredPostings" class="card" :key="message">
+      <div class="card-body">
+        <div class="listingbox">
+          <img
+            class="imgbox"
+            src="https://media.istockphoto.com/photos/volunteers-serving-hot-meal-to-people-in-community-soup-kitchen-picture-id482802211?k=20&m=482802211&s=612x612&w=0&h=wZtnwsE0iQOqzXp8z99blyjq16JLCeyRDeV0UuOZmkA="
+            alt="Listing Pic"
+            style="float: left"
+          />
+          <div class="listingpara" style="float: left">
+            <p class="listingtitle">{{ message.title }}</p>
+            <p class="listinginfo">{{ message.content }}</p>
+            <div class="listingdetails">
+              <div class="infobox">
+                <img
+                  id="profpic"
+                  src="../assets/location.png"
+                  alt="Profile Pic"
+                  height="30"
+                  width="30"
+                  style="display: inline-block"
+                />
+                <p class="specdetails">Region: {{ message.region }}</p>
+              </div>
+              <div class="infobox">
+                <img
+                  id="profpic"
+                  src="../assets/calendar.png"
+                  alt="Profile Pic"
+                  height="30"
+                  width="30"
+                />
+                <p class="specdetails">
+                  Duration : {{ message.duration }} months
+                </p>
+              </div>
+              <div class="infobox">
+                <img
+                  id="profpic"
+                  src="../assets/vacancy.png"
+                  alt="Profile Pic"
+                  height="30"
+                  width="30"
+                />
+                <p class="specdetails">Vacancy: 7 / 30 left</p>
+              </div>
             </div>
           </div>
+          <div class="listingbuttonsbox">
+            <button class="viewmore" type="button">Learn More</button>
+            <button class="viewmore" type="button">Apply Now</button>
+          </div>
         </div>
-        <div class="listingbuttonsbox">
-          <button class="viewmore" type="button">Learn More</button>
-          <button class="viewmore" type="button">Apply Now</button>
-        </div>
+        <br />
       </div>
-      <br>
     </div>
-  </div>
   </div>
 </template>
 
 <script>
 import firebaseApp from "@/firebase.js";
 import { getFirestore } from "firebase/firestore";
-import { collection , getDocs, query } from "firebase/firestore";
+import { collection, getDocs, query } from "firebase/firestore";
 
 const db = getFirestore(firebaseApp);
 
 export default {
   data() {
     return {
-      things: {
-        apple: {
-          content:
-            "Help the Home carry out services such as social-recreational activities for our Residents, gardening, cleaning and general maintenance, and other services so that our caregivers may focus on attending to the daily needs of our residents.",
-          duration: "1",
-          region: "East",
-          title: "Chefs needed for CNY",
-        },
-        pear: {
-          content:
-            "Help the Home carry out services such as social-recreational activities for our Residents, gardening, cleaning and general maintenance, and other services so that our caregivers may focus on attending to the daily needs of our residents.",
-          duration: "3",
-          region: "South-West",
-          title: "Accompany the Elderly",
-        },
-        cherry: {
-          content:
-            "Help the Home carry out services such as social-recreational activities for our Residents, gardening, cleaning and general maintenance, and other services so that our caregivers may focus on attending to the daily needs of our residents.",
-          duration: "6",
-          region: "North",
-          title: "Walk pets for SPCA",
-        },
-      },
       results: [],
       cities: [],
       messages: [],
-      messageText: '',
-      nickname: 'hootlex'
+      messageText: "",
+      nickname: "hootlex",
+      filteredPostings: [],
+      selectedPosting: "",
+      selectedPeriod: "",
     };
   },
   mounted() {
@@ -217,17 +208,63 @@ export default {
     console.log(this.list);
     //this.retrieveemployees()
   },
+  watch: {
+    selectedPosting(fil) {
+      console.log(fil);
+      if (fil == "") {
+        this.filteredPostings = this.messages;
+      }
+      if (fil != "") {
+        this.filteredPostings = this.messages.filter((posting) => {
+          return posting.region.toLowerCase() == fil.toLowerCase();
+        });
+      }
+    },
+    selectedPeriod(fil) {
+      console.log(fil);
+      if (fil == "") {
+        this.filteredPostings = this.messages;
+      }
+      if (fil != "") {
+        this.filteredPostings = this.messages.filter((posting) => {
+          return posting.duration.toLowerCase() == fil.toLowerCase();
+        });
+      }
+    },
+  },
   methods: {
-    async storeMessage () {
-        const q = query(collection(db,"Opportunities"))
-        const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc) => {
-        let yy = doc.data()
-        this.messages.push({content: yy.Content, duration: yy.Duration, 
-        region: yy.Region, status: yy.Status, title: yy.Title})
-        this.messageText = ''
-      })
-    }
+    async storeMessage() {
+      const q = query(collection(db, "Opportunities"));
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        let yy = doc.data();
+        this.messages.push({
+          content: yy.Content,
+          duration: yy.Duration,
+          region: yy.Region,
+          status: yy.Status,
+          title: yy.Title,
+        });
+        this.messageText = "";
+      });
+      this.filteredPostings = this.messages;
+    },
+    searchPostings() {
+      this.filteredPostings = this.messages;
+      console.log(this.selectedPosting);
+
+      if (this.selectedPosting == "") {
+        return this.filteredPostings;
+      }
+
+      if (this.selectedPosting != "") {
+        this.filteredPostings = this.filteredPostings.filter((posting) => {
+          return (
+            posting.region.toLowerCase() === this.selectedPosting.toLowerCase()
+          );
+        });
+      }
+    },
   },
 };
 </script>
