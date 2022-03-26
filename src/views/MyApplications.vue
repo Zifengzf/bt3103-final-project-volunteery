@@ -22,27 +22,24 @@
     </div>
     <br />
     <div class="filterandsort">
-      <label for="cars" style="font-size: 18px; padding: 10px"
-        >Filter by:</label
-      >
-      <select name="cars" id="cars" style="font-size: 18px">
-        <option value="volvo">Region</option>
-        <option value="saab">North</option>
-        <option value="opel">North-East</option>
-        <option value="audi">East</option>
-        <option value="audi">South-East</option>
-        <option value="audi">South</option>
-        <option value="audi">South-West</option>
-        <option value="audi">West</option>
-        <option value="audi">North-West</option>
+      <label for="filterbyregion" style="font-size: 18px; padding: 10px">Filter by:</label>
+      <select v-model="selectedPosting" name="filterbyregion" id="filterbyregion" style="font-size: 18px">
+        <option value="">--Region--</option>
+        <option value="north">North</option>
+        <option value="north-east">North-East</option>
+        <option value="east">East</option>
+        <option value="south-east">South-East</option>
+        <option value="south">South</option>
+        <option value="south-west">South-West</option>
+        <option value="west">West</option>
+        <option value="north-west">North-West</option>
       </select>
-      <select name="cars" id="cars" style="font-size: 18px">
-        <option value="volvo">Commitment Period</option>
-        <option value="saab">1 week</option>
-        <option value="opel">1 week - 1 month</option>
-        <option value="audi">1 month - 3 months</option>
-        <option value="audi">3 months - 6 months</option>
-        <option value="audi">6 months - 1 year</option>
+      <select v-model="selectedPeriod" name="filterbyperiod" id="filterbyperiod" style="font-size: 18px">
+        <option value="">Commitment Period</option>
+        <option value="1">1 month or less</option>
+        <option value="3">1 month - 3 months</option>
+        <option value="6">3 months - 6 months</option>
+        <option value="12">6 months - 1 year</option>
       </select>
       <label for="cars" style="font-size: 18px; padding: 10px">Sort by:</label>
       <select name="cars" id="cars" style="font-size: 18px">
@@ -50,11 +47,14 @@
         <option value="saab">Commitment Period</option>
         <option value="opel">Posted date</option>
       </select>
-      <input
+      <!-- <div class="col-auto">
+        <button type="button" class="btn btn-primary mb-2" @click="searchPostings">Search</button>
+      </div> -->
+      <!-- <input
         type="submit"
-        value="Search"
+        value="NIL"
         style="font-size: 18px; padding: 10px"
-      />
+      /> -->
     </div>
     <!-- <div style='padding: 10px 90px 20px 0px'>
       <button class="addlisting" type="button" style='padding: 0 0 0 10'>Add Listing</button>
@@ -144,7 +144,7 @@
   </form> -->
   <br>
   <!-- Messages -->
-  <div v-for="message in messages" class="card" :key="message">
+  <div v-for="message in filteredPostings" class="card" :key="message">
     <div class="card-body">
       <div class="listingbox">
         <img
@@ -215,40 +215,43 @@ export default {
   },
   data() {
     return {
-      things: {
-        apple: {
-          content:
-            "Help the Home carry out services such as social-recreational activities for our Residents, gardening, cleaning and general maintenance, and other services so that our caregivers may focus on attending to the daily needs of our residents.",
-          duration: "1",
-          region: "East",
-          status: "Approved",
-          statusbox: "approvedstatus",
-          title: "Chefs needed for CNY",
-        },
-        pear: {
-          content:
-            "Help the Home carry out services such as social-recreational activities for our Residents, gardening, cleaning and general maintenance, and other services so that our caregivers may focus on attending to the daily needs of our residents.",
-          duration: "3",
-          region: "South-West",
-          status: "Pending",
-          statusbox: "approvedstatus",
-          title: "Accompany the Elderly",
-        },
-        cherry: {
-          content:
-            "Help the Home carry out services such as social-recreational activities for our Residents, gardening, cleaning and general maintenance, and other services so that our caregivers may focus on attending to the daily needs of our residents.",
-          duration: "6",
-          region: "North",
-          status: "Approved",
-          statusbox: "approvedstatus",
-          title: "Walk pets for SPCA",
-        },
-      },
+      // things: {
+      //   apple: {
+      //     content:
+      //       "Help the Home carry out services such as social-recreational activities for our Residents, gardening, cleaning and general maintenance, and other services so that our caregivers may focus on attending to the daily needs of our residents.",
+      //     duration: "1",
+      //     region: "East",
+      //     status: "Approved",
+      //     statusbox: "approvedstatus",
+      //     title: "Chefs needed for CNY",
+      //   },
+      //   pear: {
+      //     content:
+      //       "Help the Home carry out services such as social-recreational activities for our Residents, gardening, cleaning and general maintenance, and other services so that our caregivers may focus on attending to the daily needs of our residents.",
+      //     duration: "3",
+      //     region: "South-West",
+      //     status: "Pending",
+      //     statusbox: "approvedstatus",
+      //     title: "Accompany the Elderly",
+      //   },
+      //   cherry: {
+      //     content:
+      //       "Help the Home carry out services such as social-recreational activities for our Residents, gardening, cleaning and general maintenance, and other services so that our caregivers may focus on attending to the daily needs of our residents.",
+      //     duration: "6",
+      //     region: "North",
+      //     status: "Approved",
+      //     statusbox: "approvedstatus",
+      //     title: "Walk pets for SPCA",
+      //   },
+      // },
       results: [],
       cities: [],
       messages: [],
       messageText: '',
-      nickname: 'hootlex'
+      nickname: 'hootlex',
+      filteredPostings: [],
+      selectedPosting: '',
+      selectedPeriod: ''
     };
   },
   mounted() {
@@ -294,6 +297,27 @@ export default {
     console.log(this.list);
     //this.retrieveemployees()
   },
+
+  watch: {
+      selectedPosting(fil){
+        console.log(fil);
+        if(fil == ''){
+        this.filteredPostings = this.messages;
+        }
+        if(fil != ''){
+        this.filteredPostings = this.messages.filter(posting => { return posting.region.toLowerCase() == fil.toLowerCase() })
+        }
+      },
+      selectedPeriod(fil){
+        console.log(fil);
+        if(fil == ''){
+        this.filteredPostings = this.messages;
+        }
+        if(fil != ''){
+        this.filteredPostings = this.messages.filter(posting => { return posting.duration.toLowerCase() == fil.toLowerCase() })
+        }
+      }
+    },
   methods: {
     async storeMessage () {
         const q = query(collection(db,"Applications"))
@@ -304,6 +328,22 @@ export default {
         region: yy.Region, status: yy.Status, title: yy.Title})
         this.messageText = ''
       })
+      this.filteredPostings = this.messages;
+    },
+
+    
+
+    searchPostings() {
+      this.filteredPostings = this.messages;
+      console.log(this.selectedPosting);
+
+      if( this.selectedPosting == ''){
+        return this.filteredPostings;
+      }
+
+      if( this.selectedPosting != ''){
+        this.filteredPostings = this.filteredPostings.filter(posting => { return posting.region.toLowerCase() === this.selectedPosting.toLowerCase() })
+      }
     }
     // async retrieveemployees() {
     //   let z = await getDocs(collection(db, "Applications"))
