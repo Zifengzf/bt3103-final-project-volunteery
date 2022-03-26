@@ -29,7 +29,7 @@
         v-model="selectedPosting"
         name="filterbyregion"
         id="filterbyregion"
-        style="font-size: 10px"
+        style="font-size: 18px"
       >
         <option value="">--Region--</option>
         <option value="north">North</option>
