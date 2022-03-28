@@ -2,7 +2,7 @@
   <div class="topnav">
     <!-- <div id="logged" v-if="user"> -->
     <img
-      src="@/assets/volunteery_copy.png"
+      src="@/assets/volunteery_logo.png"
       alt=""
       style="margin-left: 0px; height: 60; float: left"
     />
@@ -51,7 +51,7 @@ export default {
 
 <style scoped>
 .topnav {
-  background-color: #fff9e9;
+  background-color: #ff9213;
   overflow: hidden;
   justify-items: center;
 }
@@ -67,7 +67,7 @@ export default {
 }
 
 #nav a.router-link-exact-active {
-  color: #ff9213;
+  color: #fff9e9;
 }
 .dropdown {
   overflow: hidden;
