@@ -19,6 +19,7 @@
       <router-link to="/myapplications">My Applications</router-link> |
       <router-link to="/volunteer">View Volunteer Opportunities</router-link> |
       <router-link to="/reward">My Rewards</router-link> |
+      <router-link to="/applicants">Applicants Review</router-link>
     </div>
 
     <!-- </div> -->
