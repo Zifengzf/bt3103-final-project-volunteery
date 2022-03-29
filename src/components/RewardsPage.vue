@@ -1,23 +1,34 @@
 <template>
   <div class="mainbanner">
     <div class="maintext">
-      <div style="color:#FF9213; text-align: center; font-size: 50px; font-family: 'Ribeye Marrow'; -webkit-text-stroke: solid 2px white; ">
-          MY REWARDS</div>
+      <div
+        style="
+          color: #ff9213;
+          text-align: center;
+          font-size: 50px;
+          font-family: 'Ribeye Marrow';
+          -webkit-text-stroke: solid 2px white;
+        "
+      >
+        MY REWARDS
+      </div>
     </div>
   </div>
-  
+
   <div class="bottombanner">
     <div>
-      <div style="color:#fff9e9">Placeholder to takeup space</div>
+      <div style="color: #fff9e9">Placeholder to takeup space</div>
       <div class="acheivementStatus">Achievement Status</div>
-      <br>
+      <br />
       <div class="abouttext, center">
-        <h1 id="tier" class="rank"> SLIVER </h1>
+        <h1 id="tier" class="rank">SLIVER</h1>
         <div id="point-meter" class="centeredtext">
-          <div id="achieved" class="centeredtext"> {{ pointsAttained }}</div>
+          <div id="achieved" class="centeredtext">{{ pointsAttained }}</div>
           <div id="notachieved" class="centeredtext"></div>
         </div>
-        <p id="getPoints"> Get {{ remainingPoints }} more points to unlock next tier!</p>
+        <p id="getPoints">
+          Get {{ remainingPoints }} more points to unlock next tier!
+        </p>
       </div>
     </div>
 
@@ -25,66 +36,94 @@
       <line-chart class="chart" width=500px :data = 'chartdata'></line-chart>
     </div> -->
   </div>
-<!-- 
+  <!-- 
   <div class="right">
     <canvas id="myChart" class=center></canvas>
   <div> -->
-  
+
   <div class="listingcontainer">
-      <div class="acheivementStatus">Claim Rewards</div>
-      <div id="ptsA" class="acheivementStatus2">Points Available: {{ pointsAvailable }}</div>
-      <!-- <div class="acheivementStatus2"><button @click="display()">UPDATE</button></div> -->
+    <div class="acheivementStatus">Claim Rewards</div>
+    <div id="ptsA" class="acheivementStatus2">
+      Points Available: {{ pointsAvailable }}
+    </div>
+    <!-- <div class="acheivementStatus2"><button @click="display()">UPDATE</button></div> -->
 
-
-
-      <div class="reward"> 
-        <div class="imgcontainer" style='object-fit:contain;'>
-            <img style="padding:25px; width:140px; height:auto" class="divimg2" src="@/assets/famousamos2.png">
-        </div>
-        <div class="textcontainer" style="Sansation">
-          <h4 class="centeredtext"><span style="font-size:150%"><br>Famous Amos<br></span>
-            <span style="font-size:110%" >$5 VOUCHER</span><br><br>
-            <span style="color:#FFCB13">20 POINTS</span></h4>
-        </div>
-        <div class="buttonclass">
-        <br><br><br><br><br><br><br><br><br><br>
-        <a class="redeemclass"
-            onclick="document.getElementById('id01').style.display='block'">Redeem</a>          <!-- <button class="redeem_btn ">REDEEM</button> -->
-        </div>    
-      </div>
-
-    <div class="reward"> 
-      <div class="imgcontainer" style='object-fit:contain'>
-          <img style="padding:25px; width:140px; height:auto" class="divimg2" src="@/assets/seveneleven.png">
+    <div class="reward">
+      <div class="imgcontainer" style="object-fit: contain">
+        <img
+          style="padding: 25px; width: 140px; height: auto"
+          class="divimg2"
+          src="@/assets/famousamos2.png"
+        />
       </div>
       <div class="textcontainer" style="Sansation">
-        <h4 class="centeredtext"><span style="font-size:150%"><br>7-Eleven <br></span>
-          <span style="font-size:110%" >$10 VOUCHER</span><br><br>
-          <span style="color:#FFCB13">25 POINTS</span></h4>
+        <h4 class="centeredtext">
+          <span style="font-size: 150%"><br />Famous Amos<br /></span>
+          <span style="font-size: 110%">$5 VOUCHER</span><br /><br />
+          <span style="color: #ffcb13">20 POINTS</span>
+        </h4>
       </div>
       <div class="buttonclass">
-        <br><br><br><br><br><br><br><br><br><br>
-        <a class="redeemclass"
-          onclick="document.getElementById('id01').style.display='block'">Redeem</a>
-                  <!-- <button class="redeem_btn ">REDEEM</button> -->
-      </div>    
+        <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+        <a
+          class="redeemclass"
+          onclick="document.getElementById('id01').style.display='block'"
+          >Redeem</a
+        >
+        <!-- <button class="redeem_btn ">REDEEM</button> -->
+      </div>
     </div>
 
-    <div class="reward"> 
-      <div class="imgcontainer" style='object-fit:contain'>
-          <img style="padding:25px; width:140px; height:auto;" class="divimg2" src="@/assets/koi.jpeg">
+    <div class="reward">
+      <div class="imgcontainer" style="object-fit: contain">
+        <img
+          style="padding: 25px; width: 140px; height: auto"
+          class="divimg2"
+          src="@/assets/seveneleven.png"
+        />
       </div>
       <div class="textcontainer" style="Sansation">
-        <h4 class="centeredtext"><span style="font-size:150%"><br>KOI <br></span>
-          <span style="font-size:110%" >$5 VOUCHER</span><br><br>
-          <span style="color:#FFCB13">25 POINTS</span></h4>
+        <h4 class="centeredtext">
+          <span style="font-size: 150%"><br />7-Eleven <br /></span>
+          <span style="font-size: 110%">$10 VOUCHER</span><br /><br />
+          <span style="color: #ffcb13">25 POINTS</span>
+        </h4>
       </div>
       <div class="buttonclass">
-        <br><br><br><br><br><br><br><br><br><br>
-        <a class="redeemclass"
-          onclick="document.getElementById('id01').style.display='block'">Redeem</a>
+        <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+        <a
+          class="redeemclass"
+          onclick="document.getElementById('id01').style.display='block'"
+          >Redeem</a
+        >
         <!-- <button class="redeem_btn ">REDEEM</button> -->
-      </div>    
+      </div>
+    </div>
+
+    <div class="reward">
+      <div class="imgcontainer" style="object-fit: contain">
+        <img
+          style="padding: 25px; width: 140px; height: auto"
+          class="divimg2"
+          src="@/assets/koi.jpeg"
+        />
+      </div>
+      <div class="textcontainer" style="Sansation">
+        <h4 class="centeredtext">
+          <span style="font-size: 150%"><br />KOI <br /></span>
+          <span style="font-size: 110%">$5 VOUCHER</span><br /><br />
+          <span style="color: #ffcb13">25 POINTS</span>
+        </h4>
+      </div>
+      <div class="buttonclass">
+        <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+        <a
+          class="redeemclass"
+          onclick="document.getElementById('id01').style.display='block'"
+          >Redeem</a
+        >
+        <!-- <button class="redeem_btn ">REDEEM</button> -->
+      </div>
     </div>
   </div>
 
@@ -100,21 +139,20 @@
       </div>
       <div class="container">
         <div class="centeredtext" style="color: #ff9213; font-size: 24px">
-          <br><br>Please scan QR code to redeem reward!
+          <br /><br />Please scan QR code to redeem reward!
           <div class="qrcode">
-            <img class="divimg2" src= "../assets/qrcode.webp">
+            <img class="divimg2" src="../assets/qrcode.webp" />
           </div>
         </div>
       </div>
     </div>
   </div>
-
 </template>
 
 <script>
 import firebaseApp from "@/firebase.js";
 import { getFirestore } from "firebase/firestore";
-import { doc , getDoc } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
 // const db = getFirestore(firebaseApp);
@@ -124,94 +162,99 @@ import { getAuth } from "firebase/auth";
 export default {
   data() {
     return {
-      chartdata: {'01-2021': 7, '02-2021': 11, '03-2021': 11, '04-2021': 16, '05-2021': 19, '06-2021': 21},
+      chartdata: {
+        "01-2021": 7,
+        "02-2021": 11,
+        "03-2021": 11,
+        "04-2021": 16,
+        "05-2021": 19,
+        "06-2021": 21,
+      },
       tier: "SLIVER",
       pointsAttained: 33,
       remainingPoints: 17,
-      pointsAvailable: 20
-    }
-      // chartdata: null
-    
+      pointsAvailable: 20,
+    };
+    // chartdata: null
   },
   mounted() {
     const db = getFirestore(firebaseApp);
     const auth = getAuth();
     async function display() {
       var user = auth.currentUser.email;
-      console.log('Current User', user)
-      const z = await getDoc(doc(db,'volunteers',user));
+      console.log("Current User", user);
+      const z = await getDoc(doc(db, "volunteers", user));
       if (z.exists()) {
-        console.log('Document Data', z.data())
-        var userInfo = z.data()
-        var a = userInfo.totalPoints
-        var b = userInfo.currentPoints
-        console.log(a)
-        console.log(b)
-        alert('Updating User Points!')
+        console.log("Document Data", z.data());
+        var userInfo = z.data();
+        var a = userInfo.totalPoints;
+        var b = userInfo.currentPoints;
+        console.log(a);
+        console.log(b);
+        alert("Updating User Points!");
 
-        document.getElementById("ptsA").innerHTML = "Points Available: " + b
-        document.getElementById("achieved").innerHTML = a
-        document.getElementById("tier").innerHTML = tier(a)
-        document.getElementById("getPoints").innerHTML = ptsNeeded(a)
-        document.getElementById("point-meter").style.gridTemplateColumns = ptsM(a);
-
+        document.getElementById("ptsA").innerHTML = "Points Available: " + b;
+        document.getElementById("achieved").innerHTML = a;
+        document.getElementById("tier").innerHTML = tier(a);
+        document.getElementById("getPoints").innerHTML = ptsNeeded(a);
+        document.getElementById("point-meter").style.gridTemplateColumns =
+          ptsM(a);
       }
-      console.log(z)
+      console.log(z);
     }
     function tier(points) {
       if (points < 50) {
-        return 'Sliver'
+        return "Sliver";
       } else if (points < 80) {
-        return 'Gold'
+        return "Gold";
       } else {
-        return 'Platinum'
+        return "Platinum";
       }
     }
     function ptsNeeded(points) {
       if (points < 50) {
-        var ptsneededs = (50-points)
-        return "Get " + ptsneededs + " more points to unlock next tier!"
+        var ptsneededs = 50 - points;
+        return "Get " + ptsneededs + " more points to unlock next tier!";
       } else if (points < 80) {
-        var ptsneededg = (80-points)
-        return "Get " + ptsneededg + " more points to unlock next tier!"
+        var ptsneededg = 80 - points;
+        return "Get " + ptsneededg + " more points to unlock next tier!";
       } else {
-        return ''
+        return "";
       }
     }
     function ptsM(points) {
       if (points < 50) {
-        var ptsneededs = (50-points)
-        return points + "fr " + ptsneededs + "fr"
+        var ptsneededs = 50 - points;
+        return points + "fr " + ptsneededs + "fr";
       } else if (points < 80) {
-        var ptsneededg = (80-points)
-        return points + "fr " + ptsneededg + "fr"
+        var ptsneededg = 80 - points;
+        return points + "fr " + ptsneededg + "fr";
       } else {
-        return "60fr 30fr"
+        return "60fr 30fr";
       }
     }
-    display()
-
-  }
-//    mounted() {
-//      this.renderChart({
-//        labels: xValues,
-//        datasets: [{
-//          label: 'Data One',
-//          backgroundColor: "rgba(255,229,163,1.0)",
-//          borderColor: "rgba(255,146,19,1)",
-//          lineTension: 0,
-//          fill: true,
-//          borderWidth: 3,
-//          data: yValues,
-//        }]}, {responsive: true, maintainAspectRatio: false}) 
-//    }
-}
+    display();
+  },
+  //    mounted() {
+  //      this.renderChart({
+  //        labels: xValues,
+  //        datasets: [{
+  //          label: 'Data One',
+  //          backgroundColor: "rgba(255,229,163,1.0)",
+  //          borderColor: "rgba(255,146,19,1)",
+  //          lineTension: 0,
+  //          fill: true,
+  //          borderWidth: 3,
+  //          data: yValues,
+  //        }]}, {responsive: true, maintainAspectRatio: false})
+  //    }
+};
 </script>
 
-<style>
+<style scoped>
 img.resize {
-    width: 100px; /* you can use % */
-    height: auto;
+  width: 100px; /* you can use % */
+  height: auto;
 }
 .modal {
   display: none; /* Hidden by default */
@@ -280,10 +323,10 @@ img.resize {
   font-weight: bold;
   font-size: 26px;
   line-height: 29px;
-  color: #FF9213;
+  color: #ff9213;
   margin-top: 2%;
   margin-left: 2%;
-  text-align: left
+  text-align: left;
 }
 .acheivementStatus2 {
   font-family: Sansation;
@@ -293,7 +336,7 @@ img.resize {
   line-height: 29px;
   color: black;
   margin-left: 2%;
-  text-align: left
+  text-align: left;
 }
 .rank {
   display: block;
@@ -306,17 +349,17 @@ img.resize {
   font-size: 26px;
   line-height: 29px;
   text-align: center;
-  color: #A8A8A8;
+  color: #a8a8a8;
 }
 #achieved {
-  background: #FF9213;
-  color: #FFF6D7;
+  background: #ff9213;
+  color: #fff6d7;
 }
 #notachieved {
-  background: #FFF6D7
+  background: #fff6d7;
 }
 #point-meter {
-  border: 4px solid #FF9213;
+  border: 4px solid #ff9213;
   border-radius: 30px;
   overflow: hidden;
   display: grid;
@@ -336,13 +379,13 @@ img.resize {
 }
 .left {
   float: left;
-  width: 40%; 
+  width: 40%;
   margin-left: 30px;
   margin-top: 30px;
 }
 .right {
   float: right;
-  width: 50%; 
+  width: 50%;
   margin: 30px;
 }
 .center {
@@ -353,8 +396,8 @@ img.resize {
   /* text-align: center; */
 }
 .listingcontainer {
-  background-color: #FFE5A3;
-  border: 6px solid #FFD466;
+  background-color: #ffe5a3;
+  border: 6px solid #ffd466;
   position: absolute;
   top: 860px;
   width: 94%;
@@ -392,14 +435,14 @@ img.resize {
   max-height: 500px;
   object-fit: contain;
   margin: auto;
-  display: block
+  display: block;
 }
 .divimg2 {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
   margin: auto;
-  display: block
+  display: block;
 }
 
 .buttonclass {
@@ -407,7 +450,7 @@ img.resize {
 }
 
 .redeemclass {
-  background-color: #FF9213;
+  background-color: #ff9213;
   box-shadow: 4px 3px 4px rgba(0, 0, 0, 0.25);
   width: 300px;
   height: 42px;
@@ -420,7 +463,7 @@ img.resize {
 }
 
 .reward {
-  background-color: #FFF6D7;
+  background-color: #fff6d7;
   border-radius: 33px;
   width: 400px;
   height: 230px;
@@ -437,6 +480,6 @@ img.resize {
   /* border: 1px solid black; */
   background-color: blue;
   overflow: hidden;
-  float: left
+  float: left;
 }
 </style>

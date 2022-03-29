@@ -1,17 +1,16 @@
 <template>
-  <NavBar/>
+  <NavBar2 />
   <HomePage />
 </template>
 
 <script>
 import HomePage from "@/components/HomePage.vue";
-import NavBar from '@/components/NavBar.vue'
-
+import NavBar2 from "@/components/NavBar2.vue";
 
 export default {
   name: "App",
   components: {
-    NavBar,
+    NavBar2,
     HomePage,
   },
   data() {

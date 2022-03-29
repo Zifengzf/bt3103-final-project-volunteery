@@ -4,6 +4,7 @@ import About from "@/views/About.vue";
 import Volunteer from "@/views/Volunteer.vue";
 import MyApplications from "@/views/MyApplications.vue";
 import MyReward from "@/views/Reward.vue";
+import Applicants from "@/views/Applicants.vue";
 
 const routes = [
   {
@@ -30,6 +31,11 @@ const routes = [
     path: "/reward",
     name: "MyReward",
     component: MyReward,
+  },
+  {
+    path: "/applicants",
+    name: "Applicants",
+    component: Applicants,
   },
   /** 
    * Wait for more routes to be added
