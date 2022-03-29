@@ -2,8 +2,8 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router/index.js";
 import { initializeApp } from "firebase/app";
-import VueChartkick from "vue-chartkick";
-import "chartkick/chart.js";
+// import VueChartkick from "vue-chartkick";
+// import "chartkick/chart.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyALDpy_-8jsGYbuUEPx1v8tdCUJ_a5tVmA",
@@ -16,5 +16,6 @@ const firebaseConfig = {
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
-createApp(App).use(router, VueChartkick).mount("#app");
+// createApp(App).use(router, VueChartkick).mount("#app");
+createApp(App).use(router).mount("#app");
 export default firebaseApp;

@@ -7,7 +7,7 @@
       style="margin-left: 0px; height: 60; float: left"
     />
     <div class="dropdown">
-      <button class="dropbtn">User</button>
+      <button class="dropbtn">Organisation</button>
       <div class="dropdown-content">
         <a href="#">Profile</a>
         <a href="#">Sign Out</a>
@@ -15,11 +15,10 @@
     </div>
     <div id="nav">
       <router-link to="/" class="router-link">Home</router-link> |
-      <router-link to="/about" class="router-link">About</router-link> |
-      <router-link to="/myapplications">My Applications</router-link> |
-      <router-link to="/volunteer">View Volunteer Opportunities</router-link> |
-      <router-link to="/reward">My Rewards</router-link> |
-      <router-link to="/applicants">Applicants Review</router-link>
+      <router-link to="/about" class="router-link">Switch to User</router-link> |
+      <router-link to="/volunteer">Volunteer Opportunities</router-link> |
+      <router-link to="/applicants">Applicants Review</router-link> |
+      <router-link to="/mypostings">My Postings</router-link>
     </div>
 
     <!-- </div> -->
@@ -80,7 +79,7 @@ export default {
   font-size: 25px;
   border: none;
   outline: none;
-  color: #ff9213;
+  color: #fff9e9;
   padding: 14px 16px;
   background-color: inherit;
   font-family: inherit;
