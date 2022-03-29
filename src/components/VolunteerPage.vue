@@ -53,11 +53,24 @@
         <option value="6">3 months - 6 months</option>
         <option value="12">6 months - 1 year</option>
       </select>
-      <label for="cars" style="font-size: 18px; padding: 10px">Sort by:</label>
+      <!-- <label for="cars" style="font-size: 18px; padding: 10px">Sort by:</label>
       <select name="cars" id="cars" style="font-size: 18px">
         <option value="volvo">Vacancy</option>
         <option value="saab">Commitment Period</option>
         <option value="opel">Posted date</option>
+      </select> -->
+      <label for="sortby" style="font-size: 18px; padding: 10px"
+        >Sort by:</label
+      >
+      <select
+        v-model="selectedSorting"
+        name="selectedSorting"
+        id="selectedSorting"
+        style="font-size: 18px"
+      >
+        <option value="Vacancy">Vacancy</option>
+        <option value="Duration">Duration</option>
+        <!-- <option value="Date">Posted date</option> -->
       </select>
       <!-- <input
         type="submit"
@@ -130,7 +143,9 @@
                   height="30"
                   width="30"
                 />
-                <p class="specdetails">Vacancy: 7 / 30 left</p>
+                <p class="specdetails">
+                  Vacancy: {{ message.vacancy }} / 30 left
+                </p>
               </div>
             </div>
           </div>
@@ -148,7 +163,7 @@
 <script>
 import firebaseApp from "@/firebase.js";
 import { getFirestore } from "firebase/firestore";
-import { collection, getDocs, query } from "firebase/firestore";
+import { collection, getDocs, query, orderBy } from "firebase/firestore";
 
 const db = getFirestore(firebaseApp);
 
@@ -163,10 +178,11 @@ export default {
       filteredPostings: [],
       selectedPosting: "",
       selectedPeriod: "",
+      selectedSorting: "Vacancy",
     };
   },
   mounted() {
-    this.storeMessage();
+    this.storeMessage(this.selectedSorting);
     // async function display() {
     //     let z = await getDocs(collection(db, "Applications"))
     //     let ind = 1
@@ -231,10 +247,20 @@ export default {
         });
       }
     },
+    selectedSorting(sort) {
+      console.log(sort);
+      if (sort == "") {
+        this.filteredPostings = this.messages;
+      }
+      if (sort != "") {
+        this.storeMessage(sort);
+      }
+    },
   },
   methods: {
-    async storeMessage() {
-      const q = query(collection(db, "Opportunities"));
+    async storeMessage(sort) {
+      this.messages = [];
+      const q = query(collection(db, "Opportunities"), orderBy(sort));
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
         let yy = doc.data();
@@ -244,6 +270,7 @@ export default {
           region: yy.Region,
           status: yy.Status,
           title: yy.Title,
+          vacancy: yy.Vacancy,
         });
         this.messageText = "";
       });
