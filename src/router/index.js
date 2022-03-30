@@ -7,6 +7,7 @@ import MyApplications from "@/views/MyApplications.vue";
 import MyReward from "@/views/Reward.vue";
 import Applicants from "@/views/Applicants.vue";
 import MyPostings from "@/views/MyPostings.vue";
+import OpportunitiesPage from "@/views/OpportunitiesPage.vue";
 
 const routes = [
   {
@@ -48,6 +49,11 @@ const routes = [
     path: "/mypostings",
     name: "MyPostings",
     component: MyPostings,
+  },
+  {
+    path: "/opportunitiespage",
+    name: "OpportunitiesPage",
+    component: OpportunitiesPage,
   },
   /** 
    * Wait for more routes to be added
