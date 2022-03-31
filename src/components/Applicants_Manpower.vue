@@ -133,7 +133,7 @@ export default {
 
     async function cancel(name, listing_name) {
       //Part 1: Delete document from applicants
-      await deleteDoc(doc(db, "Applicants(Zifeng", name));
+      await deleteDoc(doc(db, "Applicants(Zifeng)", name));
       //Part 2: Update documents in listings
       await updateDoc(doc(db, "Listings", listing_name), {
         Approved: increment(-1),
@@ -145,7 +145,7 @@ export default {
 
     async function reject(name, listing_name) {
       //Part 1: Delete document from applicants
-      await deleteDoc(doc(db, "Applicants(Zifeng", name));
+      await deleteDoc(doc(db, "Applicants(Zifeng)", name));
       //Part 2: Update documents in listings
       await updateDoc(doc(db, "Listings", listing_name), {
         Pending: increment(-1),
