@@ -77,7 +77,7 @@ export default {
         cell4.innerHTML = status;
         cell5.className = "review";
         cell6.className = "accept";
-        cell7.innerHTML = "reject";
+        cell7.className = "reject";
 
         var review_button = document.createElement("button");
         review_button.className = "bwt1";
@@ -127,6 +127,7 @@ export default {
         Approved: increment(1),
         Pending: increment(-1),
       });
+      clearTable();
       display();
     }
 
@@ -138,6 +139,7 @@ export default {
         Approved: increment(-1),
         Remaining: increment(1),
       });
+      clearTable();
       display();
     }
 
@@ -148,7 +150,15 @@ export default {
       await updateDoc(doc(db, "Listings", listing_name), {
         Pending: increment(-1),
       });
+      clearTable();
       display();
+    }
+
+    async function clearTable() {
+      let tb = document.getElementById("table");
+      while (tb.rows.length > 1) {
+        tb.deleteRow(1);
+      }
     }
   },
 };
@@ -160,8 +170,32 @@ export default {
  * Accept button calls a function that updates application collection with correct status and updates listing collection
  * Reject button removes application document and updates listing document
  */
+//Note: Somehow button styling cannot be set to scoped, else it doesn't apply
 </script>
 
+<style>
+.bwt1 {
+  background-color: #ff9213;
+  color: white;
+}
+.bwt2 {
+  background-color: #099e21;
+  color: white;
+}
+.bwt3 {
+  background-color: #e81515;
+  color: white;
+}
+tr:nth-child(odd) {
+  background-color: #ffe5a3;
+}
+th,
+td {
+  border: 1px solid #dddddd;
+  text-align: center;
+  padding: 8px;
+}
+</style>
 <style scoped>
 .orangetext {
   color: #ff9213;
@@ -192,31 +226,9 @@ export default {
 }
 table {
   font-family: arial, sans-serif;
+  border: 3px solid #ffd466;
   border-collapse: collapse;
   width: 100%;
-}
-tr:nth-child(even) {
-  background-color: #ffd466;
-}
-tr:nth-child(odd) {
-  background-color: #ffe5a3;
-}
-th,
-td {
-  border: 1px solid #dddddd;
   text-align: center;
-  padding: 8px;
-}
-.bwt1 {
-  background-color: #ff9213;
-  color: white;
-}
-.bwt2 {
-  background-color: #099e21;
-  color: white;
-}
-.bwt3 {
-  background-color: #e81515;
-  color: white;
 }
 </style>
