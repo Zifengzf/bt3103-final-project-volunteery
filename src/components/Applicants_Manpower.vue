@@ -37,6 +37,14 @@
 
 <script>
 export default {};
+/**
+ * Function logic: 2 collections, one for applications and one for listings
+ * Each document in application has applicant name, listing name, application date, status
+ * Each document in listings has listing name, date, volunteers needed, approved, pending, remaining
+ * Review button should not lead anywhere yet
+ * Accept button calls a function that updates application collection with correct status and updates listing collection
+ * Reject button removes application document and updates listing document
+ */
 </script>
 
 <style scoped>
