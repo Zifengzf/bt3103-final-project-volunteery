@@ -219,8 +219,7 @@
             </div>
           </div>
           <div class="listingbuttonsbox">
-            <p class="approvedstatus">{{ message.status }}</p>
-            <button class="viewmore" type="button">View More</button>
+            <button class="viewmore" type="button" v-on:click="displayAddPts()">Mark as Complete</button>
           </div>
         </div>
         <br />
@@ -228,6 +227,37 @@
     </div>
     <!-- <div v-for="sorting of filteredPostings" :key="sorting">{{ sorting }}</div> -->
   </div>
+
+  <div id="addPoints" class="modal">
+    <form class="modal-content animate">
+      <div class="imgcontainer">
+        <span
+          onclick="document.getElementById('addPoints').style.display='none'"
+          class="close"
+          title="Close Modal"
+          >&times;</span
+        >
+        <img src="@/assets/volunteery_copy.png" alt="Avatar" class="avatar" />
+      </div>
+
+      <div class="container">
+        <div class="centeredtext" style="color: #ff9213; font-size: 24px">
+          ADD POINTS FOR VOLUNTEERS
+        </div>
+        <div id="volnames">
+          <table id="table" class="auto-index">
+            <tr>
+              <th>Volunteer Name</th>
+              <th>Hours to Add</th>
+              <th>Add</th>
+              <th></th>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </form>
+  </div>
+
 </template>
 
 <script>
@@ -290,6 +320,46 @@ export default {
   // },
   mounted() {
     this.storeMessage(this.selectedSorting);
+
+    async function display() {
+      let z = await getDocs(collection(db, "Applications", "chefs", "Volunteers"));
+      let ind = 1;
+
+      z.forEach((docs) => {
+        let data = docs.data();
+        var table = document.getElementById("table");
+
+        var row = table.insertRow(ind);
+        var name = data.Name;
+        var email = data.Email;
+
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        var cell3 = row.insertCell(2);
+        var cell4 = row.insertCell(3);
+
+        cell1.innerHTML = name;
+        cell2.innerHTML = email;
+        cell3.className = "ptsToAdd";
+        cell4.className = "accept"
+
+        var num_input = document.createElement("input")
+        num_input.type = "number"
+        cell3.appendChild(num_input)
+
+        var review_button = document.createElement("button");
+        review_button.className = "bwt1";
+        review_button.innerHTML = "Add";
+        review_button.onclick = function () {
+          console.log("To add Points");
+        };
+        cell4.appendChild(review_button);
+      })
+    
+    }
+    display();
+
+
     // async function display() {
     //     let z = await getDocs(collection(db, "Applications"))
     //     let ind = 1
@@ -403,6 +473,9 @@ export default {
         });
       }
     },
+    displayAddPts() {
+      return (document.getElementById("addPoints").style.display = "block");
+    },
 
     // sortPostings() {
     //   this.filteredPostings = this.messages;
@@ -436,6 +509,62 @@ export default {
 };
 </script>
 <style scoped>
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: #fff9e9; /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  padding-top: 60px;
+}
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fff9e9;
+  margin: 10% auto 15% auto; /* 10% from the top, 15% from the bottom and centered */
+  border: 1px solid #888;
+  border-radius: 25px;
+  width: 60%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button (x) */
+.close {
+  position: absolute;
+  right: 25px;
+  top: 0;
+  color: #000;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: red;
+  cursor: pointer;
+}
+.imgcontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+  position: relative;
+}
+.bwt1 {
+  background-color: #ff9213;
+  color: white;
+}
+table {
+  font-family: arial, sans-serif;
+  border: 3px solid #ffd466;
+  border-collapse: collapse;
+  width: 80%;
+  margin: 100px;
+  text-align: center;
+}
+
+
 .mainbanner {
   background-image: url("../assets/volunteer_bg.png");
   background-size: cover;
