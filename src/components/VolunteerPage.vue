@@ -150,7 +150,9 @@
             </div>
           </div>
           <div class="listingbuttonsbox">
-            <button class="viewmore" type="button">Learn More</button>
+            <router-link :to="`/listing/${message.url}`">
+              <button class="viewmore" type="button">Learn More</button>
+            </router-link>
             <button class="viewmore" type="button">Apply Now</button>
           </div>
         </div>
