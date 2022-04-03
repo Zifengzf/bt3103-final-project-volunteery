@@ -273,6 +273,7 @@ export default {
           status: yy.Status,
           title: yy.Title,
           vacancy: yy.Vacancy,
+          url: yy.sn,
         });
         this.messageText = "";
       });
