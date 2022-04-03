@@ -265,8 +265,8 @@
 import NavBar2 from "@/components/NavBar2.vue";
 import firebaseApp from "@/firebase.js";
 import { getFirestore } from "firebase/firestore";
-import { collection, getDocs, query, orderBy, doc, getDoc } from "firebase/firestore";
-// updateDoc
+import { collection, getDocs, query, orderBy, doc, updateDoc, increment } from "firebase/firestore";
+// updateDoc, doc, getDoc 
 
 const db = getFirestore(firebaseApp);
 
@@ -369,24 +369,35 @@ export default {
     async function userAddPts(email, numpts) {
       console.log(email);
       console.log(numpts);
-      const db = getFirestore(firebaseApp);
-      var userProfile = doc(db, "volunteers", email)
-      const z = await getDoc(userProfile);
-      var userInfo = z.data();
-      var a = userInfo.totalPoints;
-      var b = userInfo.currentPoints;
-      var newTotalPoints = a + numpts;
-      var newCurrentPoints = b + numpts;
-      console.log(newCurrentPoints)
+      // var userProfile = doc(db, "volunteers", email)
+      // const k = await getDoc(userProfile);
+      // var userInfo = k.data();
+      // var a = userInfo.totalPoints;
+      // var b = userInfo.currentPoints;
+      // console.log(a,b)
+      // var newTotalPoints = a + numpts;
+      // var newCurrentPoints = b + numpts;
+      // console.log(newCurrentPoints);
       // alert("Updating"+numpts+"to "+newCurrentPoints+email)
       // await updateDoc(userProfile, {
       //   totalPoints: newTotalPoints,
       //   currentPoints: newCurrentPoints
       // });
 
-      db.collection("volunteers").doc(email).update({
-        ctotalPoints: newTotalPoints,
+      await updateDoc(doc(db, "volunteers", email), {
+        totalPoints: increment(numpts),
+        currentPoints: increment(numpts),
       });
+
+      // db.collection("volunteers").doc(email).update({
+      //     totalPoints: newTotalPoints,
+      //     currentPoints: newCurrentPoints
+      // });
+
+      // db.collection("volunteers").doc(email).get().then(snapshot=>{
+      //   this.totalPoints= snapshot.data().totalPoints
+      //   this.currentPoints= snapshot.data().currentPoints
+      // });
     }
 
 
