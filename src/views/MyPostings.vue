@@ -247,10 +247,11 @@
         <div id="volnames">
           <table id="table" class="auto-index">
             <tr>
+              <th>S/N</th>
               <th>Volunteer Name</th>
-              <th>Hours to Add</th>
+              <th>Volunteer Email</th>
+              <th>Points to Add</th>
               <th>Add</th>
-              <th></th>
             </tr>
           </table>
         </div>
@@ -264,7 +265,8 @@
 import NavBar2 from "@/components/NavBar2.vue";
 import firebaseApp from "@/firebase.js";
 import { getFirestore } from "firebase/firestore";
-import { collection, getDocs, query, orderBy } from "firebase/firestore";
+import { collection, getDocs, query, orderBy, doc, getDoc } from "firebase/firestore";
+// updateDoc
 
 const db = getFirestore(firebaseApp);
 
@@ -337,27 +339,55 @@ export default {
         var cell2 = row.insertCell(1);
         var cell3 = row.insertCell(2);
         var cell4 = row.insertCell(3);
+        var cell5 = row.insertCell(4);
 
-        cell1.innerHTML = name;
-        cell2.innerHTML = email;
-        cell3.className = "ptsToAdd";
-        cell4.className = "accept"
+        cell1.innerHTML = ind;
+        cell2.innerHTML = name;
+        cell3.innerHTML = email;
+        cell4.className = "ptsToAdd";
+        cell5.className = "accept"
 
         var num_input = document.createElement("input")
         num_input.type = "number"
-        cell3.appendChild(num_input)
+        cell4.appendChild(num_input)
 
         var review_button = document.createElement("button");
         review_button.className = "bwt1";
         review_button.innerHTML = "Add";
         review_button.onclick = function () {
-          console.log("To add Points");
+          var numpts = document.getElementsByClassName('ptsToAdd').value;
+          console.log(numpts)
+          userAddPts(email, 3);
         };
-        cell4.appendChild(review_button);
+        cell5.appendChild(review_button);
+        ind += 1
       })
     
     }
     display();
+
+    async function userAddPts(email, numpts) {
+      console.log(email);
+      console.log(numpts);
+      const db = getFirestore(firebaseApp);
+      var userProfile = doc(db, "volunteers", email)
+      const z = await getDoc(userProfile);
+      var userInfo = z.data();
+      var a = userInfo.totalPoints;
+      var b = userInfo.currentPoints;
+      var newTotalPoints = a + numpts;
+      var newCurrentPoints = b + numpts;
+      console.log(newCurrentPoints)
+      // alert("Updating"+numpts+"to "+newCurrentPoints+email)
+      // await updateDoc(userProfile, {
+      //   totalPoints: newTotalPoints,
+      //   currentPoints: newCurrentPoints
+      // });
+
+      db.collection("volunteers").doc(email).update({
+        ctotalPoints: newTotalPoints,
+      });
+    }
 
 
     // async function display() {
