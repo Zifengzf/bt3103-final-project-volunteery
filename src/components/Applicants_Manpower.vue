@@ -31,7 +31,29 @@
         </tr>
       </table>
     </div>
-    <div class="manpower_overview"></div>
+    <br /><br />
+    <div class="manpower_overview">
+      <div class="orangetext">Manpower Overview</div>
+      <br />
+      <div class="listing_container">
+        <div
+          v-for="message in messages"
+          :key="message.id"
+          class="listing_wrapper"
+        >
+          <div class="listing_header">
+            <div class="title">{{ message.title }}</div>
+            <div class="date">{{ message.date }}</div>
+          </div>
+          <div class="listing_body">
+            <div>Volunteers Needed: {{ message.volunteers_needed }}</div>
+            <div>Approved: {{ message.approved }}</div>
+            <div>Pending Approval: {{ message.pending }}</div>
+            <div>Remaining: {{ message.remaining }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -46,11 +68,37 @@ import {
   deleteDoc,
   increment,
 } from "firebase/firestore";
+const db = getFirestore(firebaseApp);
 export default {
+  data() {
+    return {
+      messages: [],
+    };
+  },
+  methods: {
+    async storeMessage() {
+      this.messages = [];
+      let q = await getDocs(collection(db, "Opportunities"));
+      q.forEach((doc) => {
+        let data = doc.data();
+        this.messages.push({
+          title: data.Title,
+          date: data.Date,
+          volunteers_needed: doc.get("Volunteers Needed"),
+          approved: data.Approved,
+          pending: data.Pending,
+          remaining: data.Vacancy,
+          id: data.sn,
+        });
+        console.log(doc.id, " => ", doc.data());
+      });
+    },
+  },
   mounted() {
-    const db = getFirestore(firebaseApp);
+    this.storeMessage();
     async function display() {
-      let z = await getDocs(collection(db, "Applicants(Zifeng)"));
+      clearTable();
+      let z = await getDocs(collection(db, "Applicants"));
       let ind = 1;
 
       z.forEach((docs) => {
@@ -62,6 +110,7 @@ export default {
         var name = data.Name;
         var listing_name = data.Listing;
         var status = data.Status;
+        var listing_ref = data.Listing_ref;
 
         var cell1 = row.insertCell(0);
         var cell2 = row.insertCell(1);
@@ -95,10 +144,10 @@ export default {
           reject_button.className = "bwt3";
           reject_button.innerHTML = "Reject";
           accept_button.onclick = function () {
-            accept(name, listing_name);
+            accept(name, listing_ref);
           };
           reject_button.onclick = function () {
-            reject(name, listing_name);
+            reject(name, listing_ref);
           };
           cell6.appendChild(accept_button);
           cell7.appendChild(reject_button);
@@ -109,7 +158,7 @@ export default {
           cancel_button.className = "bwt3";
           cancel_button.innerHTML = "Cancel";
           cancel_button.onclick = function () {
-            cancel(name, listing_name);
+            cancel(name, listing_ref);
           };
           cell7.appendChild(cancel_button);
         }
@@ -117,40 +166,39 @@ export default {
     }
     display();
 
-    async function accept(name, listing_name) {
+    async function accept(name, listing_ref) {
       // Part 1: Change applicant status to be approved
-      await updateDoc(doc(db, "Applicants(Zifeng)", name), {
+      await updateDoc(doc(db, "Applicants", name), {
         Status: "Approved",
       });
       // Part 2: Change listing volunteer values
-      await updateDoc(doc(db, "Listings", listing_name), {
+      await updateDoc(doc(db, "Listings", listing_ref), {
         Approved: increment(1),
         Pending: increment(-1),
       });
-      clearTable();
       display();
     }
 
-    async function cancel(name, listing_name) {
+    async function cancel(name, listing_ref) {
       //Part 1: Delete document from applicants
-      await deleteDoc(doc(db, "Applicants(Zifeng)", name));
+      await deleteDoc(doc(db, "Applicants", name));
       //Part 2: Update documents in listings
-      await updateDoc(doc(db, "Listings", listing_name), {
+      await updateDoc(doc(db, "Listings", listing_ref), {
         Approved: increment(-1),
         Remaining: increment(1),
       });
-      clearTable();
+
       display();
     }
 
-    async function reject(name, listing_name) {
+    async function reject(name, listing_ref) {
       //Part 1: Delete document from applicants
-      await deleteDoc(doc(db, "Applicants(Zifeng)", name));
+      await deleteDoc(doc(db, "Applicants", name));
       //Part 2: Update documents in listings
-      await updateDoc(doc(db, "Listings", listing_name), {
+      await updateDoc(doc(db, "Listings", listing_ref), {
         Pending: increment(-1),
       });
-      clearTable();
+
       display();
     }
 
@@ -230,5 +278,39 @@ table {
   border-collapse: collapse;
   width: 100%;
   text-align: center;
+}
+.listing_container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.listing_wrapper {
+  padding: 0px;
+  margin-right: 20px;
+  height: 150px;
+  width: 25%;
+  border: 5px solid #ffd466;
+  border-radius: 15px 15px 15px 15px;
+  overflow: hidden;
+}
+.listing_header {
+  text-align: center;
+  padding: 5px;
+  height: 30%;
+  width: 100%;
+  background-color: #ffe5a3;
+  box-sizing: border-box;
+}
+.listing_body {
+  padding: 5px;
+  text-align: center;
+  height: 70%;
+  width: 100%;
+  background-color: #fff9e9;
+  box-sizing: border-box;
+}
+.title {
+  font-weight: bold;
 }
 </style>
