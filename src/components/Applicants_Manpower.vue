@@ -75,6 +75,7 @@ import {
   updateDoc,
   deleteDoc,
   increment,
+  arrayUnion,
 } from "firebase/firestore";
 const db = getFirestore(firebaseApp);
 export default {
@@ -119,6 +120,7 @@ export default {
         var listing_name = data.Listing;
         var status = data.Status;
         var listing_ref = data.Listing_ref;
+        var email = data.Email;
 
         var cell1 = row.insertCell(0);
         var cell2 = row.insertCell(1);
@@ -152,7 +154,7 @@ export default {
           reject_button.className = "bwt3";
           reject_button.innerHTML = "Reject";
           accept_button.onclick = function () {
-            accept(name, listing_ref);
+            accept(name, listing_ref, email);
           };
           reject_button.onclick = function () {
             reject(name, listing_ref);
@@ -174,15 +176,18 @@ export default {
     }
     display();
 
-    async function accept(name, listing_ref) {
+    async function accept(name, listing_ref, email) {
       // Part 1: Change applicant status to be approved
       await updateDoc(doc(db, "Applicants", name), {
         Status: "Approved",
       });
       // Part 2: Change listing volunteer values
-      await updateDoc(doc(db, "Listings", listing_ref), {
+      await updateDoc(doc(db, "Opportunities", listing_ref), {
         Approved: increment(1),
         Pending: increment(-1),
+      });
+      await updateDoc(doc(db, "Opportunities", listing_ref), {
+        Volunteers: arrayUnion(email),
       });
       display();
     }
@@ -320,7 +325,6 @@ table {
   background-color: #fff9e9;
   box-sizing: border-box;
 }
-
 .title {
   font-weight: bold;
 }
