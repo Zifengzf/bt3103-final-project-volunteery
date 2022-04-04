@@ -46,10 +46,18 @@
             <div class="date">{{ message.date }}</div>
           </div>
           <div class="listing_body">
-            <div>Volunteers Needed: {{ message.volunteers_needed }}</div>
-            <div>Approved: {{ message.approved }}</div>
-            <div>Pending Approval: {{ message.pending }}</div>
-            <div>Remaining: {{ message.remaining }}</div>
+            <div style="width: 70%; float: left; text-align: left">
+              <div>Volunteers Needed:</div>
+              <div>Approved:</div>
+              <div>Pending Approval:</div>
+              <div>Vacancies:</div>
+            </div>
+            <div style="width: 10%; float: left">
+              <div>{{ message.volunteers_needed }}</div>
+              <div>{{ message.approved }}</div>
+              <div>{{ message.pending }}</div>
+              <div>{{ message.remaining }}</div>
+            </div>
           </div>
         </div>
       </div>
@@ -303,13 +311,16 @@ table {
   box-sizing: border-box;
 }
 .listing_body {
-  padding: 5px;
+  margin-top: 5%;
+  margin-left: 10%;
+  padding: 2px;
   text-align: center;
   height: 70%;
   width: 100%;
   background-color: #fff9e9;
   box-sizing: border-box;
 }
+
 .title {
   font-weight: bold;
 }
