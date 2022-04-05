@@ -119,7 +119,7 @@
         <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
         <a
           class="redeemclass"
-          onclick="document.getElementById('id01').style.display='block'"
+          v-on:click="redeemReward()"
           >Redeem</a
         >
         <!-- <button class="redeem_btn ">REDEEM</button> -->
@@ -177,6 +177,14 @@ export default {
     };
     // chartdata: null
   },
+  methods: {
+    redeemReward() {
+      document.getElementById("id01").style.display = "block";
+      const auth = getAuth()
+      var user = auth.currentUser.email;
+      console.log(user)
+    }
+  },
   mounted() {
     const db = getFirestore(firebaseApp);
     const auth = getAuth();
@@ -206,8 +214,10 @@ export default {
       if (points < 50) {
         return "Sliver";
       } else if (points < 80) {
+        document.getElementById("tier").style.color = "#FFD700"
         return "Gold";
       } else {
+        document.getElementById("tier").style.color = "#DDA0DD"
         return "Platinum";
       }
     }
