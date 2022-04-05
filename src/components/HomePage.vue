@@ -312,7 +312,7 @@ export default {
             this.$router.push({ name: "MyApplications" });
           })
           .catch((error) => {
-            console.log(error.message);
+            alert(error.message);
           });
       }
     },
@@ -421,6 +421,7 @@ button.orange {
 
 /* Full-width input fields */
 input[type="text"],
+input[type="email"],
 input[type="password"] {
   width: 100%;
   padding: 12px 20px;
