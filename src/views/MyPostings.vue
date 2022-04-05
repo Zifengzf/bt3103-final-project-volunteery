@@ -357,7 +357,7 @@ export default {
         review_button.onclick = function () {
           var numpts = document.getElementsByClassName('ptsToAdd').value;
           console.log(numpts)
-          userAddPts(email, 3);
+          userAddPts("suzifeng1@gmail.com", 3);
         };
         cell5.appendChild(review_button);
         ind += 1
@@ -388,6 +388,7 @@ export default {
         totalPoints: increment(numpts),
         currentPoints: increment(numpts),
       });
+      updateDoc()
 
       // db.collection("volunteers").doc(email).update({
       //     totalPoints: newTotalPoints,
