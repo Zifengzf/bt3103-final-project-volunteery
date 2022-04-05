@@ -239,44 +239,50 @@ export default {
     }
 
     async function displayAddpts() {
-      let z = await getDocs(collection(db, "Applications", "chefs", "Volunteers"));
+      let z = await getDocs(collection(db, "Applicants"));
       let ind = 1;
 
       z.forEach((docs) => {
         let data = docs.data();
-        var table2 = document.getElementById("table2");
 
-        var row = table2.insertRow(ind);
-        var name = data.Name;
-        var email = data.Email;
+        var toAdd = data.Status
 
-        var cell1 = row.insertCell(0);
-        var cell2 = row.insertCell(1);
-        var cell3 = row.insertCell(2);
-        var cell4 = row.insertCell(3);
-        var cell5 = row.insertCell(4);
+        if (toAdd == "Approved") {
 
-        cell1.innerHTML = ind;
-        cell2.innerHTML = name;
-        cell3.innerHTML = email;
-        cell4.className = "ptsToAdd";
-        cell5.className = "accept"
+          var table2 = document.getElementById("table2");
 
-        var num_input = document.createElement("input")
-        num_input.type = "number"
-        num_input.setAttribute('id', 'inputPts')
-        cell4.appendChild(num_input)
+          var row = table2.insertRow(ind);
+          var name = data.Name;
+          var email = data.Email;
 
-        var review_button = document.createElement("button");
-        review_button.className = "bwt1";
-        review_button.innerHTML = "Add";
-        review_button.onclick = function () {
-          var numpts = document.getElementById('inputPts').value;
-          console.log(numpts)
-          userAddPts(email, numpts);
-        };
-        cell5.appendChild(review_button);
-        ind += 1
+          var cell1 = row.insertCell(0);
+          var cell2 = row.insertCell(1);
+          var cell3 = row.insertCell(2);
+          var cell4 = row.insertCell(3);
+          var cell5 = row.insertCell(4);
+
+          cell1.innerHTML = ind;
+          cell2.innerHTML = name;
+          cell3.innerHTML = email;
+          cell4.className = "ptsToAdd";
+          cell5.className = "accept"
+
+          var num_input = document.createElement("input")
+          num_input.type = "number"
+          num_input.setAttribute('id', 'inputPts')
+          cell4.appendChild(num_input)
+
+          var review_button = document.createElement("button");
+          review_button.className = "bwt1";
+          review_button.innerHTML = "Add";
+          review_button.onclick = function () {
+            var numpts = document.getElementById('inputPts').value;
+            console.log(numpts)
+            userAddPts(email, numpts);
+          };
+          cell5.appendChild(review_button);
+          ind += 1
+        }
       })
     }
     displayAddpts();
@@ -290,6 +296,7 @@ export default {
         totalPoints: increment(numpts),
         currentPoints: increment(numpts),
       });
+      document.getElementById('inputPts').value = ""
     }
   },
 };
@@ -371,6 +378,7 @@ table {
 .listing_wrapper {
   padding: 0px;
   margin-right: 20px;
+  margin-bottom: 20px;
   height: 150px;
   width: 25%;
   border: 5px solid #ffd466;
@@ -444,13 +452,6 @@ table {
   background-color: #ff9213;
   color: white;
 }
-table {
-  font-family: arial, sans-serif;
-  border: 3px solid #ffd466;
-  border-collapse: collapse;
-  width: 80%;
-  margin: 100px;
-  text-align: center;
-}
+
 
 </style>

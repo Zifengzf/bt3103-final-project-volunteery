@@ -219,7 +219,7 @@
             </div>
           </div>
           <div class="listingbuttonsbox">
-            <button class="viewmore" type="button" v-on:click="displayAddPts()">Mark as Complete</button>
+            <button class="viewmore" type="button">Learn More</button>
           </div>
         </div>
         <br />
@@ -228,36 +228,6 @@
     <!-- <div v-for="sorting of filteredPostings" :key="sorting">{{ sorting }}</div> -->
   </div>
 
-  <div id="addPoints" class="modal">
-    <form class="modal-content animate">
-      <div class="imgcontainer">
-        <span
-          onclick="document.getElementById('addPoints').style.display='none'"
-          class="close"
-          title="Close Modal"
-          >&times;</span
-        >
-        <img src="@/assets/volunteery_copy.png" alt="Avatar" class="avatar" />
-      </div>
-
-      <div class="container">
-        <div class="centeredtext" style="color: #ff9213; font-size: 24px">
-          ADD POINTS FOR VOLUNTEERS
-        </div>
-        <div id="volnames">
-          <table id="table" class="auto-index">
-            <tr>
-              <th>S/N</th>
-              <th>Volunteer Name</th>
-              <th>Volunteer Email</th>
-              <th>Points to Add</th>
-              <th>Add</th>
-            </tr>
-          </table>
-        </div>
-      </div>
-    </form>
-  </div>
 
 </template>
 
@@ -265,7 +235,7 @@
 import NavBar2 from "@/components/NavBar2.vue";
 import firebaseApp from "@/firebase.js";
 import { getFirestore } from "firebase/firestore";
-import { collection, getDocs, query, orderBy, doc, updateDoc, increment } from "firebase/firestore";
+import { collection, getDocs, query, orderBy } from "firebase/firestore";
 // updateDoc, doc, getDoc 
 
 const db = getFirestore(firebaseApp);
@@ -322,84 +292,6 @@ export default {
   // },
   mounted() {
     this.storeMessage(this.selectedSorting);
-
-    async function display() {
-      let z = await getDocs(collection(db, "Applications", "chefs", "Volunteers"));
-      let ind = 1;
-
-      z.forEach((docs) => {
-        let data = docs.data();
-        var table = document.getElementById("table");
-
-        var row = table.insertRow(ind);
-        var name = data.Name;
-        var email = data.Email;
-
-        var cell1 = row.insertCell(0);
-        var cell2 = row.insertCell(1);
-        var cell3 = row.insertCell(2);
-        var cell4 = row.insertCell(3);
-        var cell5 = row.insertCell(4);
-
-        cell1.innerHTML = ind;
-        cell2.innerHTML = name;
-        cell3.innerHTML = email;
-        cell4.className = "ptsToAdd";
-        cell5.className = "accept"
-
-        var num_input = document.createElement("input")
-        num_input.type = "number"
-        cell4.appendChild(num_input)
-
-        var review_button = document.createElement("button");
-        review_button.className = "bwt1";
-        review_button.innerHTML = "Add";
-        review_button.onclick = function () {
-          var numpts = document.getElementsByClassName('ptsToAdd').value;
-          console.log(numpts)
-          userAddPts("suzifeng1@gmail.com", 3);
-        };
-        cell5.appendChild(review_button);
-        ind += 1
-      })
-    
-    }
-    display();
-
-    async function userAddPts(email, numpts) {
-      console.log(email);
-      console.log(numpts);
-      // var userProfile = doc(db, "volunteers", email)
-      // const k = await getDoc(userProfile);
-      // var userInfo = k.data();
-      // var a = userInfo.totalPoints;
-      // var b = userInfo.currentPoints;
-      // console.log(a,b)
-      // var newTotalPoints = a + numpts;
-      // var newCurrentPoints = b + numpts;
-      // console.log(newCurrentPoints);
-      // alert("Updating"+numpts+"to "+newCurrentPoints+email)
-      // await updateDoc(userProfile, {
-      //   totalPoints: newTotalPoints,
-      //   currentPoints: newCurrentPoints
-      // });
-
-      await updateDoc(doc(db, "volunteers", email), {
-        totalPoints: increment(numpts),
-        currentPoints: increment(numpts),
-      });
-      updateDoc()
-
-      // db.collection("volunteers").doc(email).update({
-      //     totalPoints: newTotalPoints,
-      //     currentPoints: newCurrentPoints
-      // });
-
-      // db.collection("volunteers").doc(email).get().then(snapshot=>{
-      //   this.totalPoints= snapshot.data().totalPoints
-      //   this.currentPoints= snapshot.data().currentPoints
-      // });
-    }
 
 
     // async function display() {
@@ -551,60 +443,6 @@ export default {
 };
 </script>
 <style scoped>
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: #fff9e9; /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
-  padding-top: 60px;
-}
-/* Modal Content/Box */
-.modal-content {
-  background-color: #fff9e9;
-  margin: 10% auto 15% auto; /* 10% from the top, 15% from the bottom and centered */
-  border: 1px solid #888;
-  border-radius: 25px;
-  width: 60%; /* Could be more or less, depending on screen size */
-}
-
-/* The Close Button (x) */
-.close {
-  position: absolute;
-  right: 25px;
-  top: 0;
-  color: #000;
-  font-size: 35px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: red;
-  cursor: pointer;
-}
-.imgcontainer {
-  text-align: center;
-  margin: 24px 0 12px 0;
-  position: relative;
-}
-.bwt1 {
-  background-color: #ff9213;
-  color: white;
-}
-table {
-  font-family: arial, sans-serif;
-  border: 3px solid #ffd466;
-  border-collapse: collapse;
-  width: 80%;
-  margin: 100px;
-  text-align: center;
-}
 
 
 .mainbanner {
