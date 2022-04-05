@@ -221,7 +221,10 @@
           </div>
           <div class="listingbuttonsbox">
             <p class="approvedstatus">{{ message.status }}</p>
-            <button class="viewmore" type="button">View More</button>
+            <!-- <button class="viewmore" type="button">View More</button> -->
+            <router-link :to="`/listing/${message.url}`">
+              <button class="viewmore" type="button">View More</button>
+            </router-link>
           </div>
         </div>
         <br />
@@ -386,7 +389,8 @@ export default {
             status: yy.Status,
             title: yy.Title,
             vacancy: yy.Vacancy,
-            needed: yy['Volunteers Needed'],
+            needed: yy["Volunteers Needed"],
+            url: yy.sn,
           });
         }
         this.messageText = "";
@@ -402,8 +406,8 @@ export default {
         if (doc.id == userEmail) {
           let zz = doc.data();
           let listingsArr = zz.MyListings;
-          for (let i = 0; i < listingsArr.length; i++) {     
-            console.log(listingsArr[i]);      
+          for (let i = 0; i < listingsArr.length; i++) {
+            console.log(listingsArr[i]);
             this.myListings.push(listingsArr[i]);
           }
         }
