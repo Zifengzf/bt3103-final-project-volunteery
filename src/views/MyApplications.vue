@@ -32,6 +32,7 @@
       style="font-size: 18px"
     >
       <option value="">--Region--</option>
+      <option value="central">Central</option>
       <option value="north">North</option>
       <option value="north-east">North-East</option>
       <option value="east">East</option>
@@ -212,7 +213,7 @@
                   width="30"
                 />
                 <p class="specdetails">
-                  Vacancy: {{ message.vacancy }} / 30 left
+                  Vacancy: {{ message.vacancy }} / {{ message.needed }} left
                 </p>
                 <!-- <p class="specdetails">Vacancy: 7 / 30 left</p> -->
               </div>
@@ -283,12 +284,15 @@ export default {
       selectedPeriod: "",
       selectedSorting: "Vacancy",
       // sortBy: "Region",
+      tempUsername: "2001chenxi@gmail.com",
+      myListings: [],
     };
   },
   // firestore: {
   //   filteredPostings: collection(db, "Opportunities").orderBy("Region"),
   // },
   mounted() {
+    this.retrieveUserListing(this.tempUsername);
     this.storeMessage(this.selectedSorting);
     // async function display() {
     //     let z = await getDocs(collection(db, "Applications"))
@@ -369,22 +373,41 @@ export default {
   methods: {
     async storeMessage(sort) {
       this.messages = [];
-      const q = query(collection(db, "Applications"), orderBy(sort));
+      const q = query(collection(db, "Opportunities"), orderBy(sort));
       const querySnapshot = await getDocs(q);
       // this.messages.clear();
       querySnapshot.forEach((doc) => {
-        let yy = doc.data();
-        this.messages.push({
-          content: yy.Content,
-          duration: yy.Duration,
-          region: yy.Region,
-          status: yy.Status,
-          title: yy.Title,
-          vacancy: yy.Vacancy,
-        });
+        if (this.myListings.includes(doc.id)) {
+          let yy = doc.data();
+          this.messages.push({
+            content: yy.Content,
+            duration: yy.Duration,
+            region: yy.Region,
+            status: yy.Status,
+            title: yy.Title,
+            vacancy: yy.Vacancy,
+            needed: yy['Volunteers Needed'],
+          });
+        }
         this.messageText = "";
       });
       this.filteredPostings = this.messages;
+    },
+
+    async retrieveUserListing(userEmail) {
+      // fix to having only 1 organisation for now
+      const p = query(collection(db, "volunteers"));
+      const postingsSnapshot = await getDocs(p);
+      postingsSnapshot.forEach((doc) => {
+        if (doc.id == userEmail) {
+          let zz = doc.data();
+          let listingsArr = zz.MyListings;
+          for (let i = 0; i < listingsArr.length; i++) {     
+            console.log(listingsArr[i]);      
+            this.myListings.push(listingsArr[i]);
+          }
+        }
+      });
     },
 
     searchPostings() {

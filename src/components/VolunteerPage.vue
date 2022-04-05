@@ -32,6 +32,7 @@
         style="font-size: 18px"
       >
         <option value="">--Region--</option>
+        <option value="central">Central</option>
         <option value="north">North</option>
         <option value="north-east">North-East</option>
         <option value="east">East</option>
@@ -144,7 +145,7 @@
                   width="30"
                 />
                 <p class="specdetails">
-                  Vacancy: {{ message.vacancy }} / 30 left
+                  Vacancy: {{ message.vacancy }} / {{ message.needed }} left
                 </p>
               </div>
             </div>
@@ -273,6 +274,7 @@ export default {
           status: yy.Status,
           title: yy.Title,
           vacancy: yy.Vacancy,
+          needed: yy['Volunteers Needed'],
           url: yy.sn,
         });
         this.messageText = "";
