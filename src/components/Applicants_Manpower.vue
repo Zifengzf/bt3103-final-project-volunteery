@@ -18,7 +18,6 @@
   <div class="bottombanner">
     <div class="applicant_review">
       <div class="orangetext">Review Applicants</div>
-      <br />
       <table id="table" class="auto-index">
         <tr>
           <th>Name</th>
@@ -31,7 +30,7 @@
         </tr>
       </table>
     </div>
-    <br /><br />
+    <br />
     <div class="manpower_overview">
       <div class="orangetext">Manpower Overview</div>
       <br />
@@ -60,6 +59,23 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+
+    <br />
+    <div class="addpts">
+      <div class="orangetext">Manage Volunteers</div>
+      <br />
+      <div id="volnames">
+        <table id="table2" class="auto-index">
+          <tr>
+            <th>S/N</th>
+            <th>Volunteer Name</th>
+            <th>Volunteer Email</th>
+            <th>Points to Add</th>
+            <th>Add</th>
+          </tr>
+        </table>
       </div>
     </div>
   </div>
@@ -221,6 +237,60 @@ export default {
         tb.deleteRow(1);
       }
     }
+
+    async function displayAddpts() {
+      let z = await getDocs(collection(db, "Applications", "chefs", "Volunteers"));
+      let ind = 1;
+
+      z.forEach((docs) => {
+        let data = docs.data();
+        var table2 = document.getElementById("table2");
+
+        var row = table2.insertRow(ind);
+        var name = data.Name;
+        var email = data.Email;
+
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        var cell3 = row.insertCell(2);
+        var cell4 = row.insertCell(3);
+        var cell5 = row.insertCell(4);
+
+        cell1.innerHTML = ind;
+        cell2.innerHTML = name;
+        cell3.innerHTML = email;
+        cell4.className = "ptsToAdd";
+        cell5.className = "accept"
+
+        var num_input = document.createElement("input")
+        num_input.type = "number"
+        num_input.setAttribute('id', 'inputPts')
+        cell4.appendChild(num_input)
+
+        var review_button = document.createElement("button");
+        review_button.className = "bwt1";
+        review_button.innerHTML = "Add";
+        review_button.onclick = function () {
+          var numpts = document.getElementById('inputPts').value;
+          console.log(numpts)
+          userAddPts(email, numpts);
+        };
+        cell5.appendChild(review_button);
+        ind += 1
+      })
+    }
+    displayAddpts();
+
+    async function userAddPts(email, numpts) {
+      console.log(email);
+      console.log(numpts);
+      alert("Adding "+numpts+" for "+email)
+
+      await updateDoc(doc(db, "volunteers", email), {
+        totalPoints: increment(numpts),
+        currentPoints: increment(numpts),
+      });
+    }
   },
 };
 /**
@@ -328,4 +398,59 @@ table {
 .title {
   font-weight: bold;
 }
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: #fff9e9; /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  padding-top: 60px;
+}
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fff9e9;
+  margin: 10% auto 15% auto; /* 10% from the top, 15% from the bottom and centered */
+  border: 1px solid #888;
+  border-radius: 25px;
+  width: 60%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button (x) */
+.close {
+  position: absolute;
+  right: 25px;
+  top: 0;
+  color: #000;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: red;
+  cursor: pointer;
+}
+.imgcontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+  position: relative;
+}
+.bwt1 {
+  background-color: #ff9213;
+  color: white;
+}
+table {
+  font-family: arial, sans-serif;
+  border: 3px solid #ffd466;
+  border-collapse: collapse;
+  width: 80%;
+  margin: 100px;
+  text-align: center;
+}
+
 </style>
