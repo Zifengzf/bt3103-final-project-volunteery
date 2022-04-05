@@ -53,12 +53,6 @@
       <option value="6">3 months - 6 months</option>
       <option value="12">6 months - 1 year</option>
     </select>
-    <!-- <label for="cars" style="font-size: 18px; padding: 10px">Sort by:</label>
-      <select name="cars" id="cars" style="font-size: 18px">
-        <option value="volvo">Vacancy</option>
-        <option value="saab">Commitment Period</option>
-        <option value="opel">Posted date</option>
-      </select> -->
     <label for="sortby" style="font-size: 18px; padding: 10px">Sort by:</label>
     <select
       v-model="selectedSorting"
@@ -70,76 +64,7 @@
       <option value="Duration">Duration</option>
       <!-- <option value="Date">Posted date</option> -->
     </select>
-    <!-- <div class="col-auto">
-        <button type="button" class="btn btn-primary mb-2" @click="searchPostings">Search</button>
-      </div> -->
-    <!-- <input
-        type="submit"
-        value="NIL"
-        style="font-size: 18px; padding: 10px"
-      /> -->
   </div>
-  <!-- <div style='padding: 10px 90px 20px 0px'>
-      <button class="addlisting" type="button" style='padding: 0 0 0 10'>Add Listing</button>
-    </div> -->
-  <!-- <table id="table" class="auto-index">
-        <tr>
-            <th>S.No</th>
-            <th>Coin</th>
-            <th>Ticker</th>
-            <th>Buy_Price</th>
-            <th>Buy_Quantity</th>
-            <th>Current_Price</th>
-            <th>Profit</th>
-            <th>Options</th>
-        </tr>
-    </table> -->
-  <!-- <div v-for="thing in things" :key="thing">
-      <br />
-      <div class="listingbox">
-        <img
-          class="imgbox"
-          src="https://media.istockphoto.com/photos/volunteers-serving-hot-meal-to-people-in-community-soup-kitchen-picture-id482802211?k=20&m=482802211&s=612x612&w=0&h=wZtnwsE0iQOqzXp8z99blyjq16JLCeyRDeV0UuOZmkA="
-          alt="Listing Pic"
-          style="float: left"
-        />
-        <div class="listingpara" style="float: left">
-          <p class="listingtitle">{{ thing.title }}</p>
-          <p class="listinginfo">{{ thing.content }}</p>
-          <div class="listingdetails">
-            <img
-              id="profpic"
-              src="../assets/calendar.png"
-              alt="Profile Pic"
-              height="30"
-              width="30"
-            />
-            <p>Region: {{ thing.region }}</p>
-            <img
-              id="profpic"
-              src="../assets/calendar.png"
-              alt="Profile Pic"
-              height="30"
-              width="30"
-            />
-            <p>Commitment Period: {{ thing.duration }} months</p>
-            <img
-              id="profpic"
-              src="../assets/vacancy.png"
-              alt="Profile Pic"
-              height="30"
-              width="30"
-            />
-            <p>Vacancy: 7 / 30 left</p>
-          </div>
-        </div>
-        <div class="listingbuttonsbox">
-          <p class="approvedstatus">{{ thing.status }}</p>
-          <button class="editlisting" type="button">Edit Listing</button>
-          <button class="applicants" type="button">Applicants</button>
-        </div>
-      </div>
-    </div> -->
   <div v-for="(result, index) in results" :key="result">
     <div class="card">
       <div class="card-section">
@@ -219,7 +144,7 @@
             </div>
           </div>
           <div class="listingbuttonsbox">
-            <button class="viewmore" type="button">Learn More</button>
+            <button class="viewmore" type="button" v-on:click="displayAddPts()">Mark as Complete</button>
           </div>
         </div>
         <br />
@@ -228,6 +153,36 @@
     <!-- <div v-for="sorting of filteredPostings" :key="sorting">{{ sorting }}</div> -->
   </div>
 
+  <div id="addPoints" class="modal">
+    <form class="modal-content animate">
+      <div class="imgcontainer">
+        <span
+          onclick="document.getElementById('addPoints').style.display='none'"
+          class="close"
+          title="Close Modal"
+          >&times;</span
+        >
+        <img src="@/assets/volunteery_copy.png" alt="Avatar" class="avatar" />
+      </div>
+
+      <div class="container">
+        <div class="centeredtext" style="color: #ff9213; font-size: 24px">
+          ADD POINTS FOR VOLUNTEERS
+        </div>
+        <div id="volnames">
+          <table id="table" class="auto-index">
+            <tr>
+              <th>S/N</th>
+              <th>Volunteer Name</th>
+              <th>Volunteer Email</th>
+              <th>Points to Add</th>
+              <th>Add</th>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </form>
+  </div>
 
 </template>
 
@@ -235,7 +190,7 @@
 import NavBar2 from "@/components/NavBar2.vue";
 import firebaseApp from "@/firebase.js";
 import { getFirestore } from "firebase/firestore";
-import { collection, getDocs, query, orderBy } from "firebase/firestore";
+import { collection, getDocs, query, orderBy, doc, updateDoc, increment } from "firebase/firestore";
 // updateDoc, doc, getDoc 
 
 const db = getFirestore(firebaseApp);
@@ -246,35 +201,6 @@ export default {
   },
   data() {
     return {
-      // things: {
-      //   apple: {
-      //     content:
-      //       "Help the Home carry out services such as social-recreational activities for our Residents, gardening, cleaning and general maintenance, and other services so that our caregivers may focus on attending to the daily needs of our residents.",
-      //     duration: "1",
-      //     region: "East",
-      //     status: "Approved",
-      //     statusbox: "approvedstatus",
-      //     title: "Chefs needed for CNY",
-      //   },
-      //   pear: {
-      //     content:
-      //       "Help the Home carry out services such as social-recreational activities for our Residents, gardening, cleaning and general maintenance, and other services so that our caregivers may focus on attending to the daily needs of our residents.",
-      //     duration: "3",
-      //     region: "South-West",
-      //     status: "Pending",
-      //     statusbox: "approvedstatus",
-      //     title: "Accompany the Elderly",
-      //   },
-      //   cherry: {
-      //     content:
-      //       "Help the Home carry out services such as social-recreational activities for our Residents, gardening, cleaning and general maintenance, and other services so that our caregivers may focus on attending to the daily needs of our residents.",
-      //     duration: "6",
-      //     region: "North",
-      //     status: "Approved",
-      //     statusbox: "approvedstatus",
-      //     title: "Walk pets for SPCA",
-      //   },
-      // },
       results: [],
       cities: [],
       messages: [],
@@ -285,13 +211,94 @@ export default {
       selectedPeriod: "",
       selectedSorting: "Vacancy",
       // sortBy: "Region",
+      orgName: "WillingHearts",
+      myPostings: [],
     };
   },
   // firestore: {
   //   filteredPostings: collection(db, "Opportunities").orderBy("Region"),
   // },
   mounted() {
+    this.retrieveOrgPosting();
+    console.log("done");
     this.storeMessage(this.selectedSorting);
+
+    async function display() {
+      let z = await getDocs(collection(db, "Applications", "chefs", "Volunteers"));
+      let ind = 1;
+
+      z.forEach((docs) => {
+        let data = docs.data();
+        var table = document.getElementById("table");
+
+        var row = table.insertRow(ind);
+        var name = data.Name;
+        var email = data.Email;
+
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        var cell3 = row.insertCell(2);
+        var cell4 = row.insertCell(3);
+        var cell5 = row.insertCell(4);
+
+        cell1.innerHTML = ind;
+        cell2.innerHTML = name;
+        cell3.innerHTML = email;
+        cell4.className = "ptsToAdd";
+        cell5.className = "accept"
+
+        var num_input = document.createElement("input")
+        num_input.type = "number"
+        cell4.appendChild(num_input)
+
+        var review_button = document.createElement("button");
+        review_button.className = "bwt1";
+        review_button.innerHTML = "Add";
+        review_button.onclick = function () {
+          var numpts = document.getElementsByClassName('ptsToAdd').value;
+          console.log(numpts)
+          userAddPts(email, 3);
+        };
+        cell5.appendChild(review_button);
+        ind += 1
+      })
+    
+    }
+    display();
+
+    async function userAddPts(email, numpts) {
+      console.log(email);
+      console.log(numpts);
+      // var userProfile = doc(db, "volunteers", email)
+      // const k = await getDoc(userProfile);
+      // var userInfo = k.data();
+      // var a = userInfo.totalPoints;
+      // var b = userInfo.currentPoints;
+      // console.log(a,b)
+      // var newTotalPoints = a + numpts;
+      // var newCurrentPoints = b + numpts;
+      // console.log(newCurrentPoints);
+      // alert("Updating"+numpts+"to "+newCurrentPoints+email)
+      // await updateDoc(userProfile, {
+      //   totalPoints: newTotalPoints,
+      //   currentPoints: newCurrentPoints
+      // });
+
+      await updateDoc(doc(db, "volunteers", email), {
+        totalPoints: increment(numpts),
+        currentPoints: increment(numpts),
+      });
+
+      // db.collection("volunteers").doc(email).update({
+      //     totalPoints: newTotalPoints,
+      //     currentPoints: newCurrentPoints
+      // });
+
+      // db.collection("volunteers").doc(email).get().then(snapshot=>{
+      //   this.totalPoints= snapshot.data().totalPoints
+      //   this.currentPoints= snapshot.data().currentPoints
+      // });
+    }
 
 
     // async function display() {
@@ -373,22 +380,38 @@ export default {
   methods: {
     async storeMessage(sort) {
       this.messages = [];
-      const q = query(collection(db, "Applications"), orderBy(sort));
+      const q = query(collection(db, "Opportunities"), orderBy(sort));
       const querySnapshot = await getDocs(q);
       // this.messages.clear();
       querySnapshot.forEach((doc) => {
-        let yy = doc.data();
-        this.messages.push({
-          content: yy.Content,
-          duration: yy.Duration,
-          region: yy.Region,
-          status: yy.Status,
-          title: yy.Title,
-          vacancy: yy.Vacancy,
-        });
+        if (this.myPostings.includes(doc.id)) {
+          let yy = doc.data();
+          this.messages.push({
+            content: yy.Content,
+            duration: yy.Duration,
+            region: yy.Region,
+            status: yy.Status,
+            title: yy.Title,
+            vacancy: yy.Vacancy,
+          });
+        }
         this.messageText = "";
       });
       this.filteredPostings = this.messages;
+    },
+
+    async retrieveOrgPosting() {
+      // fix to having only 1 organisation for now
+      const p = query(collection(db, "Organisation"));
+      const postingsSnapshot = await getDocs(p);
+      postingsSnapshot.forEach((doc) => {
+        let zz = doc.data();
+        let postingsArr = zz.MyPostings;
+        for (let i = 0; i < postingsArr.length; i++) {     
+          console.log(postingsArr[i]);      
+          this.myPostings.push(postingsArr[i]);
+        }
+      });
     },
 
     searchPostings() {
@@ -443,6 +466,60 @@ export default {
 };
 </script>
 <style scoped>
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: #fff9e9; /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  padding-top: 60px;
+}
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fff9e9;
+  margin: 10% auto 15% auto; /* 10% from the top, 15% from the bottom and centered */
+  border: 1px solid #888;
+  border-radius: 25px;
+  width: 60%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button (x) */
+.close {
+  position: absolute;
+  right: 25px;
+  top: 0;
+  color: #000;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: red;
+  cursor: pointer;
+}
+.imgcontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+  position: relative;
+}
+.bwt1 {
+  background-color: #ff9213;
+  color: white;
+}
+table {
+  font-family: arial, sans-serif;
+  border: 3px solid #ffd466;
+  border-collapse: collapse;
+  width: 80%;
+  margin: 100px;
+  text-align: center;
+}
 
 
 .mainbanner {
@@ -484,16 +561,6 @@ h1 {
 .title {
   padding: 0px;
   background-color: transparent;
-  /* width: 374px;
-  color: rgba(0, 0, 0, 1);
-  position: absolute;
-  top: 55px;
-  left: 24px;
-  font-family: Roboto;
-  font-weight: Bold;
-  font-size: 16px;
-  opacity: 1;
-  text-align: left; */
 }
 
 .fliterandsort {
