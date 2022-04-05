@@ -53,12 +53,6 @@
       <option value="6">3 months - 6 months</option>
       <option value="12">6 months - 1 year</option>
     </select>
-    <!-- <label for="cars" style="font-size: 18px; padding: 10px">Sort by:</label>
-      <select name="cars" id="cars" style="font-size: 18px">
-        <option value="volvo">Vacancy</option>
-        <option value="saab">Commitment Period</option>
-        <option value="opel">Posted date</option>
-      </select> -->
     <label for="sortby" style="font-size: 18px; padding: 10px">Sort by:</label>
     <select
       v-model="selectedSorting"
@@ -70,76 +64,7 @@
       <option value="Duration">Duration</option>
       <!-- <option value="Date">Posted date</option> -->
     </select>
-    <!-- <div class="col-auto">
-        <button type="button" class="btn btn-primary mb-2" @click="searchPostings">Search</button>
-      </div> -->
-    <!-- <input
-        type="submit"
-        value="NIL"
-        style="font-size: 18px; padding: 10px"
-      /> -->
   </div>
-  <!-- <div style='padding: 10px 90px 20px 0px'>
-      <button class="addlisting" type="button" style='padding: 0 0 0 10'>Add Listing</button>
-    </div> -->
-  <!-- <table id="table" class="auto-index">
-        <tr>
-            <th>S.No</th>
-            <th>Coin</th>
-            <th>Ticker</th>
-            <th>Buy_Price</th>
-            <th>Buy_Quantity</th>
-            <th>Current_Price</th>
-            <th>Profit</th>
-            <th>Options</th>
-        </tr>
-    </table> -->
-  <!-- <div v-for="thing in things" :key="thing">
-      <br />
-      <div class="listingbox">
-        <img
-          class="imgbox"
-          src="https://media.istockphoto.com/photos/volunteers-serving-hot-meal-to-people-in-community-soup-kitchen-picture-id482802211?k=20&m=482802211&s=612x612&w=0&h=wZtnwsE0iQOqzXp8z99blyjq16JLCeyRDeV0UuOZmkA="
-          alt="Listing Pic"
-          style="float: left"
-        />
-        <div class="listingpara" style="float: left">
-          <p class="listingtitle">{{ thing.title }}</p>
-          <p class="listinginfo">{{ thing.content }}</p>
-          <div class="listingdetails">
-            <img
-              id="profpic"
-              src="../assets/calendar.png"
-              alt="Profile Pic"
-              height="30"
-              width="30"
-            />
-            <p>Region: {{ thing.region }}</p>
-            <img
-              id="profpic"
-              src="../assets/calendar.png"
-              alt="Profile Pic"
-              height="30"
-              width="30"
-            />
-            <p>Commitment Period: {{ thing.duration }} months</p>
-            <img
-              id="profpic"
-              src="../assets/vacancy.png"
-              alt="Profile Pic"
-              height="30"
-              width="30"
-            />
-            <p>Vacancy: 7 / 30 left</p>
-          </div>
-        </div>
-        <div class="listingbuttonsbox">
-          <p class="approvedstatus">{{ thing.status }}</p>
-          <button class="editlisting" type="button">Edit Listing</button>
-          <button class="applicants" type="button">Applicants</button>
-        </div>
-      </div>
-    </div> -->
   <div v-for="(result, index) in results" :key="result">
     <div class="card">
       <div class="card-section">
@@ -276,35 +201,6 @@ export default {
   },
   data() {
     return {
-      // things: {
-      //   apple: {
-      //     content:
-      //       "Help the Home carry out services such as social-recreational activities for our Residents, gardening, cleaning and general maintenance, and other services so that our caregivers may focus on attending to the daily needs of our residents.",
-      //     duration: "1",
-      //     region: "East",
-      //     status: "Approved",
-      //     statusbox: "approvedstatus",
-      //     title: "Chefs needed for CNY",
-      //   },
-      //   pear: {
-      //     content:
-      //       "Help the Home carry out services such as social-recreational activities for our Residents, gardening, cleaning and general maintenance, and other services so that our caregivers may focus on attending to the daily needs of our residents.",
-      //     duration: "3",
-      //     region: "South-West",
-      //     status: "Pending",
-      //     statusbox: "approvedstatus",
-      //     title: "Accompany the Elderly",
-      //   },
-      //   cherry: {
-      //     content:
-      //       "Help the Home carry out services such as social-recreational activities for our Residents, gardening, cleaning and general maintenance, and other services so that our caregivers may focus on attending to the daily needs of our residents.",
-      //     duration: "6",
-      //     region: "North",
-      //     status: "Approved",
-      //     statusbox: "approvedstatus",
-      //     title: "Walk pets for SPCA",
-      //   },
-      // },
       results: [],
       cities: [],
       messages: [],
@@ -315,12 +211,16 @@ export default {
       selectedPeriod: "",
       selectedSorting: "Vacancy",
       // sortBy: "Region",
+      orgName: "WillingHearts",
+      myPostings: [],
     };
   },
   // firestore: {
   //   filteredPostings: collection(db, "Opportunities").orderBy("Region"),
   // },
   mounted() {
+    this.retrieveOrgPosting();
+    console.log("done");
     this.storeMessage(this.selectedSorting);
 
     async function display() {
@@ -480,22 +380,38 @@ export default {
   methods: {
     async storeMessage(sort) {
       this.messages = [];
-      const q = query(collection(db, "Applications"), orderBy(sort));
+      const q = query(collection(db, "Opportunities"), orderBy(sort));
       const querySnapshot = await getDocs(q);
       // this.messages.clear();
       querySnapshot.forEach((doc) => {
-        let yy = doc.data();
-        this.messages.push({
-          content: yy.Content,
-          duration: yy.Duration,
-          region: yy.Region,
-          status: yy.Status,
-          title: yy.Title,
-          vacancy: yy.Vacancy,
-        });
+        if (this.myPostings.includes(doc.id)) {
+          let yy = doc.data();
+          this.messages.push({
+            content: yy.Content,
+            duration: yy.Duration,
+            region: yy.Region,
+            status: yy.Status,
+            title: yy.Title,
+            vacancy: yy.Vacancy,
+          });
+        }
         this.messageText = "";
       });
       this.filteredPostings = this.messages;
+    },
+
+    async retrieveOrgPosting() {
+      // fix to having only 1 organisation for now
+      const p = query(collection(db, "Organisation"));
+      const postingsSnapshot = await getDocs(p);
+      postingsSnapshot.forEach((doc) => {
+        let zz = doc.data();
+        let postingsArr = zz.MyPostings;
+        for (let i = 0; i < postingsArr.length; i++) {     
+          console.log(postingsArr[i]);      
+          this.myPostings.push(postingsArr[i]);
+        }
+      });
     },
 
     searchPostings() {
@@ -645,16 +561,6 @@ h1 {
 .title {
   padding: 0px;
   background-color: transparent;
-  /* width: 374px;
-  color: rgba(0, 0, 0, 1);
-  position: absolute;
-  top: 55px;
-  left: 24px;
-  font-family: Roboto;
-  font-weight: Bold;
-  font-size: 16px;
-  opacity: 1;
-  text-align: left; */
 }
 
 .fliterandsort {

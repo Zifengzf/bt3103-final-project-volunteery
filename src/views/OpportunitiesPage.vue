@@ -307,7 +307,7 @@ export default {
   methods: {
     async storeMessage(sort) {
       this.messages = [];
-      const q = query(collection(db, "Applications"), orderBy(sort));
+      const q = query(collection(db, "Opportunities"), orderBy(sort));
       const querySnapshot = await getDocs(q);
       // this.messages.clear();
       querySnapshot.forEach((doc) => {
