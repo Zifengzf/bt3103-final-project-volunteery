@@ -18,6 +18,7 @@
   <div class="bottombanner">
     <div class="applicant_review">
       <div class="orangetext">Review Applicants</div>
+      <br />
       <table id="table" class="auto-index">
         <tr>
           <th>Name</th>
@@ -65,6 +66,8 @@
     <br />
     <div class="addpts">
       <div class="orangetext">Manage Volunteers</div>
+      <h3>Points to Add: 
+      <input type="number" id="ptsToAdd"></h3>
       <br />
       <div id="volnames">
         <table id="table2" class="auto-index">
@@ -72,7 +75,6 @@
             <th>S/N</th>
             <th>Volunteer Name</th>
             <th>Volunteer Email</th>
-            <th>Points to Add</th>
             <th>Add</th>
           </tr>
         </table>
@@ -120,6 +122,7 @@ export default {
     },
   },
   mounted() {
+    
     this.storeMessage();
     async function display() {
       clearTable();
@@ -241,6 +244,7 @@ export default {
     async function displayAddpts() {
       let z = await getDocs(collection(db, "Applicants"));
       let ind = 1;
+      // let numpts = document.getElementByID('ptsToAdd').value;
 
       z.forEach((docs) => {
         let data = docs.data();
@@ -259,28 +263,20 @@ export default {
           var cell2 = row.insertCell(1);
           var cell3 = row.insertCell(2);
           var cell4 = row.insertCell(3);
-          var cell5 = row.insertCell(4);
 
           cell1.innerHTML = ind;
           cell2.innerHTML = name;
           cell3.innerHTML = email;
-          cell4.className = "ptsToAdd";
-          cell5.className = "accept"
-
-          var num_input = document.createElement("input")
-          num_input.type = "number"
-          num_input.setAttribute('id', 'inputPts')
-          cell4.appendChild(num_input)
 
           var review_button = document.createElement("button");
           review_button.className = "bwt1";
           review_button.innerHTML = "Add";
           review_button.onclick = function () {
-            var numpts = document.getElementById('inputPts').value;
+            var numpts = document.getElementById("ptsToAdd").value
             console.log(numpts)
             userAddPts(email, numpts);
           };
-          cell5.appendChild(review_button);
+          cell4.appendChild(review_button);
           ind += 1
         }
       })
@@ -296,7 +292,6 @@ export default {
         totalPoints: increment(numpts),
         currentPoints: increment(numpts),
       });
-      document.getElementById('inputPts').value = ""
     }
   },
 };
