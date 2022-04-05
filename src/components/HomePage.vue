@@ -183,7 +183,7 @@
         />
 
         <label for="email"><b>Email</b></label>
-        <input type="text" id="email" placeholder="Enter Email" required />
+        <input type="email" id="email" placeholder="Enter Email" required />
 
         <label for="psw"><b>Password</b></label>
         <input
