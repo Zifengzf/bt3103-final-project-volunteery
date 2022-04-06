@@ -21,146 +21,69 @@
       </div>
     </div>
     <br />
-    <div class="filterandsort">
-      <label for="filterbyregion" style="font-size: 18px; padding: 10px"
-        >Filter by:</label
-      >
-      <select
-        v-model="selectedPosting"
-        name="filterbyregion"
-        id="filterbyregion"
-        style="font-size: 18px"
-      >
-        <option value="">--Region--</option>
-        <option value="central">Central</option>
-        <option value="north">North</option>
-        <option value="north-east">North-East</option>
-        <option value="east">East</option>
-        <option value="south-east">South-East</option>
-        <option value="south">South</option>
-        <option value="south-west">South-West</option>
-        <option value="west">West</option>
-        <option value="north-west">North-West</option>
-      </select>
-      <select
-        v-model="selectedPeriod"
-        name="filterbyperiod"
-        id="filterbyperiod"
-        style="font-size: 18px"
-      >
-        <option value="">Commitment Period</option>
-        <option value="1">1 month or less</option>
-        <option value="3">1 month - 3 months</option>
-        <option value="6">3 months - 6 months</option>
-        <option value="12">6 months - 1 year</option>
-      </select>
-      <!-- <label for="cars" style="font-size: 18px; padding: 10px">Sort by:</label>
-      <select name="cars" id="cars" style="font-size: 18px">
-        <option value="volvo">Vacancy</option>
-        <option value="saab">Commitment Period</option>
-        <option value="opel">Posted date</option>
-      </select> -->
-      <label for="sortby" style="font-size: 18px; padding: 10px"
-        >Sort by:</label
-      >
-      <select
-        v-model="selectedSorting"
-        name="selectedSorting"
-        id="selectedSorting"
-        style="font-size: 18px"
-      >
-        <option value="Vacancy">Vacancy</option>
-        <option value="Duration">Duration</option>
-        <!-- <option value="Date">Posted date</option> -->
-      </select>
-      <!-- <input
-        type="submit"
-        value="NIL"
-        style="font-size: 18px; padding: 10px"
-      /> -->
-    </div>
-    <div v-for="(result, index) in results" :key="result">
-      <div class="card">
-        <div class="card-section">
-          <p>{{ index }}</p>
+    {{listing}}
+    <div class="bottombanner">
+        <div class="left">
+            <h1>
+                <div class="title" id="activityTitle">{{activityTitle}}</div>
+            </h1>
+            <div class="organisation" style="margin-left:15px">by ABC Elderly Home</div> <br>
+
+            <div class="description" style="margin-left:15px" id="activityContent">{{activityContent}}</div>
+            <br>
+
         </div>
-        <div class="card-divider">
-          <p>$ {{ result.USD }}</p>
-        </div>
-        <div class="card-section">
-          <p>{{ result.EUR }}</p>
-        </div>
-      </div>
-    </div>
-    <div v-for="result in cities" :key="result">
-      <div class="card">
-        <div class="card-section">
-          <p>{{ result }}</p>
-        </div>
-      </div>
-    </div>
-    <br />
-    <div v-for="message in filteredPostings" class="card" :key="message">
-      <div class="card-body">
-        <div class="listingbox">
-          <img
-            class="imgbox"
-            src="https://media.istockphoto.com/photos/volunteers-serving-hot-meal-to-people-in-community-soup-kitchen-picture-id482802211?k=20&m=482802211&s=612x612&w=0&h=wZtnwsE0iQOqzXp8z99blyjq16JLCeyRDeV0UuOZmkA="
-            alt="Listing Pic"
-            style="float: left"
-          />
-          <div class="listingpara" style="float: left">
-            <p class="listingtitle">{{ message.title }}</p>
-            <p class="listinginfo">{{ message.content }}</p>
-            <div class="listingdetails">
-              <div class="infobox">
-                <img
-                  id="profpic"
-                  src="../assets/location.png"
-                  alt="Profile Pic"
-                  height="30"
-                  width="30"
-                  style="display: inline-block"
-                />
-                <p class="specdetails">Region: {{ message.region }}</p>
-              </div>
-              <div class="infobox">
-                <img
-                  id="profpic"
-                  src="../assets/calendar.png"
-                  alt="Profile Pic"
-                  height="30"
-                  width="30"
-                />
-                <p class="specdetails">
-                  Duration : {{ message.duration }} months
-                </p>
-              </div>
-              <div class="infobox">
-                <img
-                  id="profpic"
-                  src="../assets/vacancy.png"
-                  alt="Profile Pic"
-                  height="30"
-                  width="30"
-                />
-                <p class="specdetails">
-                  Vacancy: {{ message.vacancy }} / {{ message.needed }} left
-                </p>
-              </div>
+
+
+        <div class="right" style="width: 400px; padding-right:100px; margin-top:5px">
+            <br><br><br><br>
+            <img src="../assets/calendar.png" alt="" style="width: 40px; height: 40px; float: left; margin-right: 10px">
+            <div id="activityDate">17 March 2022</div>
+            <div class="buttonclass" style="margin-left:200px; float:left; margin-top:-15px, hover:true" v-on:click="displayLogin()">
+                <a class="redeemclass">Apply!</a>
             </div>
-          </div>
-          <div class="listingbuttonsbox">
-            <router-link :to="`/listing/${message.url}`">
-              <button class="viewmore" type="button">Learn More</button>
-            </router-link>
-            <button class="viewmore" type="button" style="hover:true" v-on:click="displayLogin()">Apply Now</button>
-          </div>
+            <br><br>
+            <img src="../assets/location.png" alt="" style="width: 40px; height: 40px; float: left; margin-right: 10px">
+            <div id="activityRegion">Kent Ridge</div><br><br>
+            <img src="../assets/vacancy.png" alt="" style="width: 40px; height: 40px; float: left; margin-right: 10px">
+            <div id="activityVacancy">8 Vacancies Left</div>
         </div>
-        <br />
-      </div>
+   
+        
+        <div class="listingcontainer" style="margin-top: 50px;">
+            <div style="float: left; margin-left:20px; margin-top:10px; width:1050px">
+                <div class="title" style="float: left;">Our Reviews</div><br>
+                <div style="width:100px; margin-top: 5px; margin-left:20px; float:left">
+                    <img class="divimg2" src="../assets/stars.png">
+                </div>
+                <span style="margin-left:15px; margin-top: 7px; float:left;">5 Star Rating</span>
+                <div class="buttonclass" style="margin-left:1250px; float:left; margin-top:-15px; width:300px" v-on:click="displayLogin2()">
+                    <a class="redeemclass">Leave a Review</a>
+                </div>
+            </div>
+            <br><br><br><br>
+
+            <div v-for="message in messages" class="card" :key="message">
+            <div class="reward">
+                <div class="imgcontainer">
+                    <img class="divimg2" src="../assets/stars.png">
+                </div>
+                <div style="font: Sansation">
+                    <h4 class="centeredtext"><span>{{ message.reviewRate }} Star Rating</span></h4>
+                </div>
+                <div class="buttonclass" style="margin-left:20px; margin-right:20px">
+                    <span id="reviewDescription">{{ message.reviewDescription }}</span>
+                </div>
+            </div>
+            
+            </div>
+
+
+        </div>
+
     </div>
-  </div>
+
+
 
   <div id="id01" class="modal">
     <form class="modal-content animate">
@@ -191,399 +114,118 @@
     </form>
   </div>
 
+
+<div id="id02" class="modal">
+    <form class="modal-content animate">
+        <div class="overlay"></div>
+        <div class="content">
+            <div class="imgcontainer" style="margin-left:800px">
+                <span
+                onclick="document.getElementById('id02').style.display='none'"
+                class="close"
+                title="Close Modal">&times;</span>
+            </div>
+
+            <br><br>
+            <form>
+                <div class="title" id="activityTitle">Interact and Socialise with Our Elderly</div>
+                <p>by ABC Elderly Home</p>
+                <h3>Rating (out of 5 stars):</h3>
+                <input type="text" id="rateEntry" required="" placeholder="" style="width: 50px;">
+                <h3>Describe your overall experience!</h3>
+                <textarea rows="5" cols="70" name="Enter description" style="height:170px;" id="descriptionEntry"></textarea>
+                <br><br><br>
+                <div class="buttonclass" style="margin-left:200px; float:left; margin-top:-15px" v-on:click="addReview()">
+                    <a class="redeemclass">Submit</a>
+                </div>
+            </form>
+        </div>
+    </form>
+  </div>
+    
+
+  </div>
+
+
+
 </template>
 
 <script>
+import { computed } from "vue";
+import { useRoute } from "vue-router";
 import firebaseApp from "@/firebase.js";
 import { getFirestore } from "firebase/firestore";
-import { collection, getDocs, query, orderBy } from "firebase/firestore";
+import { collection, getDocs, query, setDoc, doc } from "firebase/firestore";
 
 const db = getFirestore(firebaseApp);
 
 export default {
   data() {
     return {
-      results: [],
-      cities: [],
+      listing: computed(() => useRoute().params.sn),
+      activityTitle: "x",
+      activityContent: "x",
+      activityId: 0,
+      reviewRate: [],
+      reviewDescription: [],
       messages: [],
-      messageText: "",
-      nickname: "hootlex",
-      filteredPostings: [],
-      selectedPosting: "",
-      selectedPeriod: "",
-      selectedSorting: "Vacancy",
     };
   },
   mounted() {
-    this.storeMessage(this.selectedSorting);
-    // async function display() {
-    //     let z = await getDocs(collection(db, "Applications"))
-    //     let ind = 1
-    //     //var tp = 0
-
-    //     z.forEach((docs) => {
-    //         let yy = docs.data()
-    //         var region = (yy.Region)
-
-    //         console.log(ind);
-    //         console.log(region);
-    //         this.list.push(region) // unable to find this.list
-
-    //         console.log("fin");
-
-    //         // adding content to bottom
-    //         // console.log(content)
-    //         // const e = document.createElement('div');
-    //         // e.innerHTML = '<h3 class="listingbox">content<h3>';
-    //         // document.body.appendChild(e);
-
-    //         // val(ticker)
-
-    //         // setInterval(() => {
-    //         //     val(ticker)
-    //         // }, 2000)
-
-    //         // async function val(ticker) {
-    //         //     let binance = new ccxt.binance()
-    //         //     let x = await binance.fetch_ohlcv(ticker, "5m")
-    //         //     cell6.innerHTML = x[499][4]
-    //         //     cell7.innerHTML = 50
-    //         //     tp = tp + parseFloat(cell7.innerHTML)
-    //         // }
-    //         ind += 1
-    //     })
-    // }
-    //display()
+    this.storeMessage();
     console.log(this.list);
     //this.retrieveemployees()
-  },
-  watch: {
-    selectedPosting(fil) {
-      console.log(fil);
-      if (fil == "") {
-        this.filteredPostings = this.messages;
-      }
-      if (fil != "") {
-        this.filteredPostings = this.messages.filter((posting) => {
-          return posting.region.toLowerCase() == fil.toLowerCase();
-        });
-      }
-    },
-    selectedPeriod(fil) {
-      console.log(fil);
-      if (fil == "") {
-        this.filteredPostings = this.messages;
-      }
-      if (fil != "") {
-        this.filteredPostings = this.messages.filter((posting) => {
-          return posting.duration.toLowerCase() == fil.toLowerCase();
-        });
-      }
-    },
-    selectedSorting(sort) {
-      console.log(sort);
-      if (sort == "") {
-        this.filteredPostings = this.messages;
-      }
-      if (sort != "") {
-        // this.filteredPostings = this.messages.orderBy(sort);
-        // this.storeMessage(sort);
-        if (sort == "Vacancy") {
-          this.filteredPostings.sort(function (a, b) {
-            // console.log(a.sort);
-            // console.log(b.sort);
-            return a.vacancy - b.vacancy;
-          });
-        } else {
-          this.filteredPostings.sort(function (a, b) {
-            return a.duration - b.duration;
-          });
-        }
-      }
-    },
   },
   methods: {
     displayLogin() {
       return (document.getElementById("id01").style.display = "block");
     },
-    async storeMessage(/*sort*/) {
-      this.messages = [];
-      const q = query(
-        collection(db, "Opportunities"),
-        orderBy(this.selectedSorting)
-      );
+    displayLogin2() {
+      return (document.getElementById("id02").style.display = "block");
+    },
+    async storeMessage() {
+      const q = query(collection(db, "Opportunities"));
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
         let yy = doc.data();
-        this.messages.push({
-          content: yy.Content,
-          duration: yy.Duration,
-          region: yy.Region,
-          status: yy.Status,
-          title: yy.Title,
-          vacancy: yy.Vacancy,
-          needed: yy["Volunteers Needed"],
-          url: yy.sn,
-        });
-        this.messageText = "";
+        if (this.listing ==  yy.sn) {
+            this.activityTitle = yy.Title;
+            this.activityContent = yy.Content;
+            this.activityId = doc.id;
+        }
       });
-      this.filteredPostings = this.messages;
-    },
-    searchPostings() {
-      this.filteredPostings = this.messages;
-      console.log(this.selectedPosting);
 
-      if (this.selectedPosting == "") {
-        return this.filteredPostings;
-      }
-
-      if (this.selectedPosting != "") {
-        this.filteredPostings = this.filteredPostings.filter((posting) => {
-          return (
-            posting.region.toLowerCase() === this.selectedPosting.toLowerCase()
-          );
+      const q2 = query(collection(db, "Opportunities/" + this.activityId + "/Reviews"));
+      const querySnapshot2 = await getDocs(q2);
+      querySnapshot2.forEach((doc) => {
+        let zz = doc.data();
+        this.messages.push({
+          reviewRate: zz.rating,
+          reviewDescription: zz.description,
         });
-      }
+      });
+
+    },
+    async addReview() {
+      var addRating = document.getElementById("rateEntry").value;
+      var addDescription = document.getElementById("descriptionEntry").value;
+      const db = getFirestore(firebaseApp);
+
+        await setDoc(doc(db, "Opportunities/bonemarrow/Reviews", "r3"), {
+            rating: addRating,
+            description: addDescription
+        })
+        .then(() => {
+            this.$router.push({ name: "MyApplications" });
+            //router.push('/')
+          });
+      
     },
   },
 };
 </script>
+
 <style scoped>
-.mainbanner {
-  background-image: url("../assets/volunteer_bg.png");
-  background-size: cover;
-  position: relative;
-  width: 100%;
-  min-height: 600px;
-  padding-top: 0%;
-  padding-bottom: 0%;
-}
-.maintext {
-  margin: 0;
-  position: absolute;
-  top: 30%;
-  left: 50%;
-  -ms-transform: translate(-50%, -30%);
-  transform: translate(-50%, -30%);
-}
-.filterandsort {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.treesbg {
-  background-image: url("../assets/volunteer_bg.png");
-  background-size: cover;
-  position: relative;
-  width: 100%;
-  min-height: 600px;
-  padding-top: 0%;
-  padding-bottom: 0%;
-}
-h1 {
-  background-color: lightgreen;
-}
-
-.title {
-  padding: 0px;
-  background-color: transparent;
-  /* width: 374px;
-  color: rgba(0, 0, 0, 1);
-  position: absolute;
-  top: 55px;
-  left: 24px;
-  font-family: Roboto;
-  font-weight: Bold;
-  font-size: 16px;
-  opacity: 1;
-  text-align: left; */
-}
-
-.fliterandsort {
-  padding: 20px;
-  color: green;
-}
-
-.formli {
-  display: inline-block;
-  text-align: right;
-}
-
-form {
-  text-align: center;
-  align-items: center;
-  margin: auto;
-}
-
-input:hover {
-  box-shadow: 3px 3px purple;
-  border-radius: 2px;
-}
-
-.save {
-  text-align: center;
-}
-
-.listingbox {
-  margin: auto;
-  width: 90%;
-  border: 6px solid #ffd466;
-  background-color: #ffe5a3;
-  padding: 10px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: stretch;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
-  overflow: hidden;
-}
-.imgbox {
-  width: 150px;
-  height: 150px;
-  object-fit: cover;
-  background-color: #ceeaf7;
-  visibility: visible;
-  float: left;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
-  /* border: 1px solid gray; */
-}
-.listingpara {
-  /* border: 1px solid gray; */
-  padding-left: 10px;
-  padding-right: 100px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  justify-items: left;
-}
-.listingtitle {
-  float: left;
-  font-size: 20px;
-  font-weight: bold;
-  margin-top: 5px;
-  margin-bottom: 1px;
-}
-.listinginfo {
-  font-size: 14px;
-  margin-top: 2px;
-  margin-bottom: 2px;
-}
-.listingdetails {
-  margin-top: 2px;
-  font-size: 12px;
-  margin-bottom: 5px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-}
-.infobox {
-  width: 200px;
-  display: flex;
-}
-.specdetails {
-  display: inline-block;
-  padding-left: 10px;
-  font-size: 15px;
-  font-weight: bold;
-}
-.viewmore {
-  display: block;
-  width: 150px;
-  background-color: #ff9213;
-  color: white;
-  font-weight: bold;
-  font-size: 20px;
-  padding: 18px 15px 18px 15px;
-  visibility: visible;
-  float: right;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
-}
-.viewmore:hover {
-  background-color: #fff9e9;
-  color: black;
-}
-.listingbuttonsbox {
-  /* border: 1px solid gray; */
-  float: right;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-  margin-left: 10px;
-  margin-right: 10px;
-}
-.addlisting {
-  display: block;
-  width: 120px;
-  background-color: #ff9213;
-  color: white;
-  font-weight: bold;
-  font-size: 14px;
-  padding: 10px 10px 10px 10px;
-  visibility: visible;
-  float: right;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
-}
-.learnmore {
-  display: block;
-  width: 120px;
-  background-color: #ff9213;
-  color: white;
-  font-weight: bold;
-  font-size: 14px;
-  padding: 10px 10px 10px 10px;
-  visibility: visible;
-  float: right;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
-}
-.learnmore:hover {
-  background-color: #fff9e9;
-  color: black;
-}
-.applynow {
-  display: block;
-  width: 120px;
-  background-color: #ff9213;
-  color: white;
-  font-weight: bold;
-  font-size: 14px;
-  padding: 10px 10px 10px 10px;
-  visibility: visible;
-  float: right;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
-}
-.applynow:hover {
-  background-color: #fff9e9;
-  color: black;
-}
-.section {
-  padding: 10px;
-  justify-content: space-evenly;
-}
-.topnav {
-  background-color: #fff9e9;
-  min-height: 50px;
-  overflow: hidden;
-}
 .mainbanner {
   background-image: url("../assets/volunteer_bg.png");
   background-size: cover;
@@ -1191,6 +833,7 @@ span.psw {
         color: fuchsia;
     }
 }
+
 .popup .overlay {
     position: fixed;
     top: 0px;
@@ -1241,5 +884,6 @@ span.psw {
     transition: all 300ms ease-in-out;
     transform: translate(-50%, -50%) scale(1);
 }
+
 
 </style>

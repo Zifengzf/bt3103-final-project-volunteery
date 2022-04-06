@@ -160,7 +160,9 @@
             </div>
           </div>
           <div class="listingbuttonsbox">
-            <button class="viewmore" type="button">Learn More</button>
+            <router-link :to="`/orglisting/${message.url}`">
+              <button class="viewmore" type="button">Learn More</button>
+            </router-link>
           </div>
         </div>
         <br />

@@ -9,6 +9,7 @@ import Applicants from "@/views/Applicants.vue";
 import MyPostings from "@/views/MyPostings.vue";
 import OpportunitiesPage from "@/views/OpportunitiesPage.vue";
 import DetailedListing from "@/views/DetailedListing.vue";
+import OrgDetailedListing from "@/views/OrgDetailedListing.vue";
 
 const routes = [{
         path: "/",
@@ -60,14 +61,19 @@ const routes = [{
         name: "DetailedListing",
         component: DetailedListing,
     },
+    {
+        path: "/orglisting/:sn",
+        name: "OrgDetailedListing",
+        component: OrgDetailedListing,
+    },
     /** 
-         * Wait for more routes to be added
-        {
-          path: "/profit",
-          name: "OnlyProfit",
-          component: OnlyProfit,
-        },
-        */
+             * Wait for more routes to be added
+            {
+              path: "/profit",
+              name: "OnlyProfit",
+              component: OnlyProfit,
+            },
+            */
 ];
 
 const router = createRouter({
