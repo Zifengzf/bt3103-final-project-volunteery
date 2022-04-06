@@ -1,16 +1,16 @@
 <template>
-  <NavBar2 />
+  <!-- <NavBar2 /> -->
   <HomePage />
 </template>
 
 <script>
 import HomePage from "@/components/HomePage.vue";
-import NavBar2 from "@/components/NavBar2.vue";
+// import NavBar2 from "@/components/NavBar2.vue";
 
 export default {
   name: "App",
   components: {
-    NavBar2,
+    // NavBar2,
     HomePage,
   },
   data() {
