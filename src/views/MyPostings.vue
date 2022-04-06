@@ -149,7 +149,7 @@
             <button
               class="viewmore"
               type="button"
-              v-on:click="deleteListing(message.title)"
+              v-on:click="deleteListing(message.id)"
             >
               Mark as Complete
             </button>
@@ -165,7 +165,7 @@
 <script>
 import NavBar2 from "@/components/NavBar2.vue";
 import firebaseApp from "@/firebase.js";
-import { getFirestore } from "firebase/firestore";
+import { deleteDoc, getFirestore } from "firebase/firestore";
 import {
   collection,
   getDocs,
@@ -174,6 +174,7 @@ import {
   doc,
   updateDoc,
   increment,
+  arrayRemove,
 } from "firebase/firestore";
 // updateDoc, doc, getDoc
 
@@ -392,6 +393,7 @@ export default {
         if (this.myPostings.includes(doc.id)) {
           let yy = doc.data();
           this.messages.push({
+            id: doc.id,
             content: yy.Content,
             duration: yy.Duration,
             region: yy.Region,
@@ -436,9 +438,24 @@ export default {
         });
       }
     },
-    deleteListing(title) {
+    async deleteListing(listing) {
       // Deletes listing from Organisation, Opportunities and all relevant applicants
-      console.log("Deleting listing " + title);
+      // this.orgName is WillingHearts
+      console.log("Deleting listing " + listing);
+      await updateDoc(doc(db, "Organisation", this.orgName), {
+        MyPostings: arrayRemove(listing),
+      });
+      await deleteDoc(doc(db, "Opportunities", listing));
+      let k = await getDocs(collection(db, "Applicants"));
+      k.forEach((document) => {
+        console.log(document.id);
+        let data = document.data();
+        var listing_ref = data.Listing_ref;
+        var id = document.id;
+        if (listing_ref === listing) {
+          deleteDoc(doc(db, "Applicants", id));
+        }
+      });
     },
 
     // sortPostings() {

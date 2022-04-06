@@ -66,8 +66,7 @@
     <br />
     <div class="addpts">
       <div class="orangetext">Manage Volunteers</div>
-      <h3>Points to Add: 
-      <input type="number" id="ptsToAdd"></h3>
+      <h3>Points to Add: <input type="number" id="ptsToAdd" /></h3>
       <br />
       <div id="volnames">
         <table id="table2" class="auto-index">
@@ -122,19 +121,18 @@ export default {
     },
   },
   mounted() {
-    
     this.storeMessage();
     async function display() {
       clearTable();
       let z = await getDocs(collection(db, "Applicants"));
       let ind = 1;
 
-      z.forEach((docs) => {
-        let data = docs.data();
+      z.forEach((doc) => {
+        let data = doc.data();
         var table = document.getElementById("table");
 
         var row = table.insertRow(ind);
-        var date = docs.get("Applied Date");
+        var date = doc.get("Applied Date");
         var name = data.Name;
         var listing_name = data.Listing;
         var status = data.Status;
@@ -249,10 +247,9 @@ export default {
       z.forEach((docs) => {
         let data = docs.data();
 
-        var toAdd = data.Status
+        var toAdd = data.Status;
 
         if (toAdd == "Approved") {
-
           var table2 = document.getElementById("table2");
 
           var row = table2.insertRow(ind);
@@ -272,21 +269,21 @@ export default {
           review_button.className = "bwt1";
           review_button.innerHTML = "Add";
           review_button.onclick = function () {
-            var numpts = document.getElementById("ptsToAdd").value
-            console.log(numpts)
+            var numpts = document.getElementById("ptsToAdd").value;
+            console.log(numpts);
             userAddPts(email, numpts);
           };
           cell4.appendChild(review_button);
-          ind += 1
+          ind += 1;
         }
-      })
+      });
     }
     displayAddpts();
 
     async function userAddPts(email, numpts) {
       console.log(email);
       console.log(numpts);
-      alert("Adding "+numpts+" for "+email)
+      alert("Adding " + numpts + " for " + email);
 
       await updateDoc(doc(db, "volunteers", email), {
         totalPoints: increment(numpts),
@@ -447,6 +444,4 @@ table {
   background-color: #ff9213;
   color: white;
 }
-
-
 </style>
