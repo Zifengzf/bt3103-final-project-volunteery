@@ -266,7 +266,7 @@ export default {
       const auth = getAuth();
       signInWithEmailAndPassword(auth, username, password)
         .then(() => {
-          this.$router.push({ name: "MyApplications" });
+          this.$router.push({ name: "Volunteer" });
         })
         .catch((error) => {
           console.log(error.message);
@@ -278,7 +278,7 @@ export default {
       const auth = getAuth();
       signInWithEmailAndPassword(auth, username, password)
         .then(() => {
-          this.$router.push({ name: "MyApplications" });
+          this.$router.push({ name: "OpportunitiesPage" });
         })
         .catch((error) => {
           console.log(error.message);
