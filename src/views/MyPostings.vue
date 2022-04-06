@@ -146,7 +146,13 @@
             </div>
           </div>
           <div class="listingbuttonsbox">
-            <button class="viewmore" type="button" v-on:click="displayAddPts()">Mark as Complete</button>
+            <button
+              class="viewmore"
+              type="button"
+              v-on:click="deleteListing(message.title)"
+            >
+              Mark as Complete
+            </button>
           </div>
         </div>
         <br />
@@ -154,46 +160,22 @@
     </div>
     <!-- <div v-for="sorting of filteredPostings" :key="sorting">{{ sorting }}</div> -->
   </div>
-
-  <div id="addPoints" class="modal">
-    <form class="modal-content animate">
-      <div class="imgcontainer">
-        <span
-          onclick="document.getElementById('addPoints').style.display='none'"
-          class="close"
-          title="Close Modal"
-          >&times;</span
-        >
-        <img src="@/assets/volunteery_copy.png" alt="Avatar" class="avatar" />
-      </div>
-
-      <div class="container">
-        <div class="centeredtext" style="color: #ff9213; font-size: 24px">
-          ADD POINTS FOR VOLUNTEERS
-        </div>
-        <div id="volnames">
-          <table id="table" class="auto-index">
-            <tr>
-              <th>S/N</th>
-              <th>Volunteer Name</th>
-              <th>Volunteer Email</th>
-              <th>Points to Add</th>
-              <th>Add</th>
-            </tr>
-          </table>
-        </div>
-      </div>
-    </form>
-  </div>
-
 </template>
 
 <script>
 import NavBar2 from "@/components/NavBar2.vue";
 import firebaseApp from "@/firebase.js";
 import { getFirestore } from "firebase/firestore";
-import { collection, getDocs, query, orderBy, doc, updateDoc, increment } from "firebase/firestore";
-// updateDoc, doc, getDoc 
+import {
+  collection,
+  getDocs,
+  query,
+  orderBy,
+  doc,
+  updateDoc,
+  increment,
+} from "firebase/firestore";
+// updateDoc, doc, getDoc
 
 const db = getFirestore(firebaseApp);
 
@@ -227,7 +209,9 @@ export default {
     this.storeMessage(this.selectedSorting);
 
     async function display() {
-      let z = await getDocs(collection(db, "Applications", "chefs", "Volunteers"));
+      let z = await getDocs(
+        collection(db, "Applications", "chefs", "Volunteers")
+      );
       let ind = 1;
 
       z.forEach((docs) => {
@@ -248,24 +232,23 @@ export default {
         cell2.innerHTML = name;
         cell3.innerHTML = email;
         cell4.className = "ptsToAdd";
-        cell5.className = "accept"
+        cell5.className = "accept";
 
-        var num_input = document.createElement("input")
-        num_input.type = "number"
-        cell4.appendChild(num_input)
+        var num_input = document.createElement("input");
+        num_input.type = "number";
+        cell4.appendChild(num_input);
 
         var review_button = document.createElement("button");
         review_button.className = "bwt1";
         review_button.innerHTML = "Add";
         review_button.onclick = function () {
-          var numpts = document.getElementsByClassName('ptsToAdd').value;
-          console.log(numpts)
+          var numpts = document.getElementsByClassName("ptsToAdd").value;
+          console.log(numpts);
           userAddPts(email, 3);
         };
         cell5.appendChild(review_button);
-        ind += 1
-      })
-    
+        ind += 1;
+      });
     }
     display();
 
@@ -302,7 +285,6 @@ export default {
       //   this.currentPoints= snapshot.data().currentPoints
       // });
     }
-
 
     // async function display() {
     //     let z = await getDocs(collection(db, "Applications"))
@@ -416,7 +398,7 @@ export default {
             status: yy.Status,
             title: yy.Title,
             vacancy: yy.Vacancy,
-            needed: yy['Volunteers Needed'],
+            needed: yy["Volunteers Needed"],
           });
         }
         this.messageText = "";
@@ -431,8 +413,8 @@ export default {
       postingsSnapshot.forEach((doc) => {
         let zz = doc.data();
         let postingsArr = zz.MyPostings;
-        for (let i = 0; i < postingsArr.length; i++) {     
-          console.log(postingsArr[i]);      
+        for (let i = 0; i < postingsArr.length; i++) {
+          console.log(postingsArr[i]);
           this.myPostings.push(postingsArr[i]);
         }
       });
@@ -454,8 +436,9 @@ export default {
         });
       }
     },
-    displayAddPts() {
-      return (document.getElementById("addPoints").style.display = "block");
+    deleteListing(title) {
+      // Deletes listing from Organisation, Opportunities and all relevant applicants
+      console.log("Deleting listing " + title);
     },
 
     // sortPostings() {
@@ -544,7 +527,6 @@ table {
   margin: 100px;
   text-align: center;
 }
-
 
 .mainbanner {
   background-image: url("../assets/volunteer_bg.png");
