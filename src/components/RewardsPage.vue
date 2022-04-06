@@ -67,7 +67,7 @@
         <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
         <a
           class="redeemclass"
-          onclick="document.getElementById('id01').style.display='block'"
+          v-on:click="redeemReward(20)"
           >Redeem</a
         >
         <!-- <button class="redeem_btn ">REDEEM</button> -->
@@ -93,7 +93,7 @@
         <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
         <a
           class="redeemclass"
-          onclick="document.getElementById('id01').style.display='block'"
+          v-on:click="redeemReward(25)"
           >Redeem</a
         >
         <!-- <button class="redeem_btn ">REDEEM</button> -->
@@ -119,7 +119,7 @@
         <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
         <a
           class="redeemclass"
-          v-on:click="redeemReward()"
+          v-on:click="redeemReward(25)"
           >Redeem</a
         >
         <!-- <button class="redeem_btn ">REDEEM</button> -->
@@ -152,7 +152,7 @@
 <script>
 import firebaseApp from "@/firebase.js";
 import { getFirestore } from "firebase/firestore";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc, increment } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
 // const db = getFirestore(firebaseApp);
@@ -162,14 +162,6 @@ import { getAuth } from "firebase/auth";
 export default {
   data() {
     return {
-      chartdata: {
-        "01-2021": 7,
-        "02-2021": 11,
-        "03-2021": 11,
-        "04-2021": 16,
-        "05-2021": 19,
-        "06-2021": 21,
-      },
       tier: "SLIVER",
       pointsAttained: 33,
       remainingPoints: 17,
@@ -178,17 +170,29 @@ export default {
     // chartdata: null
   },
   methods: {
-    redeemReward() {
-      document.getElementById("id01").style.display = "block";
+    async redeemReward(pts) { 
+      const db = getFirestore(firebaseApp);     
       const auth = getAuth()
-      var user = auth.currentUser.email;
-      console.log(user)
-    }
-  },
-  mounted() {
-    const db = getFirestore(firebaseApp);
-    const auth = getAuth();
-    async function display() {
+      var email = auth.currentUser.email;
+      console.log(email)
+      var z = await getDoc(doc(db, "volunteers", email));
+      var userInfo = z.data();
+      var userPts =  userInfo.currentPoints;
+      if (userPts >= pts) {
+        document.getElementById("id01").style.display = "block";
+        await updateDoc(doc(db, "volunteers", email), {
+          totalPoints: increment(-pts),
+          currentPoints: increment(-pts),
+        });
+        this.display()
+      }
+      else {
+        alert("Not enough points")
+      }
+    },
+    async display() {
+      const db = getFirestore(firebaseApp);     
+      const auth = getAuth()
       var user = auth.currentUser.email;
       console.log("Current User", user);
       const z = await getDoc(doc(db, "volunteers", user));
@@ -203,14 +207,14 @@ export default {
 
         document.getElementById("ptsA").innerHTML = "Points Available: " + b;
         document.getElementById("achieved").innerHTML = a;
-        document.getElementById("tier").innerHTML = tier(a);
-        document.getElementById("getPoints").innerHTML = ptsNeeded(a);
+        document.getElementById("tier").innerHTML = this.tierfn(a);
+        document.getElementById("getPoints").innerHTML = this.ptsNeededfn(a);
         document.getElementById("point-meter").style.gridTemplateColumns =
-          ptsM(a);
+          this.$optionsptsMfn(a);
       }
       console.log(z);
-    }
-    function tier(points) {
+    },
+    tierfn(points) {
       if (points < 50) {
         return "Sliver";
       } else if (points < 80) {
@@ -220,8 +224,8 @@ export default {
         document.getElementById("tier").style.color = "#DDA0DD"
         return "Platinum";
       }
-    }
-    function ptsNeeded(points) {
+    },
+    ptsNeededfn(points) {
       if (points < 50) {
         var ptsneededs = 50 - points;
         return "Get " + ptsneededs + " more points to unlock next tier!";
@@ -231,8 +235,8 @@ export default {
       } else {
         return "";
       }
-    }
-    function ptsM(points) {
+    },
+    ptsMfn(points) {
       if (points < 50) {
         var ptsneededs = 50 - points;
         return points + "fr " + ptsneededs + "fr";
@@ -243,22 +247,12 @@ export default {
         return "60fr 30fr";
       }
     }
-    display();
   },
-  //    mounted() {
-  //      this.renderChart({
-  //        labels: xValues,
-  //        datasets: [{
-  //          label: 'Data One',
-  //          backgroundColor: "rgba(255,229,163,1.0)",
-  //          borderColor: "rgba(255,146,19,1)",
-  //          lineTension: 0,
-  //          fill: true,
-  //          borderWidth: 3,
-  //          data: yValues,
-  //        }]}, {responsive: true, maintainAspectRatio: false})
-  //    }
-};
+  mounted() {
+    this.display();
+}
+}
+
 </script>
 
 <style scoped>
