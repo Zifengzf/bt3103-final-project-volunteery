@@ -181,7 +181,6 @@ export default {
       if (userPts >= pts) {
         document.getElementById("id01").style.display = "block";
         await updateDoc(doc(db, "volunteers", email), {
-          totalPoints: increment(-pts),
           currentPoints: increment(-pts),
         });
         this.display()

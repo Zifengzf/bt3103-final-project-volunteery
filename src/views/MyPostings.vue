@@ -31,7 +31,7 @@
       id="filterbyregion"
       style="font-size: 18px"
     >
-      <option value="">--Region--</option>
+      <option value="">-- Region --</option>
       <option value="central">Central</option>
       <option value="north">North</option>
       <option value="north-east">North-East</option>
@@ -48,11 +48,12 @@
       id="filterbyperiod"
       style="font-size: 18px"
     >
-      <option value="">Duration</option>
-      <option value="1">1 month or less</option>
-      <option value="3">1 month - 3 months</option>
-      <option value="6">3 months - 6 months</option>
-      <option value="12">6 months - 1 year</option>
+      <option value="">-- Duration --</option>
+      <option value="0,1">Less than 1 month</option>
+      <option value="1,3">1 - 3 months</option>
+      <option value="3,6">3 - 6 months</option>
+      <option value="6,12">6 months - 1 year</option>
+      <option value="12,999">More than 1 year</option>
     </select>
     <label for="sortby" style="font-size: 18px; padding: 10px">Sort by:</label>
     <select
@@ -214,6 +215,7 @@ export default {
       // sortBy: "Region",
       orgName: "WillingHearts",
       myPostings: [],
+      holder: [],
     };
   },
   // firestore: {
@@ -346,26 +348,46 @@ export default {
 
   watch: {
     selectedPosting(fil) {
-      console.log(fil);
-      if (fil == "") {
-        this.filteredPostings = this.messages;
-      }
-      if (fil != "") {
-        this.filteredPostings = this.messages.filter((posting) => {
-          return posting.region.toLowerCase() == fil.toLowerCase();
+      let currPosting = fil;
+      let currPeriod = this.selectedPeriod;
+      this.holder = this.messages;
+      if (currPosting != "") {
+        this.holder = this.holder.filter((posting) => {
+          return posting.region.toLowerCase() == currPosting.toLowerCase();
         });
       }
+      if (currPeriod != "") {
+        let arr = currPeriod.split(",");
+        let a = arr[0];
+        let b = arr[1];
+        console.log("more than " + a);
+        console.log("less than " + b);
+        this.holder = this.holder.filter((posting) => {
+          return a < posting.duration && posting.duration <= b;
+        });
+      }
+      this.filteredPostings = this.holder;
     },
     selectedPeriod(fil) {
-      console.log(fil);
-      if (fil == "") {
-        this.filteredPostings = this.messages;
-      }
-      if (fil != "") {
-        this.filteredPostings = this.messages.filter((posting) => {
-          return posting.duration.toLowerCase() == fil.toLowerCase();
+      let currPosting = this.selectedPosting;
+      let currPeriod = fil;
+      this.holder = this.messages;
+      if (currPosting != "") {
+        this.holder = this.holder.filter((posting) => {
+          return posting.region.toLowerCase() == currPosting.toLowerCase();
         });
       }
+      if (currPeriod != "") {
+        let arr = currPeriod.split(",");
+        let a = arr[0];
+        let b = arr[1];
+        console.log("more than " + a);
+        console.log("less than " + b);
+        this.holder = this.holder.filter((posting) => {
+          return a < posting.duration && posting.duration <= b;
+        });
+      }
+      this.filteredPostings = this.holder;
     },
     selectedSorting(sort) {
       console.log(sort);
