@@ -10,13 +10,10 @@
       <button class="dropbtn">User</button>
       <div class="dropdown-content">
         <a href="#">Profile</a>
-        <!-- <a href="#">Sign Out</a> -->
         <router-link to="/" class="router-link">Sign out</router-link>
       </div>
     </div>
     <div id="nav">
-      <!-- <router-link to="/" class="router-link">Home</router-link> | -->
-      <!-- <router-link to="/aboutorg" class="router-link">Switch to Org</router-link> | -->
       <router-link to="/volunteer">Volunteer Opportunities</router-link> |
       <router-link to="/myapplications">My Applications</router-link> |
       <router-link to="/reward">My Rewards</router-link>
