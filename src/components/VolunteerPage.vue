@@ -256,14 +256,29 @@ export default {
         this.filteredPostings = this.messages;
       }
       if (sort != "") {
-        this.storeMessage(sort);
+        // this.filteredPostings = this.messages.orderBy(sort);
+        // this.storeMessage(sort);
+        if (sort == "Vacancy") {
+          this.filteredPostings.sort(function (a, b) {
+            // console.log(a.sort);
+            // console.log(b.sort);
+            return a.vacancy - b.vacancy;
+          });
+        } else {
+          this.filteredPostings.sort(function (a, b) {
+            return a.duration - b.duration;
+          });
+        }
       }
     },
   },
   methods: {
-    async storeMessage(sort) {
+    async storeMessage(/*sort*/) {
       this.messages = [];
-      const q = query(collection(db, "Opportunities"), orderBy(sort));
+      const q = query(
+        collection(db, "Opportunities"),
+        orderBy(this.selectedSorting)
+      );
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
         let yy = doc.data();
@@ -274,7 +289,7 @@ export default {
           status: yy.Status,
           title: yy.Title,
           vacancy: yy.Vacancy,
-          needed: yy['Volunteers Needed'],
+          needed: yy["Volunteers Needed"],
           url: yy.sn,
         });
         this.messageText = "";

@@ -22,6 +22,16 @@
   </div>
   <br />
   <div class="filterandsort">
+    <label for="sortby" style="font-size: 18px; padding: 10px">Sort by:</label>
+    <select
+      v-model="selectedSorting"
+      name="selectedSorting"
+      id="selectedSorting"
+      style="font-size: 18px"
+    >
+      <option value="Vacancy">Vacancy</option>
+      <option value="Duration">Duration</option>
+    </select>
     <label for="filterbyregion" style="font-size: 18px; padding: 10px"
       >Filter by:</label
     >
@@ -60,7 +70,7 @@
         <option value="saab">Commitment Period</option>
         <option value="opel">Posted date</option>
       </select> -->
-    <label for="sortby" style="font-size: 18px; padding: 10px">Sort by:</label>
+    <!-- <label for="sortby" style="font-size: 18px; padding: 10px">Sort by:</label>
     <select
       v-model="selectedSorting"
       name="selectedSorting"
@@ -69,8 +79,7 @@
     >
       <option value="Vacancy">Vacancy</option>
       <option value="Duration">Duration</option>
-      <!-- <option value="Date">Posted date</option> -->
-    </select>
+    </select> -->
     <!-- <div class="col-auto">
         <button type="button" class="btn btn-primary mb-2" @click="searchPostings">Search</button>
       </div> -->
@@ -280,13 +289,13 @@ export default {
       results: [],
       cities: [],
       messages: [],
+      // messages2: [],
       messageText: "",
       nickname: "hootlex",
       filteredPostings: [],
       selectedPosting: "",
       selectedPeriod: "",
       selectedSorting: "Vacancy",
-      // sortBy: "Region",
       tempUsername: "2001chenxi@gmail.com",
       myListings: [],
     };
@@ -362,6 +371,17 @@ export default {
         });
       }
     },
+    // selectedDuration(sort) {
+    //   console.log(sort);
+    //   if (sort == "") {
+    //     this.filteredPostings = this.messages;
+    //   }
+    //   if (sort != "") {
+    //     this.filteredPostings = this.filteredPostings.sort((function (a, b) {
+    //       return a.duration - b.duration;
+    //     }))
+    //   }
+    // },
     selectedSorting(sort) {
       console.log(sort);
       if (sort == "") {
@@ -369,14 +389,28 @@ export default {
       }
       if (sort != "") {
         // this.filteredPostings = this.messages.orderBy(sort);
-        this.storeMessage(sort);
+        // this.storeMessage(sort);
+        if (sort == "Vacancy") {
+          this.filteredPostings.sort(function (a, b) {
+            // console.log(a.sort);
+            // console.log(b.sort);
+            return a.vacancy - b.vacancy;
+          });
+        } else {
+          this.filteredPostings.sort(function (a, b) {
+            return a.duration - b.duration;
+          });
+        }
       }
     },
   },
   methods: {
-    async storeMessage(sort) {
+    async storeMessage(/*sort*/) {
       this.messages = [];
-      const q = query(collection(db, "Opportunities"), orderBy(sort));
+      const q = query(
+        collection(db, "Opportunities"),
+        orderBy(this.selectedSorting)
+      );
       const querySnapshot = await getDocs(q);
       // this.messages.clear();
       querySnapshot.forEach((doc) => {
@@ -395,6 +429,16 @@ export default {
         }
         this.messageText = "";
       });
+      // this.messages2 = this.messages;
+      // for (let i = 0; i < this.messages.length; i++) {
+      //   if (
+      //     this.filteredPostings.find(this.messages.at(i)) == this.messages.at(i)
+      //   ) {
+      //     continue;
+      //   } else {
+      //     this.messages2.splice(i);
+      //   }
+      // }
       this.filteredPostings = this.messages;
     },
 
