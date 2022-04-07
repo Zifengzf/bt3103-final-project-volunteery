@@ -153,20 +153,26 @@
   </div>
 
   <div id="id02" class="modal">
-    <span
-      onclick="document.getElementById('id02').style.display='none'"
-      class="close"
-      title="Close Modal"
-      >&times;</span
-    >
     <form class="modal-content" id="userForm">
+      <div class="imgcontainer">
+        <span
+          onclick="document.getElementById('id02').style.display='none'"
+          class="close"
+          title="Close Modal"
+          >&times;</span
+        >
+        <img src="@/assets/volunteery_copy.png" alt="Avatar" class="avatar" />
+      </div>
       <div class="container">
-        <h1>Sign Up</h1>
+        <div class="centeredtext" style="color: #ff9213; font-size: 24px">
+          SIGN UP
+        </div>
         <hr />
-        <img id="myinfo" src="@/assets/myinfo-logo.png" alt="" />
+        <p><b>Sign up with Singpass</b></p>
+        <img id="myinfo" src="@/assets/myinfo_logo.png" alt="" />
         <button id="Singpass">Use Singpass to prefill your details</button>
         <hr />
-        <p>Or enter your details manually</p>
+        <p><b>Or enter your details manually</b></p>
 
         <label for="name"><b>Full Name</b></label>
         <input type="text" placeholder="Enter Name" id="full_name" required />
@@ -213,15 +219,8 @@
         </label>
 
         <div class="clearfix">
-          <button type="button" class="signupbtn" v-on:click="userSignUp()">
-            Sign Up
-          </button>
-          <button
-            type="button"
-            onclick="document.getElementById('id02').style.display='none'"
-            class="cancelbtn"
-          >
-            Cancel
+          <button type="button" class="orange" v-on:click="userSignUp()">
+            SIGN UP
           </button>
         </div>
       </div>
@@ -436,15 +435,10 @@ button:hover {
   opacity: 0.8;
 }
 
-/* Extra styles for the cancel button */
-.cancelbtn {
-  background-color: #f44336;
-}
-
 /* Center the image and position the close button */
 .imgcontainer {
   text-align: center;
-  margin: 24px 0 12px 0;
+  margin: 24px 0 0px 0;
   position: relative;
 }
 
@@ -516,6 +510,9 @@ span.psw {
 }
 
 #myinfo {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
   width: 200px;
   height: 80px;
 }
