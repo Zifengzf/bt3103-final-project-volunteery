@@ -1,5 +1,6 @@
 <template>
   <NavBar2 />
+  <div style="background-color: #fff9e9">
   <div class="mainbanner">
     <div class="maintext">
       <div
@@ -159,6 +160,7 @@
       </div>
     </div>
     <!-- <div v-for="sorting of filteredPostings" :key="sorting">{{ sorting }}</div> -->
+  </div>
   </div>
 </template>
 
