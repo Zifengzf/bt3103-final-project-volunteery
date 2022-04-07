@@ -165,6 +165,8 @@
 <script>
 import NavBar2 from "@/components/NavBar2.vue";
 import firebaseApp from "@/firebase.js";
+import { getAuth } from "firebase/auth";
+
 import { deleteDoc, getFirestore } from "firebase/firestore";
 import {
   collection,
@@ -196,7 +198,7 @@ export default {
       selectedPeriod: "",
       selectedSorting: "Vacancy",
       // sortBy: "Region",
-      orgName: "wh@willinghearts.com",
+      // orgName: "wh@willinghearts.com",
       myPostings: [],
       holder: [],
     };
@@ -442,7 +444,9 @@ export default {
       // Deletes listing from Organisation, Opportunities and all relevant applicants
       // this.orgName is WillingHearts
       console.log("Deleting listing " + listing);
-      await updateDoc(doc(db, "Organisation", this.orgName), {
+      const auth = getAuth();
+      var email = auth.currentUser.email;
+      await updateDoc(doc(db, "Organisation", email), {
         MyPostings: arrayRemove(listing),
       });
       await deleteDoc(doc(db, "Opportunities", listing));
