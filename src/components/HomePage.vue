@@ -200,10 +200,11 @@
           required
         />
 
-        <label for="psw-repeat"><b>Repeat Password</b></label>
+        <label for="psw-repeat"><b>Confirm Password</b></label>
         <input
           type="password"
           placeholder="Repeat Password"
+          id="confirm_password"
           name="psw-repeat"
           required
         />
@@ -215,11 +216,16 @@
         </p>
 
         <label>
-          <input type="checkbox" checked="checked" name="remember" />
+          <input type="checkbox" checked="checked" name="remember" required />
         </label>
 
         <div class="clearfix">
-          <button type="button" class="orange" v-on:click="userSignUp()">
+          <button
+            type="button"
+            class="orange"
+            id="signup_button"
+            v-on:click="userSignUp()"
+          >
             SIGN UP
           </button>
         </div>
@@ -289,6 +295,11 @@ export default {
       var nationality = document.getElementById("nationality").value;
       var email = document.getElementById("email").value;
       var password = document.getElementById("signup_password").value;
+      var confirm_password = document.getElementById("confirm_password").value;
+      if (password != confirm_password) {
+        alert("Passwords do not match!");
+        return;
+      }
       const db = getFirestore(firebaseApp);
       const docRef = doc(db, "volunteers", email);
       const docSnap = await getDoc(docRef);
