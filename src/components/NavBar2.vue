@@ -9,7 +9,7 @@
     <div class="dropdown">
       <button class="dropbtn">Organisation</button>
       <div class="dropdown-content">
-        <a href="#">Profile</a>
+        <router-link to='/profileorg'>Profile</router-link>
         <router-link to="/" class="router-link">Sign out</router-link>
       </div>
     </div>

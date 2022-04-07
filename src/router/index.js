@@ -10,12 +10,25 @@ import MyPostings from "@/views/MyPostings.vue";
 import OpportunitiesPage from "@/views/OpportunitiesPage.vue";
 import DetailedListing from "@/views/DetailedListing.vue";
 import OrgDetailedListing from "@/views/OrgDetailedListing.vue";
+import Profile from "@/views/Profile.vue";
+import ProfileOrg from "@/views/ProfileOrg.vue";
+
 
 const routes = [{
         path: "/",
         name: "Home",
         component: Home,
     },
+    {
+        path: "/profile",
+        name: "Profile",
+        component: Profile,
+    },    
+    {
+        path: "/profileorg",
+        name: "ProfileOrg",
+        component: ProfileOrg,
+    },    
     {
         path: "/about",
         name: "About",

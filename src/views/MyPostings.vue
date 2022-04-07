@@ -196,7 +196,7 @@ export default {
       selectedPeriod: "",
       selectedSorting: "Vacancy",
       // sortBy: "Region",
-      orgName: "WillingHearts",
+      orgName: "wh@willinghearts.com",
       myPostings: [],
       holder: [],
     };
