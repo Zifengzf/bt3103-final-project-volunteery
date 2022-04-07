@@ -49,9 +49,8 @@
     <!-- <div class="acheivementStatus2"><button @click="display()">UPDATE</button></div> -->
 
     <div class="reward">
-      <div class="imgcontainer" style="object-fit: contain">
+      <div class="imgcontainer" style="object-fit: contain; padding: 20px">
         <img
-          style="padding: 25px; width: 140px; height: auto"
           class="divimg2"
           src="@/assets/famousamos2.png"
         />
@@ -75,9 +74,8 @@
     </div>
 
     <div class="reward">
-      <div class="imgcontainer" style="object-fit: contain">
+      <div class="imgcontainer" style="object-fit: contain; padding: 20px">
         <img
-          style="padding: 25px; width: 140px; height: auto"
           class="divimg2"
           src="@/assets/seveneleven.png"
         />
@@ -101,9 +99,8 @@
     </div>
 
     <div class="reward">
-      <div class="imgcontainer" style="object-fit: contain">
+      <div class="imgcontainer" style="object-fit: contain; padding: 20px">
         <img
-          style="padding: 25px; width: 140px; height: auto"
           class="divimg2"
           src="@/assets/koi.jpeg"
         />
@@ -409,8 +406,8 @@ img.resize {
   margin-left: 20px;
 }
 .imgcontainer {
-  width: 142px;
-  height: 142px;
+  width: 130px;
+  height: 130px;
   padding: 0px;
   left: 30px;
   /* border: 1px solid black; */

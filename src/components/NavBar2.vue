@@ -14,7 +14,7 @@
       </div>
     </div>
     <div id="nav">
-      <router-link to="/opportunitiespage">Volunteer Opportunities</router-link> |
+      <router-link to="/opportunitiespage">All Opportunities</router-link> |
       <router-link to="/applicants">Applicants Review</router-link> |
       <router-link to="/mypostings">My Postings</router-link>
     </div>

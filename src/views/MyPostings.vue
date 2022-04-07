@@ -1,5 +1,6 @@
 <template>
   <NavBar2 />
+  <div style="background-color: #fff9e9">
   <div class="mainbanner">
     <div class="maintext">
       <div
@@ -10,7 +11,7 @@
           font-family: Georgia, 'Times New Roman', Times, serif;
         "
       >
-        My Postings
+        MY POSTINGS
       </div>
       <p style="color: black; text-align: center">
         “As you grow older, you will discover that you have two hands <br />
@@ -159,6 +160,7 @@
       </div>
     </div>
     <!-- <div v-for="sorting of filteredPostings" :key="sorting">{{ sorting }}</div> -->
+  </div>
   </div>
 </template>
 
