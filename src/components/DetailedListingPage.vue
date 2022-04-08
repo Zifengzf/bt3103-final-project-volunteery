@@ -57,7 +57,7 @@
                     <img class="divimg2" src="../assets/stars.png">
                 </div>
                 <span style="margin-left:15px; margin-top: 7px; float:left;">5 Star Rating</span>
-                <div class="buttonclass" style="margin-left:1250px; float:left; margin-top:-15px; width:300px" v-on:click="displayLogin2()">
+                <div class="buttonclass" style="float:right; margin-top:8px; width:300px" v-on:click="displayLogin2()">
                     <a class="redeemclass">Leave a Review</a>
                 </div>
             </div>
@@ -119,14 +119,14 @@
     <form class="modal-content animate">
         <div class="overlay"></div>
         <div class="content">
-            <div class="imgcontainer" style="margin-left:800px">
+            <div class="imgcontainer" style="float:right; margin-right:30px">
                 <span
                 onclick="document.getElementById('id02').style.display='none'"
-                class="close"
+                class="close" 
                 title="Close Modal">&times;</span>
             </div>
 
-            <br><br>
+            <br><br><br>
             <form>
                 <div class="title" id="activityTitle">Interact and Socialise with Our Elderly</div>
                 <p>by ABC Elderly Home</p>
@@ -135,8 +135,8 @@
                 <h3>Describe your overall experience!</h3>
                 <textarea rows="5" cols="70" name="Enter description" style="height:170px;" id="descriptionEntry"></textarea>
                 <br><br><br>
-                <div class="buttonclass" style="margin-left:200px; float:left; margin-top:-15px" v-on:click="addReview()">
-                    <a class="redeemclass">Submit</a>
+                <div class="buttonclass" v-on:click="addReview()">
+                    <a class="redeemclass" style="float:centre; margin-left:0px; padding-left:50px">Submit </a>
                 </div>
             </form>
         </div>
@@ -853,7 +853,7 @@ span.psw {
     transform: translate(-50%, -50%) scale(0);
     background: #fff9e9;
     width: 650px;
-    height: 450px;
+    height: 500px;
     z-index: 2;
     text-align: center;
     padding: 20px;
