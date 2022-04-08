@@ -285,11 +285,14 @@ export default {
         console.log("more than " + a);
         console.log("less than " + b);
         this.holder = this.holder.filter((posting) => {
-          return Number(a) < Number(posting.duration) && Number(posting.duration) <= Number(b);
+          return (
+            Number(a) < Number(posting.duration) &&
+            Number(posting.duration) <= Number(b)
+          );
         });
       }
       this.filteredPostings = this.holder;
-      
+
       this.holder2 = this.messages2;
       if (currPosting != "") {
         this.holder2 = this.holder2.filter((posting) => {
@@ -303,7 +306,10 @@ export default {
         console.log("more than " + a);
         console.log("less than " + b);
         this.holder2 = this.holder2.filter((posting) => {
-          return Number(a) < Number(posting.duration) && Number(posting.duration) <= Number(b);
+          return (
+            Number(a) < Number(posting.duration) &&
+            Number(posting.duration) <= Number(b)
+          );
         });
       }
       this.filteredPostings2 = this.holder2;
@@ -324,7 +330,10 @@ export default {
         console.log("more than " + a);
         console.log("less than " + b);
         this.holder = this.holder.filter((posting) => {
-          return Number(a) < Number(posting.duration) && Number(posting.duration) <= Number(b);
+          return (
+            Number(a) < Number(posting.duration) &&
+            Number(posting.duration) <= Number(b)
+          );
         });
       }
       this.filteredPostings = this.holder;
@@ -342,21 +351,29 @@ export default {
         console.log("more than " + a);
         console.log("less than " + b);
         this.holder2 = this.holder2.filter((posting) => {
-          return Number(a) < Number(posting.duration) && Number(posting.duration) <= Number(b);
+          return (
+            Number(a) < Number(posting.duration) &&
+            Number(posting.duration) <= Number(b)
+          );
         });
       }
       this.filteredPostings2 = this.holder2;
     },
     selectedSorting(sort) {
       console.log(sort);
-      if (sort == "") {
-        this.filteredPostings = this.messages;
-      }
+      // if (sort == "") {
+      //   this.filteredPostings = this.messages;
+      // }
       if (sort != "") {
         // this.filteredPostings = this.messages.orderBy(sort);
         // this.storeMessage(sort);
         if (sort == "Vacancy") {
           this.filteredPostings.sort(function (a, b) {
+            // console.log(a.sort);
+            // console.log(b.sort);
+            return a.vacancy - b.vacancy;
+          });
+          this.filteredPostings2.sort(function (a, b) {
             // console.log(a.sort);
             // console.log(b.sort);
             return a.vacancy - b.vacancy;
@@ -367,14 +384,27 @@ export default {
             // console.log(b.sort);
             return b.vacancy - a.vacancy;
           });
+          this.filteredPostings2.sort(function (a, b) {
+            // console.log(a.sort);
+            // console.log(b.sort);
+            return b.vacancy - a.vacancy;
+          });
         } else if (sort == "Duration") {
           this.filteredPostings.sort(function (a, b) {
             // console.log(a.sort);
             // console.log(b.sort);
             return a.duration - b.duration;
           });
+          this.filteredPostings2.sort(function (a, b) {
+            // console.log(a.sort);
+            // console.log(b.sort);
+            return a.duration - b.duration;
+          });
         } else {
           this.filteredPostings.sort(function (a, b) {
+            return b.duration - a.duration;
+          });
+          this.filteredPostings2.sort(function (a, b) {
             return b.duration - a.duration;
           });
         }
