@@ -87,6 +87,8 @@ import { getFirestore } from "firebase/firestore";
 import {
   collection,
   getDocs,
+  query,
+  where,
   doc,
   updateDoc,
   deleteDoc,
@@ -123,71 +125,93 @@ export default {
     this.storeMessage();
     async function display() {
       clearTable();
-      let z = await getDocs(collection(db, "Applicants"));
+      const k = await getDocs(collection(db, "Opportunities"));
+      var listings = {};
+      k.forEach((doc1) => {
+        listings[doc1.id] = doc1.data().Title;
+      });
+      console.log(listings);
+      const q = query(
+        collection(db, "volunteers"),
+        where("applied", "==", true)
+      );
+      const z = await getDocs(q);
       let ind = 1;
 
       z.forEach((doc) => {
         let data = doc.data();
-        var table = document.getElementById("table");
+        var name = data.name;
+        var email = data.email;
 
-        var row = table.insertRow(ind);
-        var name = data.Name;
-        var listing_name = data.Listing;
-        var status = data.Status;
-        var listing_ref = data.Listing_ref;
-        var email = data.Email;
-
-        var cell1 = row.insertCell(0);
-        var cell2 = row.insertCell(1);
-        var cell3 = row.insertCell(2);
-        var cell4 = row.insertCell(3);
-        var cell5 = row.insertCell(4);
-        var cell6 = row.insertCell(5);
-
-        cell1.innerHTML = name;
-        cell2.innerHTML = listing_name;
-        cell3.innerHTML = status;
-        cell4.className = "review";
-        cell5.className = "accept";
-        cell6.className = "reject";
-
-        var review_button = document.createElement("button");
-        review_button.className = "bwt1";
-        review_button.innerHTML = "Review";
-        review_button.onclick = function () {
-          console.log("Review functionality not available yet");
-        };
-        cell4.appendChild(review_button);
-
-        if (status == "Pending") {
-          var accept_button = document.createElement("button");
-          var reject_button = document.createElement("button");
-          accept_button.className = "bwt2";
-          accept_button.innerHTML = "Accept";
-          reject_button.className = "bwt3";
-          reject_button.innerHTML = "Reject";
-          accept_button.onclick = function () {
-            accept(name, listing_ref, email);
-          };
-          reject_button.onclick = function () {
-            reject(name, listing_ref);
-          };
-          cell5.appendChild(accept_button);
-          cell6.appendChild(reject_button);
-        }
-
-        if (status == "Approved") {
-          var cancel_button = document.createElement("button");
-          cancel_button.className = "bwt3";
-          cancel_button.innerHTML = "Cancel";
-          cancel_button.onclick = function () {
-            cancel(name, listing_ref);
-          };
-          cell6.appendChild(cancel_button);
+        if (data.ApprovedListings.length == 0) {
+          for (var list_ref of data.PendingListings) {
+            addlisting(name, list_ref, "Pending", email, ind, listings);
+          }
+        } else if (data.PendingListings.length == 0) {
+          for (var list_ref_1 of data.ApprovedListings) {
+            addlisting(name, list_ref_1, "Approved", email, ind, listings);
+          }
+        } else {
+          for (var list_ref_2 of data.PendingListings) {
+            addlisting(name, list_ref_2, "Pending", email, ind, listings);
+          }
+          for (var list_ref_3 of data.ApprovedListings) {
+            addlisting(name, list_ref_3, "Approved", email, ind, listings);
+          }
         }
       });
     }
     display();
+
+    async function addlisting(name, listing_ref, status, email, index, dict) {
+      var table = document.getElementById("table");
+      var row = table.insertRow(index);
+      var cell1 = row.insertCell(0);
+      var cell2 = row.insertCell(1);
+      var cell3 = row.insertCell(2);
+      var cell4 = row.insertCell(3);
+      var cell5 = row.insertCell(4);
+      var cell6 = row.insertCell(5);
+      cell1.innerHTML = name;
+      cell2.innerHTML = dict[listing_ref];
+      cell3.innerHTML = status;
+      cell4.className = "review";
+      cell5.className = "accept";
+      cell6.className = "reject";
+      var review_button = document.createElement("button");
+      review_button.className = "bwt1";
+      review_button.innerHTML = "Review";
+      review_button.onclick = function () {
+        console.log("Review functionality not available yet");
+      };
+      cell4.appendChild(review_button);
+      if (status == "Pending") {
+        var accept_button = document.createElement("button");
+        var reject_button = document.createElement("button");
+        accept_button.className = "bwt2";
+        accept_button.innerHTML = "Accept";
+        reject_button.className = "bwt3";
+        reject_button.innerHTML = "Reject";
+        accept_button.onclick = function () {
+          accept(name, listing_ref, email);
+        };
+        reject_button.onclick = function () {
+          reject(name, listing_ref);
+        };
+        cell5.appendChild(accept_button);
+        cell6.appendChild(reject_button);
+      }
+
+      if (status == "Approved") {
+        var cancel_button = document.createElement("button");
+        cancel_button.className = "bwt3";
+        cancel_button.innerHTML = "Cancel";
+        cancel_button.onclick = function () {
+          cancel(name, listing_ref);
+        };
+        cell6.appendChild(cancel_button);
+      }
+    }
 
     async function accept(name, listing_ref, email) {
       // Part 1: Change applicant status to be approved
