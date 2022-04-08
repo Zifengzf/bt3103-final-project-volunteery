@@ -23,7 +23,6 @@
         <tr>
           <th>Name</th>
           <th>Listing</th>
-          <th>Applied Date</th>
           <th>Status</th>
           <th>Review</th>
           <th>Accept</th>
@@ -132,7 +131,6 @@ export default {
         var table = document.getElementById("table");
 
         var row = table.insertRow(ind);
-        var date = doc.get("Applied Date");
         var name = data.Name;
         var listing_name = data.Listing;
         var status = data.Status;
@@ -145,15 +143,13 @@ export default {
         var cell4 = row.insertCell(3);
         var cell5 = row.insertCell(4);
         var cell6 = row.insertCell(5);
-        var cell7 = row.insertCell(6);
 
         cell1.innerHTML = name;
         cell2.innerHTML = listing_name;
-        cell3.innerHTML = date;
-        cell4.innerHTML = status;
-        cell5.className = "review";
-        cell6.className = "accept";
-        cell7.className = "reject";
+        cell3.innerHTML = status;
+        cell4.className = "review";
+        cell5.className = "accept";
+        cell6.className = "reject";
 
         var review_button = document.createElement("button");
         review_button.className = "bwt1";
@@ -161,7 +157,7 @@ export default {
         review_button.onclick = function () {
           console.log("Review functionality not available yet");
         };
-        cell5.appendChild(review_button);
+        cell4.appendChild(review_button);
 
         if (status == "Pending") {
           var accept_button = document.createElement("button");
@@ -176,8 +172,8 @@ export default {
           reject_button.onclick = function () {
             reject(name, listing_ref);
           };
-          cell6.appendChild(accept_button);
-          cell7.appendChild(reject_button);
+          cell5.appendChild(accept_button);
+          cell6.appendChild(reject_button);
         }
 
         if (status == "Approved") {
@@ -187,7 +183,7 @@ export default {
           cancel_button.onclick = function () {
             cancel(name, listing_ref);
           };
-          cell7.appendChild(cancel_button);
+          cell6.appendChild(cancel_button);
         }
       });
     }
