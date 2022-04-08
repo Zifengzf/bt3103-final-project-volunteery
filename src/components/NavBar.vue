@@ -4,12 +4,12 @@
     <img
       src="@/assets/volunteery_copy.png"
       alt=""
-      style="margin-left: 0px; height: 60; float: left"
+      style="margin-left: 0px; height: 60; float: left; padding-top: 11px"
     />
     <div class="dropdown">
       <button class="dropbtn">User</button>
       <div class="dropdown-content">
-        <router-link to='/profile'>Profile</router-link>
+        <router-link to="/profile">Profile</router-link>
         <router-link to="/" class="router-link">Sign out</router-link>
       </div>
     </div>
@@ -69,8 +69,8 @@ export default {
 }
 .dropdown {
   overflow: hidden;
-  float: inline-end;
-  padding: 15px;
+  float: left;
+  /* padding: 15px; */
 }
 
 .dropdown .dropbtn {
@@ -78,7 +78,7 @@ export default {
   border: none;
   outline: none;
   color: #ff9213;
-  padding: 14px 16px;
+  padding: 24px 16px 14px 16px;
   background-color: inherit;
   font-family: inherit;
   margin: 0;
@@ -86,7 +86,7 @@ export default {
 
 .navbar a:hover,
 .dropdown:hover .dropbtn {
-  color: #ffe5a3;
+  color: #ffbf00;
 }
 
 .dropdown-content {

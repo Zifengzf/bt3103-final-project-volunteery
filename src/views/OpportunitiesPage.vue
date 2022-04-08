@@ -373,6 +373,7 @@ export default {
           title: yy.Title,
           vacancy: yy.Vacancy,
           needed: yy["Volunteers Needed"],
+          url: yy.sn,
         });
         this.messageText = "";
       });
