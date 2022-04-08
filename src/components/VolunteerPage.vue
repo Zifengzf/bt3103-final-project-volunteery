@@ -294,7 +294,7 @@ export default {
         console.log("more than " + a);
         console.log("less than " + b);
         this.holder = this.holder.filter((posting) => {
-          return a < posting.duration && posting.duration <= b;
+          return Number(a) < Number(posting.duration) && Number(posting.duration) <= Number(b);
         });
       }
       this.filteredPostings = this.holder;
@@ -315,7 +315,7 @@ export default {
         console.log("more than " + a);
         console.log("less than " + b);
         this.holder = this.holder.filter((posting) => {
-          return a < posting.duration && posting.duration <= b;
+          return Number(a) < Number(posting.duration) && Number(posting.duration) <= Number(b);
         });
       }
       this.filteredPostings = this.holder;

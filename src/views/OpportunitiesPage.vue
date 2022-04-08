@@ -294,7 +294,7 @@ export default {
         console.log("more than " + a);
         console.log("less than " + b);
         this.holder = this.holder.filter((posting) => {
-          return a < posting.duration && posting.duration <= b;
+          return Number(a) < Number(posting.duration) && Number(posting.duration) <= Number(b);
         });
       }
       this.filteredPostings = this.holder;
@@ -315,7 +315,7 @@ export default {
         console.log("more than " + a);
         console.log("less than " + b);
         this.holder = this.holder.filter((posting) => {
-          return a < posting.duration && posting.duration <= b;
+          return Number(a) < Number(posting.duration) && Number(posting.duration) <= Number(b);
         });
       }
       this.filteredPostings = this.holder;
@@ -373,6 +373,7 @@ export default {
           title: yy.Title,
           vacancy: yy.Vacancy,
           needed: yy["Volunteers Needed"],
+          url: yy.sn,
         });
         this.messageText = "";
       });
@@ -478,11 +479,6 @@ h1 {
   font-size: 16px;
   opacity: 1;
   text-align: left; */
-}
-
-.fliterandsort {
-  padding: 20px;
-  color: green;
 }
 
 .formli {
