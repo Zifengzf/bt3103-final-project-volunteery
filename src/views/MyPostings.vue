@@ -1,166 +1,169 @@
 <template>
   <NavBar2 />
   <div style="background-color: #fff9e9">
-  <div class="mainbanner">
-    <div class="maintext">
-      <div
-        style="
-          color: #ff9213;
-          text-align: center;
-          font-size: 50px;
-          font-family: Georgia, 'Times New Roman', Times, serif;
-        "
-      >
-        MY POSTINGS
-      </div>
-      <p style="color: black; text-align: center">
-        “As you grow older, you will discover that you have two hands <br />
-        — one for helping yourself, the other for helping others.”, <br />
-        —Audrey Hepburn
-      </p>
-      <br />
-    </div>
-  </div>
-  <br />
-  <div class="filterandsort">
-    <label for="filterbyregion" style="font-size: 18px; padding: 10px"
-      >Filter by:</label
-    >
-    <select
-      v-model="selectedPosting"
-      name="filterbyregion"
-      id="filterbyregion"
-      style="font-size: 18px"
-    >
-      <option value="">-- Region --</option>
-      <option value="central">Central</option>
-      <option value="north">North</option>
-      <option value="north-east">North-East</option>
-      <option value="east">East</option>
-      <option value="south-east">South-East</option>
-      <option value="south">South</option>
-      <option value="south-west">South-West</option>
-      <option value="west">West</option>
-      <option value="north-west">North-West</option>
-    </select>
-    <select
-      v-model="selectedPeriod"
-      name="filterbyperiod"
-      id="filterbyperiod"
-      style="font-size: 18px"
-    >
-      <option value="">-- Duration --</option>
-      <option value="0,1">Less than 1 month</option>
-      <option value="1,3">1 - 3 months</option>
-      <option value="3,6">3 - 6 months</option>
-      <option value="6,12">6 months - 1 year</option>
-      <option value="12,999">More than 1 year</option>
-    </select>
-    <label for="sortby" style="font-size: 18px; padding: 10px">Sort by:</label>
-    <select
-      v-model="selectedSorting"
-      name="selectedSorting"
-      id="selectedSorting"
-      style="font-size: 18px"
-    >
-      <option value="Vacancy">Vacancy</option>
-      <option value="Duration">Duration</option>
-      <!-- <option value="Date">Posted date</option> -->
-    </select>
-  </div>
-  <div v-for="(result, index) in results" :key="result">
-    <div class="card">
-      <div class="card-section">
-        <p>{{ index }}</p>
-      </div>
-      <div class="card-divider">
-        <p>$ {{ result.USD }}</p>
-      </div>
-      <div class="card-section">
-        <p>{{ result.EUR }}</p>
-      </div>
-    </div>
-  </div>
-  <div v-for="result in cities" :key="result">
-    <div class="card">
-      <div class="card-section">
-        <p>{{ result }}</p>
-      </div>
-    </div>
-  </div>
-  <div id="chat" class="container">
-    <!-- <form @submit.prevent="storeMessage">
-    <br>
-    <button class="btn btn-primary">View Applications</button>
-  </form> -->
-    <br />
-    <!-- Messages -->
-    <div v-for="message in filteredPostings" class="card" :key="message">
-      <div class="card-body">
-        <div class="listingbox">
-          <img
-            class="imgbox"
-            src="https://media.istockphoto.com/photos/volunteers-serving-hot-meal-to-people-in-community-soup-kitchen-picture-id482802211?k=20&m=482802211&s=612x612&w=0&h=wZtnwsE0iQOqzXp8z99blyjq16JLCeyRDeV0UuOZmkA="
-            alt="Listing Pic"
-            style="float: left"
-          />
-          <div class="listingpara" style="float: left">
-            <p class="listingtitle">{{ message.title }}</p>
-            <p class="listinginfo">{{ message.content }}</p>
-            <div class="listingdetails">
-              <div class="infobox">
-                <img
-                  id="profpic"
-                  src="../assets/location.png"
-                  alt="Profile Pic"
-                  height="30"
-                  width="30"
-                  style="display: inline-block"
-                />
-                <p class="specdetails">Region: {{ message.region }}</p>
-              </div>
-              <div class="infobox">
-                <img
-                  id="profpic"
-                  src="../assets/calendar.png"
-                  alt="Profile Pic"
-                  height="30"
-                  width="30"
-                />
-                <p class="specdetails">
-                  Duration : {{ message.duration }} months
-                </p>
-              </div>
-              <div class="infobox">
-                <img
-                  id="profpic"
-                  src="../assets/vacancy.png"
-                  alt="Profile Pic"
-                  height="30"
-                  width="30"
-                />
-                <p class="specdetails">
-                  Vacancy: {{ message.vacancy }} / {{ message.needed }} left
-                </p>
-                <!-- <p class="specdetails">Vacancy: 7 / 30 left</p> -->
-              </div>
-            </div>
-          </div>
-          <div class="listingbuttonsbox">
-            <button
-              class="viewmore"
-              type="button"
-              v-on:click="deleteListing(message.id)"
-            >
-              Mark as Complete
-            </button>
-          </div>
+    <div class="mainbanner">
+      <div class="maintext">
+        <div
+          style="
+            color: #ff9213;
+            text-align: center;
+            font-size: 50px;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+          "
+        >
+          MY POSTINGS
         </div>
+        <p style="color: black; text-align: center">
+          “As you grow older, you will discover that you have two hands <br />
+          — one for helping yourself, the other for helping others.”, <br />
+          —Audrey Hepburn
+        </p>
         <br />
       </div>
     </div>
-    <!-- <div v-for="sorting of filteredPostings" :key="sorting">{{ sorting }}</div> -->
-  </div>
+    <br />
+    <div class="filterandsort">
+      <label for="filterbyregion" style="font-size: 18px; padding: 10px"
+        >Filter by:</label
+      >
+      <select
+        v-model="selectedPosting"
+        name="filterbyregion"
+        id="filterbyregion"
+        style="font-size: 18px"
+      >
+        <option value="">-- Region --</option>
+        <option value="central">Central</option>
+        <option value="north">North</option>
+        <option value="north-east">North-East</option>
+        <option value="east">East</option>
+        <option value="south-east">South-East</option>
+        <option value="south">South</option>
+        <option value="south-west">South-West</option>
+        <option value="west">West</option>
+        <option value="north-west">North-West</option>
+      </select>
+      <select
+        v-model="selectedPeriod"
+        name="filterbyperiod"
+        id="filterbyperiod"
+        style="font-size: 18px"
+      >
+        <option value="">-- Duration --</option>
+        <option value="0,1">Less than 1 month</option>
+        <option value="1,3">1 - 3 months</option>
+        <option value="3,6">3 - 6 months</option>
+        <option value="6,12">6 months - 1 year</option>
+        <option value="12,999">More than 1 year</option>
+      </select>
+      <label for="sortby" style="font-size: 18px; padding: 10px"
+        >Sort by:</label
+      >
+      <select
+        v-model="selectedSorting"
+        name="selectedSorting"
+        id="selectedSorting"
+        style="font-size: 18px"
+      >
+        <option value="Vacancy">Vacancy</option>
+        <option value="VacancyDescending">Vacancy (descending)</option>
+        <option value="Duration">Duration</option>
+        <option value="DurationDescending">Duration (descending)</option>
+      </select>
+    </div>
+    <div v-for="(result, index) in results" :key="result">
+      <div class="card">
+        <div class="card-section">
+          <p>{{ index }}</p>
+        </div>
+        <div class="card-divider">
+          <p>$ {{ result.USD }}</p>
+        </div>
+        <div class="card-section">
+          <p>{{ result.EUR }}</p>
+        </div>
+      </div>
+    </div>
+    <div v-for="result in cities" :key="result">
+      <div class="card">
+        <div class="card-section">
+          <p>{{ result }}</p>
+        </div>
+      </div>
+    </div>
+    <div id="chat" class="container">
+      <!-- <form @submit.prevent="storeMessage">
+    <br>
+    <button class="btn btn-primary">View Applications</button>
+  </form> -->
+      <br />
+      <!-- Messages -->
+      <div v-for="message in filteredPostings" class="card" :key="message">
+        <div class="card-body">
+          <div class="listingbox">
+            <img
+              class="imgbox"
+              src="https://media.istockphoto.com/photos/volunteers-serving-hot-meal-to-people-in-community-soup-kitchen-picture-id482802211?k=20&m=482802211&s=612x612&w=0&h=wZtnwsE0iQOqzXp8z99blyjq16JLCeyRDeV0UuOZmkA="
+              alt="Listing Pic"
+              style="float: left"
+            />
+            <div class="listingpara" style="float: left">
+              <p class="listingtitle">{{ message.title }}</p>
+              <p class="listinginfo">{{ message.content }}</p>
+              <div class="listingdetails">
+                <div class="infobox">
+                  <img
+                    id="profpic"
+                    src="../assets/location.png"
+                    alt="Profile Pic"
+                    height="30"
+                    width="30"
+                    style="display: inline-block"
+                  />
+                  <p class="specdetails">Region: {{ message.region }}</p>
+                </div>
+                <div class="infobox">
+                  <img
+                    id="profpic"
+                    src="../assets/calendar.png"
+                    alt="Profile Pic"
+                    height="30"
+                    width="30"
+                  />
+                  <p class="specdetails">
+                    Duration : {{ message.duration }} months
+                  </p>
+                </div>
+                <div class="infobox">
+                  <img
+                    id="profpic"
+                    src="../assets/vacancy.png"
+                    alt="Profile Pic"
+                    height="30"
+                    width="30"
+                  />
+                  <p class="specdetails">
+                    Vacancy: {{ message.vacancy }} / {{ message.needed }} left
+                  </p>
+                  <!-- <p class="specdetails">Vacancy: 7 / 30 left</p> -->
+                </div>
+              </div>
+            </div>
+            <div class="listingbuttonsbox">
+              <button
+                class="viewmore"
+                type="button"
+                v-on:click="deleteListing(message.id)"
+              >
+                Mark as Complete
+              </button>
+            </div>
+          </div>
+          <br />
+        </div>
+      </div>
+      <!-- <div v-for="sorting of filteredPostings" :key="sorting">{{ sorting }}</div> -->
+    </div>
   </div>
 </template>
 
@@ -383,14 +386,40 @@ export default {
       }
       if (sort != "") {
         // this.filteredPostings = this.messages.orderBy(sort);
-        this.storeMessage(sort);
+        // this.storeMessage(sort);
+        if (sort == "Vacancy") {
+          this.filteredPostings.sort(function (a, b) {
+            // console.log(a.sort);
+            // console.log(b.sort);
+            return a.vacancy - b.vacancy;
+          });
+        } else if (sort == "VacancyDescending") {
+          this.filteredPostings.sort(function (a, b) {
+            // console.log(a.sort);
+            // console.log(b.sort);
+            return b.vacancy - a.vacancy;
+          });
+        } else if (sort == "Duration") {
+          this.filteredPostings.sort(function (a, b) {
+            // console.log(a.sort);
+            // console.log(b.sort);
+            return a.duration - b.duration;
+          });
+        } else {
+          this.filteredPostings.sort(function (a, b) {
+            return b.duration - a.duration;
+          });
+        }
       }
     },
   },
   methods: {
-    async storeMessage(sort) {
+    async storeMessage(/*sort*/) {
       this.messages = [];
-      const q = query(collection(db, "Opportunities"), orderBy(sort));
+      const q = query(
+        collection(db, "Opportunities"),
+        orderBy(this.selectedSorting)
+      );
       const querySnapshot = await getDocs(q);
       // this.messages.clear();
       querySnapshot.forEach((doc) => {
