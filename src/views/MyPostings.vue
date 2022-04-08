@@ -70,6 +70,9 @@
         <option value="Duration">Duration</option>
         <option value="DurationDescending">Duration (descending)</option>
       </select>
+    <div>
+        <button class="addlisting" type="button">Add Listing</button>
+      </div>
     </div>
     <div v-for="(result, index) in results" :key="result">
       <div class="card">
