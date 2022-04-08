@@ -1,6 +1,6 @@
 <template>
   <NavBar2 />
-   <div style="background-color: #fff9e9">
+  <div style="background-color: #fff9e9">
     <div class="mainbanner">
       <div class="maintext">
         <div
@@ -23,11 +23,11 @@
     </div>
     <br />
     <div class="filterandsort">
-      <div style="width: 150px; background-color: red"> </div>
+      <div style="width: 150px; background-color: red"></div>
       <div class="filterbox">
-      <label for="filterbyregion" style="font-size: 18px; padding: 10px"
-        >Filter by:</label
-      >
+        <label for="filterbyregion" style="font-size: 18px; padding: 10px"
+          >Filter by:</label
+        >
       </div>
       <select
         v-model="selectedPosting"
@@ -69,16 +69,18 @@
         >Sort by:</label
       >
       <div class="sortingbox">
-      <select
-        v-model="selectedSorting"
-        name="selectedSorting"
-        id="selectedSorting"
-        style="font-size: 18px"
-      >
-        <option value="Vacancy">Vacancy</option>
-        <option value="Duration">Duration</option>
-        <!-- <option value="Date">Posted date</option> -->
-      </select>
+        <select
+          v-model="selectedSorting"
+          name="selectedSorting"
+          id="selectedSorting"
+          style="font-size: 18px"
+        >
+          <option value="Vacancy">Vacancy</option>
+          <option value="VacancyDescending">Vacancy (descending)</option>
+          <option value="Duration">Duration</option>
+          <option value="DurationDescending">Duration (descending)</option>
+          <!-- <option value="Date">Posted date</option> -->
+        </select>
       </div>
       <!-- <input
         type="submit"
@@ -325,14 +327,40 @@ export default {
       }
       if (sort != "") {
         // this.filteredPostings = this.messages.orderBy(sort);
-        this.storeMessage(sort);
+        // this.storeMessage(sort);
+        if (sort == "Vacancy") {
+          this.filteredPostings.sort(function (a, b) {
+            // console.log(a.sort);
+            // console.log(b.sort);
+            return a.vacancy - b.vacancy;
+          });
+        } else if (sort == "VacancyDescending") {
+          this.filteredPostings.sort(function (a, b) {
+            // console.log(a.sort);
+            // console.log(b.sort);
+            return b.vacancy - a.vacancy;
+          });
+        } else if (sort == "Duration") {
+          this.filteredPostings.sort(function (a, b) {
+            // console.log(a.sort);
+            // console.log(b.sort);
+            return a.duration - b.duration;
+          });
+        } else {
+          this.filteredPostings.sort(function (a, b) {
+            return b.duration - a.duration;
+          });
+        }
       }
     },
   },
   methods: {
-    async storeMessage(sort) {
+    async storeMessage() {
       this.messages = [];
-      const q = query(collection(db, "Opportunities"), orderBy(sort));
+      const q = query(
+        collection(db, "Opportunities"),
+        orderBy(this.selectedSorting)
+      );
       const querySnapshot = await getDocs(q);
       // this.messages.clear();
       querySnapshot.forEach((doc) => {
@@ -344,7 +372,7 @@ export default {
           status: yy.Status,
           title: yy.Title,
           vacancy: yy.Vacancy,
-          needed: yy['Volunteers Needed'],
+          needed: yy["Volunteers Needed"],
         });
         this.messageText = "";
       });
