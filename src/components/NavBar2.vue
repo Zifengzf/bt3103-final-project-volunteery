@@ -9,14 +9,14 @@
     <div class="dropdown">
       <button class="dropbtn">Organisation</button>
       <div class="dropdown-content">
-        <router-link to='/profileorg'>Profile</router-link>
+        <router-link to="/profileorg">Profile</router-link>
         <router-link to="/" class="router-link">Sign out</router-link>
       </div>
     </div>
     <div id="nav">
       <router-link to="/opportunitiespage">All Opportunities</router-link> |
-      <router-link to="/applicants">Applicants Review</router-link> |
-      <router-link to="/mypostings">My Postings</router-link>
+      <router-link to="/mypostings">My Postings</router-link> |
+      <router-link to="/applicants">Applicants Review</router-link>
     </div>
 
     <!-- </div> -->
@@ -69,8 +69,8 @@ export default {
 }
 .dropdown {
   overflow: hidden;
-  float: inline-end;
-  padding: 15px;
+  float: left;
+  /* padding: 15px; */
 }
 
 .dropdown .dropbtn {
@@ -78,7 +78,7 @@ export default {
   border: none;
   outline: none;
   color: #fff9e9;
-  padding: 14px 16px;
+  padding: 24px 16px 14px 16px;
   background-color: inherit;
   font-family: inherit;
   margin: 0;
@@ -90,6 +90,7 @@ export default {
 }
 
 .dropdown-content {
+  /* float: none; */
   display: none;
   position: absolute;
   background-color: #ffe5a3;
