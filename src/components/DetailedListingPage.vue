@@ -36,16 +36,16 @@
       <div class="right" style="width: 400px; padding-right:100px; margin-top:-20px">
           <br><br><br><br>
           <img src="../assets/calendar.png" alt="" style="width: 40px; height: 40px; float: left; margin-right: 10px">
-          <div id="activityDate" style="margin-top:12px">17 March 2022</div>
+          <div id="activityDate" style="margin-top:12px">Duration : {{duration}} months</div>
           <div class="buttonclass" style="margin-left:200px; float:left; margin-top:-18px; hover:true" v-on:click="displayLogin()">
               <a class="redeemclass">Apply!</a>
           </div>
           <br><br>
           <img src="../assets/location.png" alt="" style="width: 40px; height: 40px; float: left; margin-right: 10px">
-          <div id="activityRegion" style="margin-top:12px">Kent Ridge</div>
+          <div id="activityRegion" style="margin-top:12px">Region: {{region}}</div>
           <br><br>
           <img src="../assets/vacancy.png" alt="" style="width: 40px; height: 40px; float: left; margin-right: 10px">
-          <div id="activityVacancy" style="margin-top:12px">8 Vacancies Left</div>
+          <div id="activityVacancy" style="margin-top:12px">Vacancy: {{vacancy}} / {{needed}} left</div>
       </div>
    
         
@@ -193,6 +193,10 @@ export default {
       reviewDescription: [],
       messages: [],
       docname: "",
+      duration: "",
+      region: "",
+      vacancy: "",
+      needed: "",
 
       user: "",
       fullname: "",
@@ -229,6 +233,10 @@ export default {
             this.activityContent = yy.Content;
             this.activityId = doc.id;
             this.activitySN = doc.sn;
+            this.duration = yy.Duration;
+            this.region = yy.Region;
+            this.vacancy = yy.Vacancy;
+            this.needed = yy["Volunteers Needed"];
         }
       });
 
