@@ -52,9 +52,23 @@
       <div class="listingcontainer" style="margin-top: 20px; height:auto">
         <div style="float: left; margin-left:20px; margin-top:10px; width:500px">
           <div class="title" style="float: left">Our Reviews</div>
-          <div style="width:100px; margin-top: 15px; margin-left:15px; float:left">
+
+          <div style="width:100px; margin-top: 15px; margin-left:15px; float:left" v-if="Math.round(avgRate)==5">
               <img class="divimg2" src="../assets/stars.png">
           </div>
+          <div style="width:100px; margin-top: 15px; margin-left:15px; float:left" v-else-if="Math.round(avgRate)==4">
+              <img class="divimg2" src="../assets/stars4.png">
+          </div>
+          <div style="width:100px; margin-top: 15px; margin-left:15px; float:left" v-else-if="Math.round(avgRate)==3">
+              <img class="divimg2" src="../assets/stars3.png">
+          </div>
+          <div style="width:100px; margin-top: 15px; margin-left:15px; float:left" v-else-if="Math.round(avgRate)==2">
+              <img class="divimg2" src="../assets/stars2.png">
+          </div>
+          <div style="width:100px; margin-top: 15px; margin-left:15px; float:left" v-else>
+              <img class="divimg2" src="../assets/stars1.png">
+          </div>
+
           <div style="margin-left:15px; margin-top: 18px; float:left;">{{avgRate}} Star Rating</div>
         </div>
         
@@ -66,11 +80,20 @@
 
         <div v-for="message in messages" class="card" :key="message">
           <div class="reward">
-              <div class="imgcontainer" v-if="message.reviewRate==4">
-                  <img class="divimg2" src="../assets/stars.png">  4 
+              <div class="imgcontainer" v-if="message.reviewRate==5">
+                  <img class="divimg2" src="../assets/stars.png">
+              </div>
+              <div class="imgcontainer" v-else-if="message.reviewRate==4">
+                  <img class="divimg2" src="../assets/stars4.png">
+              </div>
+              <div class="imgcontainer" v-else-if="message.reviewRate==3">
+                  <img class="divimg2" src="../assets/stars3.png">
+              </div>
+              <div class="imgcontainer" v-else-if="message.reviewRate==2">
+                  <img class="divimg2" src="../assets/stars2.png">
               </div>
               <div class="imgcontainer" v-else>
-                  <img class="divimg2" src="../assets/stars.png">3
+                  <img class="divimg2" src="../assets/stars1.png">
               </div>
               <div style="font: Sansation">
                   <h4 class="centeredtext"><span>{{ message.reviewRate }} Star Rating</span></h4>
