@@ -22,8 +22,6 @@
     <br>
     
     <div class="bottombanner">
-      Hi {{user.email}}
-      {{fullname}} {{activityId}}
       <div class="left">
           <h1>
               <div class="title" id="activityTitle">{{activityTitle}}</div>
@@ -57,7 +55,7 @@
           <div style="width:100px; margin-top: 15px; margin-left:15px; float:left">
               <img class="divimg2" src="../assets/stars.png">
           </div>
-          <div style="margin-left:15px; margin-top: 18px; float:left;">5 Star Rating</div>
+          <div style="margin-left:15px; margin-top: 18px; float:left;">{{avgRate}} Star Rating</div>
         </div>
         
         <div class="buttonclass" style="float:right; margin-top:28px; margin-right:-70px; width:300px" v-on:click="displayLogin2()">
@@ -164,6 +162,7 @@ export default {
       activityContent: "",
       activityId: 0,
       activitySN: 0,
+      avgRate: 0,
       reviewRate: [],
       reviewDescription: [],
       messages: [],
@@ -209,13 +208,18 @@ export default {
 
       const q2 = query(collection(db, "Opportunities/" + this.activityId + "/Reviews"));
       const querySnapshot2 = await getDocs(q2);
+      let count = 0;
+      let totalRate = 0;
       querySnapshot2.forEach((doc) => {
         let zz = doc.data();
+        count = count + 1;
+        totalRate = totalRate + Number(zz.rating);
         this.messages.push({
           reviewRate: zz.rating,
           reviewDescription: zz.description,
         });
       });
+      this.avgRate = (totalRate/count).toFixed(1);
 
       const auth = getAuth();
       var z = await getDoc(doc(db, "volunteers", auth.currentUser.email));
