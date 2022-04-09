@@ -80,29 +80,30 @@
     </div>
   </div>
 
-<div id="id00" class="modal">
+  <div id="id00" class="modal">
     <form class="modal-content animate">
       <div class="overlay"></div>
       <div class="content">
-        <div class="imgcontainer" style="float:right; margin-right:30px">
-            <span
+        <div class="imgcontainer" style="float: right; margin-right: 30px">
+          <span
             onclick="document.getElementById('id02').style.display='none'"
-            class="close" 
-            title="Close Modal">&times;</span>
+            class="close"
+            title="Close Modal"
+            >&times;</span
+          >
         </div>
 
-        <br><br><br>
+        <br /><br /><br />
 
-        <form style="margin-bottom:30px">
-            <p>by ABC Elderly Home</p>
-            <h3>Rating (out of 5 stars):</h3>
-            <h3>Describe your overall experience!</h3>
-            <br><br><br>
+        <form style="margin-bottom: 30px">
+          <p>by ABC Elderly Home</p>
+          <h3>Rating (out of 5 stars):</h3>
+          <h3>Describe your overall experience!</h3>
+          <br /><br /><br />
         </form>
       </div>
     </form>
   </div>
-
 </template>
 
 <script>
@@ -115,10 +116,10 @@ import {
   where,
   doc,
   updateDoc,
-  deleteDoc,
   increment,
   arrayUnion,
-  getDoc
+  arrayRemove,
+  getDoc,
 } from "firebase/firestore";
 const db = getFirestore(firebaseApp);
 export default {
@@ -207,7 +208,7 @@ export default {
       review_button.className = "bwt4";
       review_button.innerHTML = "Review";
       review_button.onclick = function () {
-        review(name, listing_ref, email);
+        review(listing_ref, email);
       };
 
       cell4.appendChild(review_button);
@@ -220,10 +221,10 @@ export default {
         reject_button.innerHTML = "Reject";
 
         accept_button.onclick = function () {
-          accept(name, listing_ref, email);
+          accept(listing_ref, email);
         };
         reject_button.onclick = function () {
-          reject(name, listing_ref);
+          reject(listing_ref, email);
         };
         cell5.appendChild(accept_button);
         cell6.appendChild(reject_button);
@@ -234,33 +235,39 @@ export default {
         cancel_button.className = "bwt3";
         cancel_button.innerHTML = "Cancel";
         cancel_button.onclick = function () {
-          cancel(name, listing_ref);
+          cancel(listing_ref, email);
         };
         cell6.appendChild(cancel_button);
       }
     }
 
-    async function accept(name, listing_ref, email) {
-      // Part 1: Change applicant status to be approved
-      await updateDoc(doc(db, "Applicants", name), {
-        Status: "Approved",
+    async function accept(listing_ref, email) {
+      await updateDoc(doc(db, "volunteers", email), {
+        ApprovedListings: arrayUnion(listing_ref),
+        PendingListings: arrayRemove(listing_ref),
       });
-      // Part 2: Change listing volunteer values
       await updateDoc(doc(db, "Opportunities", listing_ref), {
         Approved: increment(1),
         Pending: increment(-1),
       });
-      await updateDoc(doc(db, "Opportunities", listing_ref), {
-        Volunteers: arrayUnion(email),
-      });
       display();
     }
 
-    async function cancel(name, listing_ref) {
-      //Part 1: Delete document from applicants
-      await deleteDoc(doc(db, "Applicants", name));
-      //Part 2: Update documents in listings
-      await updateDoc(doc(db, "Listings", listing_ref), {
+    async function cancel(listing_ref, email) {
+      await updateDoc(doc(db, "volunteers", email), {
+        ApprovedListings: arrayRemove(listing_ref),
+      });
+      const docSnap = await getDoc(doc(db, "volunteers", email));
+      var data = docSnap.data();
+      if (
+        data.ApprovedListings.length == 0 &&
+        data.PendingListings.length == 0
+      ) {
+        await updateDoc(doc(db, "volunteers", email), {
+          applied: false,
+        });
+      }
+      await updateDoc(doc(db, "Opportunities", listing_ref), {
         Approved: increment(-1),
         Remaining: increment(1),
       });
@@ -268,11 +275,21 @@ export default {
       display();
     }
 
-    async function reject(name, listing_ref) {
-      //Part 1: Delete document from applicants
-      await deleteDoc(doc(db, "Applicants", name));
-      //Part 2: Update documents in listings
-      await updateDoc(doc(db, "Listings", listing_ref), {
+    async function reject(listing_ref, email) {
+      await updateDoc(doc(db, "volunteers", email), {
+        PendingListings: arrayRemove(listing_ref),
+      });
+      const docSnap = await getDoc(doc(db, "volunteers", email));
+      var data = docSnap.data();
+      if (
+        data.ApprovedListings.length == 0 &&
+        data.PendingListings.length == 0
+      ) {
+        await updateDoc(doc(db, "volunteers", email), {
+          applied: false,
+        });
+      }
+      await updateDoc(doc(db, "Opportunities", listing_ref), {
         Pending: increment(-1),
       });
 
@@ -284,7 +301,7 @@ export default {
       var userDescription = z.data().Description;
       console.log(name);
       console.log(userDescription);
-      alert(name + ": " + userDescription)
+      alert(name + ": " + userDescription);
     }
 
     async function clearTable() {
@@ -375,7 +392,6 @@ export default {
 .bwt4 {
   background-color: #ff9213;
   color: white;
-
 }
 tr:nth-child(odd) {
   background-color: #ffe5a3;
@@ -463,156 +479,150 @@ table {
 /* The Modal (background) */
 
 .modal {
-    display: none;
-    /* Hidden by default */
-    position: fixed;
-    /* Stay in place */
-    z-index: 1;
-    /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%;
-    /* Full width */
-    height: 100%;
-    /* Full height */
-    overflow: auto;
-    /* Enable scroll if needed */
-    background-color: #fff9e9;
-    /* Fallback color */
-    background-color: rgba(0, 0, 0, 0.4);
-    /* Black w/ opacity */
-    padding-top: 60px;
+  display: none;
+  /* Hidden by default */
+  position: fixed;
+  /* Stay in place */
+  z-index: 1;
+  /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
+  overflow: auto;
+  /* Enable scroll if needed */
+  background-color: #fff9e9;
+  /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4);
+  /* Black w/ opacity */
+  padding-top: 60px;
 }
-
 
 /* Modal Content/Box */
 
 .modal-content {
-    background-color: #fff9e9;
-    margin: 10% auto 15% auto;
-    /* 10% from the top, 15% from the bottom and centered */
-    border: 1px solid #888;
-    border-radius: 25px;
-    width: 60%;
-    /* Could be more or less, depending on screen size */
+  background-color: #fff9e9;
+  margin: 10% auto 15% auto;
+  /* 10% from the top, 15% from the bottom and centered */
+  border: 1px solid #888;
+  border-radius: 25px;
+  width: 60%;
+  /* Could be more or less, depending on screen size */
 }
-
 
 /* The Close Button (x) */
 
 .close {
-    position: absolute;
-    right: 25px;
-    top: 0;
-    color: #000;
-    font-size: 25px;
-    font-weight: bold;
+  position: absolute;
+  right: 25px;
+  top: 0;
+  color: #000;
+  font-size: 25px;
+  font-weight: bold;
 }
 
 .close:hover,
 .close:focus {
-    color: red;
-    cursor: pointer;
+  color: red;
+  cursor: pointer;
 }
 
 #myinfo {
-    width: 200px;
-    height: 80px;
+  width: 200px;
+  height: 80px;
 }
-
 
 /* Add Zoom Animation */
 
 .animate {
-    -webkit-animation: animatezoom 0.6s;
-    animation: animatezoom 0.6s;
+  -webkit-animation: animatezoom 0.6s;
+  animation: animatezoom 0.6s;
 }
 
 @-webkit-keyframes animatezoom {
-    from {
-        -webkit-transform: scale(0);
-    }
-    to {
-        -webkit-transform: scale(1);
-    }
+  from {
+    -webkit-transform: scale(0);
+  }
+  to {
+    -webkit-transform: scale(1);
+  }
 }
 
 @keyframes animatezoom {
-    from {
-        transform: scale(0);
-    }
-    to {
-        transform: scale(1);
-    }
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
 }
-
 
 /* Change styles for span and cancel button on extra small screens */
 
 @media screen and (max-width: 300px) {
-    span.psw {
-        display: block;
-        float: none;
-    }
-    .cancelbtn {
-        width: 100%;
-    }
-    .mainbutton {
-        width: 200px;
-        color: fuchsia;
-    }
+  span.psw {
+    display: block;
+    float: none;
+  }
+  .cancelbtn {
+    width: 100%;
+  }
+  .mainbutton {
+    width: 200px;
+    color: fuchsia;
+  }
 }
 
 .popup .overlay {
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.7);
-    z-index: 1;
-    display: none;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 1;
+  display: none;
 }
 
 .popup .content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    border-radius: 10px;
-    transform: translate(-50%, -50%) scale(0);
-    background: #fff9e9;
-    width: 650px;
-    height: 500px;
-    z-index: 2;
-    text-align: center;
-    padding: 20px;
-    box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 10px;
+  transform: translate(-50%, -50%) scale(0);
+  background: #fff9e9;
+  width: 650px;
+  height: 500px;
+  z-index: 2;
+  text-align: center;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .popup .close-btn {
-    cursor: pointer;
-    position: absolute;
-    right: 20px;
-    top: 20px;
-    width: 30px;
-    height: 30px;
-    background: #222;
-    color: #fff9e9;
-    font-size: 25px;
-    font-weight: 600;
-    line-height: 30px;
-    text-align: center;
-    border-radius: 50%;
+  cursor: pointer;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  width: 30px;
+  height: 30px;
+  background: #222;
+  color: #fff9e9;
+  font-size: 25px;
+  font-weight: 600;
+  line-height: 30px;
+  text-align: center;
+  border-radius: 50%;
 }
 
 .popup.active .overlay {
-    display: block;
+  display: block;
 }
 
 .popup.active .content {
-    transition: all 300ms ease-in-out;
-    transform: translate(-50%, -50%) scale(1);
+  transition: all 300ms ease-in-out;
+  transform: translate(-50%, -50%) scale(1);
 }
-
-
 </style>
