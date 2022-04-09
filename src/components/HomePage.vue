@@ -247,13 +247,15 @@ import {
   createUserWithEmailAndPassword,
 } from "firebase/auth";
 import firebaseApp from "@/main.js";
-import { getFirestore, setDoc, doc, getDoc } from "firebase/firestore";
+import { getFirestore, setDoc, doc, getDoc} from "firebase/firestore";
+import { query, collection, getDocs } from "firebase/firestore";
 var modal = document.getElementById("id01");
 window.onclick = function (event) {
   if (event.target == modal) {
     modal.style.display = "none";
   }
 };
+
 
 export default {
   methods: {
@@ -271,29 +273,93 @@ export default {
       document.getElementById("id01").style.display = "block";
       document.getElementById("id01b").style.display = "none";
     },
-    volunteerLogin() {
+    async volunteerLogin() {
+      const db = getFirestore(firebaseApp);
+
       var username = document.getElementById("v_username").value;
       var password = document.getElementById("v_password").value;
-      const auth = getAuth();
-      signInWithEmailAndPassword(auth, username, password)
-        .then(() => {
-          this.$router.push({ name: "Volunteer" });
-        })
-        .catch((error) => {
-          console.log(error.message);
-        });
+            // var z = await getDoc(doc(db, "volunteers"));
+            // console.log(z);
+      var isVolunteer = false;
+      // const auth = getAuth();
+      //   signInWithEmailAndPassword(auth, username, password)
+      //     .then(() => {
+      //       this.$router.push({ name: "Volunteer" });
+      //     })
+      //     .catch((error) => {
+      //       console.log(error.message);
+      //     });
+      const q = query(
+        collection(db, "volunteers"),
+      );
+      const querySnapshot = await getDocs(q);
+      // this.messages.clear();
+      querySnapshot.forEach((doc) => {
+        if (username == doc.id) {
+          console.log(doc.id);
+          isVolunteer = true;
+        }
+      });
+      if (isVolunteer) {
+        const auth = getAuth();
+        signInWithEmailAndPassword(auth, username, password)
+          .then(() => {
+            this.$router.push({ name: "Volunteer" });
+          })
+          .catch((error) => {
+            console.log(error.message);
+          });
+      } else {
+        alert("You're not a volunteer!");
+      }
     },
-    organizationLogin() {
+    async organizationLogin() {
+      const db = getFirestore(firebaseApp);
+
       var username = document.getElementById("o_username").value;
       var password = document.getElementById("o_password").value;
-      const auth = getAuth();
-      signInWithEmailAndPassword(auth, username, password)
-        .then(() => {
-          this.$router.push({ name: "OpportunitiesPage" });
+
+      var isOrganisation = false;
+      // const auth = getAuth();
+      //   signInWithEmailAndPassword(auth, username, password)
+      //     .then(() => {
+      //       this.$router.push({ name: "Volunteer" });
+      //     })
+      //     .catch((error) => {
+      //       console.log(error.message);
+      //     });
+      const q = query(
+        collection(db, "Organisation"),
+      );
+      const querySnapshot = await getDocs(q);
+      // this.messages.clear();
+      querySnapshot.forEach((doc) => {
+        if (username == doc.id) {
+          console.log(doc.id);
+          isOrganisation = true;
+        }
+      });
+      if (isOrganisation) {
+        const auth = getAuth();
+        signInWithEmailAndPassword(auth, username, password)
+          .then(() => {
+            this.$router.push({ name: "OpportunitiesPage" });
         })
-        .catch((error) => {
-          console.log(error.message);
+          .catch((error) => {
+            console.log(error.message);
         });
+      } else {
+          alert("You're not an organisation!");
+      }
+
+      // const auth = getAuth();
+      // signInWithEmailAndPassword(auth, username, password)
+      //   .then(() => {
+      //     this.$router.push({ name: "OpportunitiesPage" });
+      //   })
+      //   .catch((error) => {
+      //     console.log(error.message);
+      //   });
     },
     async userSignUp() {
       var name = document.getElementById("full_name").value;
