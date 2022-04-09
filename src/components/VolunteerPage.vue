@@ -217,6 +217,7 @@ import firebaseApp from "@/firebase.js";
 import { getFirestore } from "firebase/firestore";
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
 
+
 const db = getFirestore(firebaseApp);
 
 export default {

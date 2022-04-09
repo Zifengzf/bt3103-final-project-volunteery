@@ -232,6 +232,7 @@ import NavBar from "@/components/NavBar.vue";
 import firebaseApp from "@/firebase.js";
 import { getFirestore } from "firebase/firestore";
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
 const db = getFirestore(firebaseApp);
 
@@ -252,7 +253,7 @@ export default {
       selectedPosting: "",
       selectedPeriod: "",
       selectedSorting: "Vacancy",
-      tempUsername: "2001chenxi@gmail.com",
+      tempUsername: "hellokitty@gmail.com",
       myApprovedPostings: [],
       myPendingPostings: [],
       holder: [],
@@ -263,7 +264,10 @@ export default {
   //   filteredPostings: collection(db, "Opportunities").orderBy("Region"),
   // },
   mounted() {
-    this.retrieveUserListing(this.tempUsername);
+    const auth = getAuth()
+    var email = auth.currentUser.email;
+    
+    this.retrieveUserListing(email);
     this.storeMessage(this.selectedSorting);
     console.log(this.list);
   },

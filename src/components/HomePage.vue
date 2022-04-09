@@ -321,6 +321,9 @@ export default {
           password: password,
           currentPoints: 0,
           totalPoints: 0,
+          applied: false,
+          ApprovedListings: [],
+          PendingListings: []
         });
         const auth = getAuth();
         createUserWithEmailAndPassword(auth, email, password)
