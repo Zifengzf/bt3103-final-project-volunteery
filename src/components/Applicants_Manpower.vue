@@ -79,6 +79,30 @@
       </div>
     </div>
   </div>
+
+<div id="id00" class="modal">
+    <form class="modal-content animate">
+      <div class="overlay"></div>
+      <div class="content">
+        <div class="imgcontainer" style="float:right; margin-right:30px">
+            <span
+            onclick="document.getElementById('id02').style.display='none'"
+            class="close" 
+            title="Close Modal">&times;</span>
+        </div>
+
+        <br><br><br>
+
+        <form style="margin-bottom:30px">
+            <p>by ABC Elderly Home</p>
+            <h3>Rating (out of 5 stars):</h3>
+            <h3>Describe your overall experience!</h3>
+            <br><br><br>
+        </form>
+      </div>
+    </form>
+  </div>
+
 </template>
 
 <script>
@@ -94,6 +118,7 @@ import {
   deleteDoc,
   increment,
   arrayUnion,
+  getDoc
 } from "firebase/firestore";
 const db = getFirestore(firebaseApp);
 export default {
@@ -179,11 +204,12 @@ export default {
       cell5.className = "accept";
       cell6.className = "reject";
       var review_button = document.createElement("button");
-      review_button.className = "bwt1";
+      review_button.className = "bwt4";
       review_button.innerHTML = "Review";
       review_button.onclick = function () {
-        console.log("Review functionality not available yet");
+        review(name, listing_ref, email);
       };
+
       cell4.appendChild(review_button);
       if (status == "Pending") {
         var accept_button = document.createElement("button");
@@ -192,6 +218,7 @@ export default {
         accept_button.innerHTML = "Accept";
         reject_button.className = "bwt3";
         reject_button.innerHTML = "Reject";
+
         accept_button.onclick = function () {
           accept(name, listing_ref, email);
         };
@@ -250,6 +277,14 @@ export default {
       });
 
       display();
+    }
+
+    async function review(name, listing_ref, email) {
+      var z = await getDoc(doc(db, "Applicants", email));
+      var userDescription = z.data().Description;
+      console.log(name);
+      console.log(userDescription);
+      alert(name + ": " + userDescription)
     }
 
     async function clearTable() {
@@ -337,6 +372,11 @@ export default {
   background-color: #e81515;
   color: white;
 }
+.bwt4 {
+  background-color: #ff9213;
+  color: white;
+
+}
 tr:nth-child(odd) {
   background-color: #ffe5a3;
 }
@@ -419,50 +459,160 @@ table {
 .title {
   font-weight: bold;
 }
+
+/* The Modal (background) */
+
 .modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: #fff9e9; /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
-  padding-top: 60px;
-}
-/* Modal Content/Box */
-.modal-content {
-  background-color: #fff9e9;
-  margin: 10% auto 15% auto; /* 10% from the top, 15% from the bottom and centered */
-  border: 1px solid #888;
-  border-radius: 25px;
-  width: 60%; /* Could be more or less, depending on screen size */
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1;
+    /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: #fff9e9;
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
+    padding-top: 60px;
 }
 
+
+/* Modal Content/Box */
+
+.modal-content {
+    background-color: #fff9e9;
+    margin: 10% auto 15% auto;
+    /* 10% from the top, 15% from the bottom and centered */
+    border: 1px solid #888;
+    border-radius: 25px;
+    width: 60%;
+    /* Could be more or less, depending on screen size */
+}
+
+
 /* The Close Button (x) */
+
 .close {
-  position: absolute;
-  right: 25px;
-  top: 0;
-  color: #000;
-  font-size: 35px;
-  font-weight: bold;
+    position: absolute;
+    right: 25px;
+    top: 0;
+    color: #000;
+    font-size: 25px;
+    font-weight: bold;
 }
 
 .close:hover,
 .close:focus {
-  color: red;
-  cursor: pointer;
+    color: red;
+    cursor: pointer;
 }
-.imgcontainer {
-  text-align: center;
-  margin: 24px 0 12px 0;
-  position: relative;
+
+#myinfo {
+    width: 200px;
+    height: 80px;
 }
-.bwt1 {
-  background-color: #ff9213;
-  color: white;
+
+
+/* Add Zoom Animation */
+
+.animate {
+    -webkit-animation: animatezoom 0.6s;
+    animation: animatezoom 0.6s;
 }
+
+@-webkit-keyframes animatezoom {
+    from {
+        -webkit-transform: scale(0);
+    }
+    to {
+        -webkit-transform: scale(1);
+    }
+}
+
+@keyframes animatezoom {
+    from {
+        transform: scale(0);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+
+
+/* Change styles for span and cancel button on extra small screens */
+
+@media screen and (max-width: 300px) {
+    span.psw {
+        display: block;
+        float: none;
+    }
+    .cancelbtn {
+        width: 100%;
+    }
+    .mainbutton {
+        width: 200px;
+        color: fuchsia;
+    }
+}
+
+.popup .overlay {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+    display: none;
+}
+
+.popup .content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 10px;
+    transform: translate(-50%, -50%) scale(0);
+    background: #fff9e9;
+    width: 650px;
+    height: 500px;
+    z-index: 2;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.popup .close-btn {
+    cursor: pointer;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    width: 30px;
+    height: 30px;
+    background: #222;
+    color: #fff9e9;
+    font-size: 25px;
+    font-weight: 600;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 50%;
+}
+
+.popup.active .overlay {
+    display: block;
+}
+
+.popup.active .content {
+    transition: all 300ms ease-in-out;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+
 </style>
