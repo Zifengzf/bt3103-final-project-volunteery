@@ -69,7 +69,6 @@
           <option value="VacancyDescending">Vacancy (descending)</option>
           <option value="Duration">Duration</option>
           <option value="DurationDescending">Duration (descending)</option>
-          <!-- <option value="Date">Posted date</option> -->
         </select>
     </div>
     <div v-for="(result, index) in results" :key="result">
@@ -169,35 +168,6 @@ export default {
   },
   data() {
     return {
-      // things: {
-      //   apple: {
-      //     content:
-      //       "Help the Home carry out services such as social-recreational activities for our Residents, gardening, cleaning and general maintenance, and other services so that our caregivers may focus on attending to the daily needs of our residents.",
-      //     duration: "1",
-      //     region: "East",
-      //     status: "Approved",
-      //     statusbox: "approvedstatus",
-      //     title: "Chefs needed for CNY",
-      //   },
-      //   pear: {
-      //     content:
-      //       "Help the Home carry out services such as social-recreational activities for our Residents, gardening, cleaning and general maintenance, and other services so that our caregivers may focus on attending to the daily needs of our residents.",
-      //     duration: "3",
-      //     region: "South-West",
-      //     status: "Pending",
-      //     statusbox: "approvedstatus",
-      //     title: "Accompany the Elderly",
-      //   },
-      //   cherry: {
-      //     content:
-      //       "Help the Home carry out services such as social-recreational activities for our Residents, gardening, cleaning and general maintenance, and other services so that our caregivers may focus on attending to the daily needs of our residents.",
-      //     duration: "6",
-      //     region: "North",
-      //     status: "Approved",
-      //     statusbox: "approvedstatus",
-      //     title: "Walk pets for SPCA",
-      //   },
-      // },
       results: [],
       cities: [],
       messages: [],
@@ -208,16 +178,11 @@ export default {
       selectedPeriod: "",
       selectedSorting: "Vacancy",
       holder: [],
-      // sortBy: "Region",
     };
   },
-  // firestore: {
-  //   filteredPostings: collection(db, "Opportunities").orderBy("Region"),
-  // },
   mounted() {
     this.storeMessage(this.selectedSorting);
     console.log(this.list);
-    //this.retrieveemployees()
   },
 
   watch: {
@@ -269,24 +234,16 @@ export default {
         this.filteredPostings = this.messages;
       }
       if (sort != "") {
-        // this.filteredPostings = this.messages.orderBy(sort);
-        // this.storeMessage(sort);
         if (sort == "Vacancy") {
           this.filteredPostings.sort(function (a, b) {
-            // console.log(a.sort);
-            // console.log(b.sort);
             return a.vacancy - b.vacancy;
           });
         } else if (sort == "VacancyDescending") {
           this.filteredPostings.sort(function (a, b) {
-            // console.log(a.sort);
-            // console.log(b.sort);
             return b.vacancy - a.vacancy;
           });
         } else if (sort == "Duration") {
           this.filteredPostings.sort(function (a, b) {
-            // console.log(a.sort);
-            // console.log(b.sort);
             return a.duration - b.duration;
           });
         } else {
@@ -305,7 +262,6 @@ export default {
         orderBy(this.selectedSorting)
       );
       const querySnapshot = await getDocs(q);
-      // this.messages.clear();
       querySnapshot.forEach((doc) => {
         let yy = doc.data();
         this.messages.push({
@@ -339,35 +295,6 @@ export default {
         });
       }
     },
-
-    // sortPostings() {
-    //   this.filteredPostings = this.messages;
-    //   console.log(this.selectedPosting);
-
-    //   if (this.selectedPosting == "") {
-    //     return this.filteredPostings;
-    //   }
-
-    //   if (this.selectedPosting != "") {
-    //     this.filteredPostings = this.filteredPostings.sortBy((posting) => {
-    //       return posting.region;
-    //     });
-    //   }
-    // },
-    // async retrieveemployees() {
-    //   let z = await getDocs(collection(db, "Applications"))
-    //   z.forEach(response => {
-    //     console.log("pitstop");
-    //     console.log(response);
-    //     //let yy = response.data()
-    //     //this.employees = response.data;
-    //     //this.details = yy;
-    //     //console.log(yy);
-    //   })
-    //   .catch(e => {
-    //     console.log(e);
-    //   });
-    // }
   },
 };
 </script>

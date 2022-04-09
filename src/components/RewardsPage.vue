@@ -31,22 +31,14 @@
         </p>
       </div>
     </div>
-
-    <!-- <div style="background-color:blue">
-      <line-chart class="chart" width=500px :data = 'chartdata'></line-chart>
-    </div> -->
   </div>
-  <!-- 
-  <div class="right">
-    <canvas id="myChart" class=center></canvas>
-  <div> -->
+
 
   <div class="listingcontainer">
     <div class="acheivementStatus">Claim Rewards</div>
     <div id="ptsA" class="acheivementStatus2">
       Points Available: {{ pointsAvailable }}
     </div>
-    <!-- <div class="acheivementStatus2"><button @click="display()">UPDATE</button></div> -->
 
     <div class="reward">
       <div class="imgcontainer" style="object-fit: contain; padding: 20px">
@@ -69,7 +61,6 @@
           v-on:click="redeemReward(20)"
           >Redeem</a
         >
-        <!-- <button class="redeem_btn ">REDEEM</button> -->
       </div>
     </div>
 
@@ -94,7 +85,6 @@
           v-on:click="redeemReward(25)"
           >Redeem</a
         >
-        <!-- <button class="redeem_btn ">REDEEM</button> -->
       </div>
     </div>
 
@@ -119,7 +109,6 @@
           v-on:click="redeemReward(25)"
           >Redeem</a
         >
-        <!-- <button class="redeem_btn ">REDEEM</button> -->
       </div>
     </div>
   </div>
@@ -152,10 +141,6 @@ import { getFirestore } from "firebase/firestore";
 import { doc, getDoc, updateDoc, increment } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
-// const db = getFirestore(firebaseApp);
-
-// var xValues = ["Week 1","Week 2","Week 3","Week 4","Week 5","Week 6","Week 7","Week 8"];
-// var yValues = [7,11,11,16,19,21,25,32];
 export default {
   data() {
     return {
@@ -164,7 +149,6 @@ export default {
       remainingPoints: 17,
       pointsAvailable: 20,
     };
-    // chartdata: null
   },
   methods: {
     async redeemReward(pts) { 

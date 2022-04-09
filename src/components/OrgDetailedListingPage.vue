@@ -238,16 +238,6 @@ export default {
 .title {
   padding: 0px;
   background-color: transparent;
-  /* width: 374px;
-  color: rgba(0, 0, 0, 1);
-  position: absolute;
-  top: 55px;
-  left: 24px;
-  font-family: Roboto;
-  font-weight: Bold;
-  font-size: 16px;
-  opacity: 1;
-  text-align: left; */
 }
 
 .fliterandsort {

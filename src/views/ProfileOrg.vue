@@ -79,10 +79,6 @@ export default {
       var userInfo = z.data();
       var volName =  userInfo.Name;
 
-      
-    //   var cell3 = row.insertCell(2);
-    //   var cell4 = row.insertCell(3);
-    //   var cell5 = row.insertCell(4);
       document.getElementById("fn").innerHTML = volName;
 
     }

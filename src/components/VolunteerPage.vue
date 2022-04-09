@@ -55,12 +55,7 @@
         <option value="6,12">6 months - 1 year</option>
         <option value="12,999">More than 1 year</option>
       </select>
-      <!-- <label for="cars" style="font-size: 18px; padding: 10px">Sort by:</label>
-      <select name="cars" id="cars" style="font-size: 18px">
-        <option value="volvo">Vacancy</option>
-        <option value="saab">Commitment Period</option>
-        <option value="opel">Posted date</option>
-      </select> -->
+
       <label for="sortby" style="font-size: 18px; padding: 10px"
         >Sort by:</label
       >
@@ -74,13 +69,8 @@
         <option value="VacancyDescending">Vacancy (descending)</option>
         <option value="Duration">Duration</option>
         <option value="DurationDescending">Duration (descending)</option>
-        <!-- <option value="Date">Posted date</option> -->
       </select>
-      <!-- <input
-        type="submit"
-        value="NIL"
-        style="font-size: 18px; padding: 10px"
-      /> -->
+
     </div>
     <div v-for="(result, index) in results" :key="result">
       <div class="card">
@@ -237,46 +227,7 @@ export default {
   },
   mounted() {
     this.storeMessage(this.selectedSorting);
-    // async function display() {
-    //     let z = await getDocs(collection(db, "Applications"))
-    //     let ind = 1
-    //     //var tp = 0
-
-    //     z.forEach((docs) => {
-    //         let yy = docs.data()
-    //         var region = (yy.Region)
-
-    //         console.log(ind);
-    //         console.log(region);
-    //         this.list.push(region) // unable to find this.list
-
-    //         console.log("fin");
-
-    //         // adding content to bottom
-    //         // console.log(content)
-    //         // const e = document.createElement('div');
-    //         // e.innerHTML = '<h3 class="listingbox">content<h3>';
-    //         // document.body.appendChild(e);
-
-    //         // val(ticker)
-
-    //         // setInterval(() => {
-    //         //     val(ticker)
-    //         // }, 2000)
-
-    //         // async function val(ticker) {
-    //         //     let binance = new ccxt.binance()
-    //         //     let x = await binance.fetch_ohlcv(ticker, "5m")
-    //         //     cell6.innerHTML = x[499][4]
-    //         //     cell7.innerHTML = 50
-    //         //     tp = tp + parseFloat(cell7.innerHTML)
-    //         // }
-    //         ind += 1
-    //     })
-    // }
-    //display()
     console.log(this.list);
-    //this.retrieveemployees()
   },
   watch: {
     selectedPosting(fil) {
@@ -327,24 +278,16 @@ export default {
         this.filteredPostings = this.messages;
       }
       if (sort != "") {
-        // this.filteredPostings = this.messages.orderBy(sort);
-        // this.storeMessage(sort);
         if (sort == "Vacancy") {
           this.filteredPostings.sort(function (a, b) {
-            // console.log(a.sort);
-            // console.log(b.sort);
             return a.vacancy - b.vacancy;
           });
         } else if (sort == "VacancyDescending") {
           this.filteredPostings.sort(function (a, b) {
-            // console.log(a.sort);
-            // console.log(b.sort);
             return b.vacancy - a.vacancy;
           });
         } else if (sort == "Duration") {
           this.filteredPostings.sort(function (a, b) {
-            // console.log(a.sort);
-            // console.log(b.sort);
             return a.duration - b.duration;
           });
         } else {
@@ -442,16 +385,6 @@ h1 {
 .title {
   padding: 0px;
   background-color: transparent;
-  /* width: 374px;
-  color: rgba(0, 0, 0, 1);
-  position: absolute;
-  top: 55px;
-  left: 24px;
-  font-family: Roboto;
-  font-weight: Bold;
-  font-size: 16px;
-  opacity: 1;
-  text-align: left; */
 }
 
 .fliterandsort {

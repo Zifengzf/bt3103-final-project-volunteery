@@ -78,14 +78,6 @@ const routes = [{
         name: "OrgDetailedListing",
         component: OrgDetailedListing,
     },
-    /** 
-                 * Wait for more routes to be added
-                {
-                  path: "/profit",
-                  name: "OnlyProfit",
-                  component: OnlyProfit,
-                },
-                */
 ];
 
 const router = createRouter({

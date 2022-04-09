@@ -95,12 +95,7 @@
       </div>
     </div>
     <div id="chat" class="container">
-      <!-- <form @submit.prevent="storeMessage">
-    <br>
-    <button class="btn btn-primary">View Applications</button>
-  </form> -->
       <br />
-      <!-- Messages -->
       <div v-for="message in filteredPostings" class="card" :key="message">
         <div class="card-body">
           <div class="listingbox">
@@ -148,7 +143,6 @@
                   <p class="specdetails">
                     Vacancy: {{ message.vacancy }} / {{ message.needed }} left
                   </p>
-                  <!-- <p class="specdetails">Vacancy: 7 / 30 left</p> -->
                 </div>
               </div>
             </div>
@@ -165,7 +159,6 @@
           <br />
         </div>
       </div>
-      <!-- <div v-for="sorting of filteredPostings" :key="sorting">{{ sorting }}</div> -->
     </div>
   </div>
 
@@ -228,7 +221,6 @@ import {
   increment,
   arrayRemove,
 } from "firebase/firestore";
-// updateDoc, doc, getDoc
 
 const db = getFirestore(firebaseApp);
 
@@ -247,15 +239,11 @@ export default {
       selectedPosting: "",
       selectedPeriod: "",
       selectedSorting: "Vacancy",
-      // sortBy: "Region",
-      // orgName: "wh@willinghearts.com",
       myPostings: [],
       holder: [],
     };
   },
-  // firestore: {
-  //   filteredPostings: collection(db, "Opportunities").orderBy("Region"),
-  // },
+
   mounted() {
     this.retrieveOrgPosting();
     console.log("done");
@@ -308,20 +296,6 @@ export default {
     async function userAddPts(email, numpts) {
       console.log(email);
       console.log(numpts);
-      // var userProfile = doc(db, "volunteers", email)
-      // const k = await getDoc(userProfile);
-      // var userInfo = k.data();
-      // var a = userInfo.totalPoints;
-      // var b = userInfo.currentPoints;
-      // console.log(a,b)
-      // var newTotalPoints = a + numpts;
-      // var newCurrentPoints = b + numpts;
-      // console.log(newCurrentPoints);
-      // alert("Updating"+numpts+"to "+newCurrentPoints+email)
-      // await updateDoc(userProfile, {
-      //   totalPoints: newTotalPoints,
-      //   currentPoints: newCurrentPoints
-      // });
 
       await updateDoc(doc(db, "volunteers", email), {
         totalPoints: increment(numpts),
@@ -329,7 +303,6 @@ export default {
       });
     }
     console.log(this.list);
-    //this.retrieveemployees()
   },
 
   watch: {
@@ -381,24 +354,17 @@ export default {
         this.filteredPostings = this.messages;
       }
       if (sort != "") {
-        // this.filteredPostings = this.messages.orderBy(sort);
-        // this.storeMessage(sort);
+
         if (sort == "Vacancy") {
           this.filteredPostings.sort(function (a, b) {
-            // console.log(a.sort);
-            // console.log(b.sort);
             return a.vacancy - b.vacancy;
           });
         } else if (sort == "VacancyDescending") {
           this.filteredPostings.sort(function (a, b) {
-            // console.log(a.sort);
-            // console.log(b.sort);
             return b.vacancy - a.vacancy;
           });
         } else if (sort == "Duration") {
           this.filteredPostings.sort(function (a, b) {
-            // console.log(a.sort);
-            // console.log(b.sort);
             return a.duration - b.duration;
           });
         } else {
@@ -420,7 +386,6 @@ export default {
         orderBy(this.selectedSorting)
       );
       const querySnapshot = await getDocs(q);
-      // this.messages.clear();
       querySnapshot.forEach((doc) => {
         if (this.myPostings.includes(doc.id)) {
           let yy = doc.data();
@@ -441,7 +406,6 @@ export default {
     },
 
     async retrieveOrgPosting() {
-      // fix to having only 1 organisation for now
       const p = query(collection(db, "Organisation"));
       const postingsSnapshot = await getDocs(p);
       postingsSnapshot.forEach((doc) => {
@@ -492,34 +456,6 @@ export default {
       });
     },
 
-    // sortPostings() {
-    //   this.filteredPostings = this.messages;
-    //   console.log(this.selectedPosting);
-
-    //   if (this.selectedPosting == "") {
-    //     return this.filteredPostings;
-    //   }
-
-    //   if (this.selectedPosting != "") {
-    //     this.filteredPostings = this.filteredPostings.sortBy((posting) => {
-    //       return posting.region;
-    //     });
-    //   }
-    // },
-    // async retrieveemployees() {
-    //   let z = await getDocs(collection(db, "Applications"))
-    //   z.forEach(response => {
-    //     console.log("pitstop");
-    //     console.log(response);
-    //     //let yy = response.data()
-    //     //this.employees = response.data;
-    //     //this.details = yy;
-    //     //console.log(yy);
-    //   })
-    //   .catch(e => {
-    //     console.log(e);
-    //   });
-    // }
   },
 };
 </script>

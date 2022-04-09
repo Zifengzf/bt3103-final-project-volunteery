@@ -1,6 +1,5 @@
 <template>
   <div class="topnav">
-    <!-- <div id="logged" v-if="user"> -->
     <img
       src="@/assets/volunteery_copy.png"
       alt=""
@@ -14,20 +13,11 @@
       <router-link class="rl" to="/profile">My Profile</router-link>
       <router-link class="rl" to="/">Sign out</router-link>
     </div>
-    <!-- <div class="dropdown">
-      <button class="dropbtn">User</button>
-      <div class="dropdown-content">
-        <router-link to="/profile">Profile</router-link>
-        <router-link to="/" class="router-link">Sign out</router-link>
-      </div>
-    </div> -->
 
-    <!-- </div> -->
   </div>
 </template>
 
 <script>
-// import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export default {
   name: "NavBar",
@@ -37,16 +27,6 @@ export default {
       user: false,
     };
   },
-
-  // mounted() {
-  //     const auth = getAuth();
-  //     onAuthStateChanged(auth, (user) => {
-  //     if (user) {
-  //         this.user = user;
-  //         console.log("showing nav " + user)
-  //     }
-  //     })
-  // },
 };
 </script>
 

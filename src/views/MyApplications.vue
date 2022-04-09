@@ -92,12 +92,8 @@
       </div>
     </div>
     <div id="chat" class="container">
-      <!-- <form @submit.prevent="storeMessage">
-    <br>
-    <button class="btn btn-primary">View Applications</button>
-  </form> -->
+
       <br />
-      <!-- Messages -->
       <div v-for="message in filteredPostings" class="card" :key="message">
         <div class="card-body">
           <div class="listingbox">
@@ -145,13 +141,11 @@
                   <p class="specdetails">
                     Vacancy: {{ message.vacancy }} / {{ message.needed }} left
                   </p>
-                  <!-- <p class="specdetails">Vacancy: 7 / 30 left</p> -->
                 </div>
               </div>
             </div>
             <div class="listingbuttonsbox">
               <p class="approvedstatus"> Approved </p>
-              <!-- <button class="viewmore" type="button">View More</button> -->
               <router-link :to="`/listing/${message.url}`">
                 <button class="viewmore" type="button">View More</button>
               </router-link>
@@ -207,13 +201,11 @@
                   <p class="specdetails">
                     Vacancy: {{ message.vacancy }} / {{ message.needed }} left
                   </p>
-                  <!-- <p class="specdetails">Vacancy: 7 / 30 left</p> -->
                 </div>
               </div>
             </div>
             <div class="listingbuttonsbox">
               <p class="pendingstatus"> Pending </p>
-              <!-- <button class="viewmore" type="button">View More</button> -->
               <router-link :to="`/listing/${message.url}`">
                 <button class="viewmore" type="button">View More</button>
               </router-link>
@@ -222,7 +214,6 @@
           <br />
         </div>
       </div>
-      <!-- <div v-for="sorting of filteredPostings" :key="sorting">{{ sorting }}</div> -->
     </div>
   </div>
 </template>
@@ -260,9 +251,6 @@ export default {
       holder2: [],
     };
   },
-  // firestore: {
-  //   filteredPostings: collection(db, "Opportunities").orderBy("Region"),
-  // },
   mounted() {
     const auth = getAuth()
     var email = auth.currentUser.email;
@@ -365,43 +353,26 @@ export default {
     },
     selectedSorting(sort) {
       console.log(sort);
-      // if (sort == "") {
-      //   this.filteredPostings = this.messages;
-      // }
       if (sort != "") {
-        // this.filteredPostings = this.messages.orderBy(sort);
-        // this.storeMessage(sort);
         if (sort == "Vacancy") {
           this.filteredPostings.sort(function (a, b) {
-            // console.log(a.sort);
-            // console.log(b.sort);
             return a.vacancy - b.vacancy;
           });
           this.filteredPostings2.sort(function (a, b) {
-            // console.log(a.sort);
-            // console.log(b.sort);
             return a.vacancy - b.vacancy;
           });
         } else if (sort == "VacancyDescending") {
           this.filteredPostings.sort(function (a, b) {
-            // console.log(a.sort);
-            // console.log(b.sort);
             return b.vacancy - a.vacancy;
           });
           this.filteredPostings2.sort(function (a, b) {
-            // console.log(a.sort);
-            // console.log(b.sort);
             return b.vacancy - a.vacancy;
           });
         } else if (sort == "Duration") {
           this.filteredPostings.sort(function (a, b) {
-            // console.log(a.sort);
-            // console.log(b.sort);
             return a.duration - b.duration;
           });
           this.filteredPostings2.sort(function (a, b) {
-            // console.log(a.sort);
-            // console.log(b.sort);
             return a.duration - b.duration;
           });
         } else {
@@ -424,7 +395,6 @@ export default {
         orderBy(this.selectedSorting)
       );
       const querySnapshot = await getDocs(q);
-      // this.messages.clear();
       querySnapshot.forEach((doc) => {
         if (this.myApprovedPostings.includes(doc.id)) {
           let yy = doc.data();
@@ -456,16 +426,7 @@ export default {
         }
         this.messageText = "";
       });
-      // this.messages2 = this.messages;
-      // for (let i = 0; i < this.messages.length; i++) {
-      //   if (
-      //     this.filteredPostings.find(this.messages.at(i)) == this.messages.at(i)
-      //   ) {
-      //     continue;
-      //   } else {
-      //     this.messages2.splice(i);
-      //   }
-      // }
+
       this.filteredPostings = this.messages;
       this.filteredPostings2 = this.messages2;
     },
@@ -506,35 +467,6 @@ export default {
         });
       }
     },
-
-    // sortPostings() {
-    //   this.filteredPostings = this.messages;
-    //   console.log(this.selectedPosting);
-
-    //   if (this.selectedPosting == "") {
-    //     return this.filteredPostings;
-    //   }
-
-    //   if (this.selectedPosting != "") {
-    //     this.filteredPostings = this.filteredPostings.sortBy((posting) => {
-    //       return posting.region;
-    //     });
-    //   }
-    // },
-    // async retrieveemployees() {
-    //   let z = await getDocs(collection(db, "Applications"))
-    //   z.forEach(response => {
-    //     console.log("pitstop");
-    //     console.log(response);
-    //     //let yy = response.data()
-    //     //this.employees = response.data;
-    //     //this.details = yy;
-    //     //console.log(yy);
-    //   })
-    //   .catch(e => {
-    //     console.log(e);
-    //   });
-    // }
   },
 };
 </script>
