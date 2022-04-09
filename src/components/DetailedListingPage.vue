@@ -66,8 +66,11 @@
 
         <div v-for="message in messages" class="card" :key="message">
           <div class="reward">
-              <div class="imgcontainer">
-                  <img class="divimg2" src="../assets/stars.png">
+              <div class="imgcontainer" v-if="message.reviewRate==4">
+                  <img class="divimg2" src="../assets/stars.png">  4 
+              </div>
+              <div class="imgcontainer" v-else>
+                  <img class="divimg2" src="../assets/stars.png">3
               </div>
               <div style="font: Sansation">
                   <h4 class="centeredtext"><span>{{ message.reviewRate }} Star Rating</span></h4>
