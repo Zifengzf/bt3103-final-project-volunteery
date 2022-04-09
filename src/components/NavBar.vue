@@ -54,8 +54,8 @@ export default {
   justify-items: center;
 }
 #nav {
-  padding: 30px 0px 30px 0px;
-  text-align: center;
+  padding: 30px 10px 30px 0px;
+  text-align: right;
   font-size: 20px;
 }
 
@@ -78,7 +78,7 @@ export default {
   border: none;
   outline: none;
   color: #ff9213;
-  padding: 24px 16px 14px 16px;
+  padding: 22px 16px 14px 16px;
   background-color: inherit;
   font-family: inherit;
   margin: 0;

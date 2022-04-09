@@ -295,21 +295,22 @@ export default {
     }
 
     async function displayAddpts() {
-      let z = await getDocs(collection(db, "Applicants"));
+      let z = await getDocs(collection(db, "volunteers"));
+
       let ind = 1;
       // let numpts = document.getElementByID('ptsToAdd').value;
 
       z.forEach((docs) => {
         let data = docs.data();
 
-        var toAdd = data.Status;
+        var toAdd = data.ApprovedListings;
 
-        if (toAdd == "Approved") {
+        if (toAdd.length > 0) {
           var table2 = document.getElementById("table2");
 
           var row = table2.insertRow(ind);
-          var name = data.Name;
-          var email = data.Email;
+          var name = data.name;
+          var email = data.email;
 
           var cell1 = row.insertCell(0);
           var cell2 = row.insertCell(1);
