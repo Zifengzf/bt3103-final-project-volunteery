@@ -150,7 +150,7 @@
               </div>
             </div>
             <div class="listingbuttonsbox">
-              <p class="approvedstatus">{{ message.status }}</p>
+              <p class="approvedstatus"> Approved </p>
               <!-- <button class="viewmore" type="button">View More</button> -->
               <router-link :to="`/listing/${message.url}`">
                 <button class="viewmore" type="button">View More</button>
@@ -212,7 +212,7 @@
               </div>
             </div>
             <div class="listingbuttonsbox">
-              <p class="pendingstatus">{{ message.status }}</p>
+              <p class="pendingstatus"> Pending </p>
               <!-- <button class="viewmore" type="button">View More</button> -->
               <router-link :to="`/listing/${message.url}`">
                 <button class="viewmore" type="button">View More</button>
@@ -266,7 +266,7 @@ export default {
   mounted() {
     const auth = getAuth()
     var email = auth.currentUser.email;
-    
+    console.log("this is " + email);
     this.retrieveUserListing(email);
     this.storeMessage(this.selectedSorting);
     console.log(this.list);
@@ -478,12 +478,12 @@ export default {
           let zz = doc.data();
           let listingsArr = zz.ApprovedListings;
           for (let i = 0; i < listingsArr.length; i++) {
-            console.log(listingsArr[i]);
+            console.log("approved is " + listingsArr[i]);
             this.myApprovedPostings.push(listingsArr[i]);
           }
           let y = zz.PendingListings;
           for (let i = 0; i < y.length; i++) {
-            console.log(y[i]);
+            console.log("pending is " + y[i]);
             this.myPendingPostings.push(y[i]);
           }
         }

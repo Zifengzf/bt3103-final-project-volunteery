@@ -327,56 +327,7 @@ export default {
         totalPoints: increment(numpts),
         currentPoints: increment(numpts),
       });
-
-      // db.collection("volunteers").doc(email).update({
-      //     totalPoints: newTotalPoints,
-      //     currentPoints: newCurrentPoints
-      // });
-
-      // db.collection("volunteers").doc(email).get().then(snapshot=>{
-      //   this.totalPoints= snapshot.data().totalPoints
-      //   this.currentPoints= snapshot.data().currentPoints
-      // });
     }
-
-    // async function display() {
-    //     let z = await getDocs(collection(db, "Applications"))
-    //     let ind = 1
-    //     //var tp = 0
-
-    //     z.forEach((docs) => {
-    //         let yy = docs.data()
-    //         var region = (yy.Region)
-
-    //         console.log(ind);
-    //         console.log(region);
-    //         this.list.push(region) // unable to find this.list
-
-    //         console.log("fin");
-
-    //         // adding content to bottom
-    //         // console.log(content)
-    //         // const e = document.createElement('div');
-    //         // e.innerHTML = '<h3 class="listingbox">content<h3>';
-    //         // document.body.appendChild(e);
-
-    //         // val(ticker)
-
-    //         // setInterval(() => {
-    //         //     val(ticker)
-    //         // }, 2000)
-
-    //         // async function val(ticker) {
-    //         //     let binance = new ccxt.binance()
-    //         //     let x = await binance.fetch_ohlcv(ticker, "5m")
-    //         //     cell6.innerHTML = x[499][4]
-    //         //     cell7.innerHTML = 50
-    //         //     tp = tp + parseFloat(cell7.innerHTML)
-    //         // }
-    //         ind += 1
-    //     })
-    // }
-    //display()
     console.log(this.list);
     //this.retrieveemployees()
   },
