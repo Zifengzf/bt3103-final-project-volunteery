@@ -49,10 +49,15 @@
       style="float: right; height: 200px"
     />
     <div class="abouttext" style="color: #ff9213">ABOUT VOLUNTEERY</div>
-    <div class="abouttext"><b>
-      Volunteery is a platform that matches volunteers to organizations. Organisations would list relevant oppotunties and review applicants through this platform.
-      For volunteers, it is a one-stop platform for you to seek volunteer opportunities, leave reviews and also redeem rewards. 
-      Helping your community is an opportunity for you to grow as a person, to better understand how you fit into the world around you. Let's go!</b>
+    <div class="abouttext">
+      <b>
+        Volunteery is a platform that matches volunteers to organizations.
+        Organisations would list relevant oppotunties and review applicants
+        through this platform. For volunteers, it is a one-stop platform for you
+        to seek volunteer opportunities, leave reviews and also redeem rewards.
+        Helping your community is an opportunity for you to grow as a person, to
+        better understand how you fit into the world around you. Let's go!</b
+      >
     </div>
 
     <email-detail email="98"></email-detail>
@@ -239,15 +244,13 @@
 </template>
 
 <script>
-
-
 import {
   getAuth,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
 } from "firebase/auth";
 import firebaseApp from "@/main.js";
-import { getFirestore, setDoc, doc, getDoc} from "firebase/firestore";
+import { getFirestore, setDoc, doc, getDoc } from "firebase/firestore";
 import { query, collection, getDocs } from "firebase/firestore";
 var modal = document.getElementById("id01");
 window.onclick = function (event) {
@@ -255,7 +258,6 @@ window.onclick = function (event) {
     modal.style.display = "none";
   }
 };
-
 
 export default {
   methods: {
@@ -278,8 +280,8 @@ export default {
 
       var username = document.getElementById("v_username").value;
       var password = document.getElementById("v_password").value;
-            // var z = await getDoc(doc(db, "volunteers"));
-            // console.log(z);
+      // var z = await getDoc(doc(db, "volunteers"));
+      // console.log(z);
       var isVolunteer = false;
       // const auth = getAuth();
       //   signInWithEmailAndPassword(auth, username, password)
@@ -289,9 +291,7 @@ export default {
       //     .catch((error) => {
       //       console.log(error.message);
       //     });
-      const q = query(
-        collection(db, "volunteers"),
-      );
+      const q = query(collection(db, "volunteers"));
       const querySnapshot = await getDocs(q);
       // this.messages.clear();
       querySnapshot.forEach((doc) => {
@@ -328,9 +328,7 @@ export default {
       //     .catch((error) => {
       //       console.log(error.message);
       //     });
-      const q = query(
-        collection(db, "Organisation"),
-      );
+      const q = query(collection(db, "Organisation"));
       const querySnapshot = await getDocs(q);
       // this.messages.clear();
       querySnapshot.forEach((doc) => {
@@ -344,12 +342,12 @@ export default {
         signInWithEmailAndPassword(auth, username, password)
           .then(() => {
             this.$router.push({ name: "OpportunitiesPage" });
-        })
+          })
           .catch((error) => {
             console.log(error.message);
-        });
+          });
       } else {
-          alert("You're not an organisation!");
+        alert("You're not an organisation!");
       }
 
       // const auth = getAuth();
@@ -384,12 +382,11 @@ export default {
           nric: nric,
           nationality: nationality,
           email: email,
-          password: password,
           currentPoints: 0,
           totalPoints: 0,
           applied: false,
           ApprovedListings: [],
-          PendingListings: []
+          PendingListings: [],
         });
         const auth = getAuth();
         createUserWithEmailAndPassword(auth, email, password)
@@ -401,8 +398,7 @@ export default {
           });
       }
     },
-  }
-
+  },
 };
 </script>
 <style scoped>
