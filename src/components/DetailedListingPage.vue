@@ -7,8 +7,7 @@
             color: #ff9213;
             text-align: center;
             font-size: 50px;
-            font-family: Georgia, 'Times New Roman', Times, serif;
-          "
+            font-family: Georgia, 'Times New Roman', Times, serif;"
         >
           Volunteer
         </div>
@@ -20,67 +19,68 @@
         <br />
       </div>
     </div>
-    <br />
-    {{listing}}
+    <br>
+    
     <div class="bottombanner">
-        <div class="left">
-            <h1>
-                <div class="title" id="activityTitle">{{activityTitle}}</div>
-            </h1>
-            <div class="organisation" style="margin-left:15px">by ABC Elderly Home</div> <br>
+      Hi {{user.email}}
+      {{fullname}} {{activityId}}
+      <div class="left">
+          <h1>
+              <div class="title" id="activityTitle">{{activityTitle}}</div>
+          </h1>
+          <div class="organisation" style="margin-left:15px">by ABC Elderly Home</div>
+          <br>
+          <div class="description" style="margin-left:15px" id="activityContent">{{activityContent}}</div>
+          <br>
+          <div style="opacity:0">{{listing}}</div>
+      </div>
 
-            <div class="description" style="margin-left:15px" id="activityContent">{{activityContent}}</div>
-            <br>
-
-        </div>
-
-
-        <div class="right" style="width: 400px; padding-right:100px; margin-top:5px">
-            <br><br><br><br>
-            <img src="../assets/calendar.png" alt="" style="width: 40px; height: 40px; float: left; margin-right: 10px">
-            <div id="activityDate">17 March 2022</div>
-            <div class="buttonclass" style="margin-left:200px; float:left; margin-top:-15px, hover:true" v-on:click="displayLogin()">
-                <a class="redeemclass">Apply!</a>
-            </div>
-            <br><br>
-            <img src="../assets/location.png" alt="" style="width: 40px; height: 40px; float: left; margin-right: 10px">
-            <div id="activityRegion">Kent Ridge</div><br><br>
-            <img src="../assets/vacancy.png" alt="" style="width: 40px; height: 40px; float: left; margin-right: 10px">
-            <div id="activityVacancy">8 Vacancies Left</div>
-        </div>
+      <div class="right" style="width: 400px; padding-right:100px; margin-top:-20px">
+          <br><br><br><br>
+          <img src="../assets/calendar.png" alt="" style="width: 40px; height: 40px; float: left; margin-right: 10px">
+          <div id="activityDate" style="margin-top:12px">17 March 2022</div>
+          <div class="buttonclass" style="margin-left:200px; float:left; margin-top:-18px; hover:true" v-on:click="displayLogin()">
+              <a class="redeemclass">Apply!</a>
+          </div>
+          <br><br>
+          <img src="../assets/location.png" alt="" style="width: 40px; height: 40px; float: left; margin-right: 10px">
+          <div id="activityRegion" style="margin-top:12px">Kent Ridge</div>
+          <br><br>
+          <img src="../assets/vacancy.png" alt="" style="width: 40px; height: 40px; float: left; margin-right: 10px">
+          <div id="activityVacancy" style="margin-top:12px">8 Vacancies Left</div>
+      </div>
    
         
-        <div class="listingcontainer" style="margin-top: 50px;">
-            <div style="float: left; margin-left:20px; margin-top:10px; width:1050px">
-                <div class="title" style="float: left;">Our Reviews</div><br>
-                <div style="width:100px; margin-top: 5px; margin-left:20px; float:left">
-                    <img class="divimg2" src="../assets/stars.png">
-                </div>
-                <span style="margin-left:15px; margin-top: 7px; float:left;">5 Star Rating</span>
-                <div class="buttonclass" style="float:right; margin-top:8px; width:300px" v-on:click="displayLogin2()">
-                    <a class="redeemclass">Leave a Review</a>
-                </div>
-            </div>
-            <br><br><br><br>
-
-            <div v-for="message in messages" class="card" :key="message">
-            <div class="reward">
-                <div class="imgcontainer">
-                    <img class="divimg2" src="../assets/stars.png">
-                </div>
-                <div style="font: Sansation">
-                    <h4 class="centeredtext"><span>{{ message.reviewRate }} Star Rating</span></h4>
-                </div>
-                <div class="buttonclass" style="margin-left:20px; margin-right:20px">
-                    <span id="reviewDescription">{{ message.reviewDescription }}</span>
-                </div>
-            </div>
-            
-            </div>
-
-
+      <div class="listingcontainer" style="margin-top: 20px; height:auto">
+        <div style="float: left; margin-left:20px; margin-top:10px; width:500px">
+          <div class="title" style="float: left">Our Reviews</div>
+          <div style="width:100px; margin-top: 15px; margin-left:15px; float:left">
+              <img class="divimg2" src="../assets/stars.png">
+          </div>
+          <div style="margin-left:15px; margin-top: 18px; float:left;">5 Star Rating</div>
+        </div>
+        
+        <div class="buttonclass" style="float:right; margin-top:28px; margin-right:-70px; width:300px" v-on:click="displayLogin2()">
+            <a class="redeemclass">Leave a Review</a>
         </div>
 
+        <br><br><br><br>
+
+        <div v-for="message in messages" class="card" :key="message">
+          <div class="reward">
+              <div class="imgcontainer">
+                  <img class="divimg2" src="../assets/stars.png">
+              </div>
+              <div style="font: Sansation">
+                  <h4 class="centeredtext"><span>{{ message.reviewRate }} Star Rating</span></h4>
+              </div>
+              <div class="buttonclass" style="margin-left:20px; margin-right:20px">
+                  <span id="reviewDescription">{{ message.reviewDescription }}</span>
+              </div>
+          </div>
+        </div>
+
+      </div>
     </div>
 
 
@@ -91,62 +91,58 @@
       <div class="container">
         <div class="overlay"></div>
         <div class="content">
-            <div class="imgcontainer" style="margin-left:500px">
+            <div class="imgcontainer" style="float:right">
                 <span
                 onclick="document.getElementById('id01').style.display='none'"
-                class="close"
-                title="Close Modal">&times;</span>
+                class="close" title="Close Modal">&times;</span>
+              <br>
             </div>
 
-            <br><br>
-            <div class="title" id="activityTitle">Interact and Socialise with Our Elderly</div>
-            <p>by ABC Elderly Home</p>
-
-            <h3>Tell us why you would like to join us!</h3>
-            <textarea rows="5" cols="70" name="Enter description" style="height:220px;"></textarea>
             <br><br><br>
-            <div class="buttonclass" style="margin-left:200px; float:left; margin-top:-15px">
+
+            <div class="title" id="activityTitle">{{activityTitle}}</div>
+            <p>by ABC Elderly Home</p>
+            <h3>Tell us why you would like to join us!</h3>
+            <textarea rows="5" cols="70" name="Enter description" style="height:220px;" id="applicationEntry"></textarea>
+            <br><br><br>
+            <div class="buttonclass" style="margin-top:-15px" v-on:click="addApply()">
                 <a class="redeemclass">Submit</a>
             </div>
         </div>
+      </div>
 
+    </form>
+  </div>
+  </div>
+
+  <div id="id02" class="modal">
+    <form class="modal-content animate">
+      <div class="overlay"></div>
+      <div class="content">
+        <div class="imgcontainer" style="float:right; margin-right:30px">
+            <span
+            onclick="document.getElementById('id02').style.display='none'"
+            class="close" 
+            title="Close Modal">&times;</span>
+        </div>
+
+        <br><br><br>
+
+        <form style="margin-bottom:30px">
+            <div class="title" id="activityTitle">{{activityTitle}}</div>
+            <p>by ABC Elderly Home</p>
+            <h3>Rating (out of 5 stars):</h3>
+            <input type="text" id="rateEntry" required="" placeholder="" style="width: 50px;">
+            <h3>Describe your overall experience!</h3>
+            <textarea rows="5" cols="70" name="Enter description" style="height:170px;" id="descriptionEntry"></textarea>
+            <br><br><br>
+            <div class="buttonclass" v-on:click="addReview()">
+                <a class="redeemclass" style="float:centre">Submit</a>
+            </div>
+        </form>
       </div>
     </form>
   </div>
-
-
-<div id="id02" class="modal">
-    <form class="modal-content animate">
-        <div class="overlay"></div>
-        <div class="content">
-            <div class="imgcontainer" style="float:right; margin-right:30px">
-                <span
-                onclick="document.getElementById('id02').style.display='none'"
-                class="close" 
-                title="Close Modal">&times;</span>
-            </div>
-
-            <br><br><br>
-            <form>
-                <div class="title" id="activityTitle">Interact and Socialise with Our Elderly</div>
-                <p>by ABC Elderly Home</p>
-                <h3>Rating (out of 5 stars):</h3>
-                <input type="text" id="rateEntry" required="" placeholder="" style="width: 50px;">
-                <h3>Describe your overall experience!</h3>
-                <textarea rows="5" cols="70" name="Enter description" style="height:170px;" id="descriptionEntry"></textarea>
-                <br><br><br>
-                <div class="buttonclass" v-on:click="addReview()">
-                    <a class="redeemclass" style="float:centre; margin-left:0px; padding-left:50px">Submit </a>
-                </div>
-            </form>
-        </div>
-    </form>
-  </div>
-    
-
-  </div>
-
-
 
 </template>
 
@@ -155,7 +151,8 @@ import { computed } from "vue";
 import { useRoute } from "vue-router";
 import firebaseApp from "@/firebase.js";
 import { getFirestore } from "firebase/firestore";
-import { collection, getDocs, query, setDoc, doc } from "firebase/firestore";
+import { collection, getDocs, query, setDoc, doc, getDoc, updateDoc, arrayUnion } from "firebase/firestore";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const db = getFirestore(firebaseApp);
 
@@ -163,19 +160,33 @@ export default {
   data() {
     return {
       listing: computed(() => useRoute().params.sn),
-      activityTitle: "x",
-      activityContent: "x",
+      activityTitle: "",
+      activityContent: "",
       activityId: 0,
+      activitySN: 0,
       reviewRate: [],
       reviewDescription: [],
       messages: [],
+      docname: "",
+
+      user: "",
+      fullname: "",
     };
   },
   mounted() {
     this.storeMessage();
     console.log(this.list);
     //this.retrieveemployees()
+
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        this.user = user;
+      }
+    });
   },
+
+
   methods: {
     displayLogin() {
       return (document.getElementById("id01").style.display = "block");
@@ -192,6 +203,7 @@ export default {
             this.activityTitle = yy.Title;
             this.activityContent = yy.Content;
             this.activityId = doc.id;
+            this.activitySN = doc.sn;
         }
       });
 
@@ -205,22 +217,53 @@ export default {
         });
       });
 
+      const auth = getAuth();
+      var z = await getDoc(doc(db, "volunteers", auth.currentUser.email));
+      var userInfo = z.data();
+      this.fullname =  userInfo.name;
+
     },
     async addReview() {
       var addRating = document.getElementById("rateEntry").value;
       var addDescription = document.getElementById("descriptionEntry").value;
       const db = getFirestore(firebaseApp);
 
-        await setDoc(doc(db, "Opportunities/bonemarrow/Reviews", "r3"), {
+        await setDoc(doc(db, "Opportunities/" + this.activityId + "/Reviews", this.fullname+addDescription.slice(0,5)), {
             rating: addRating,
             description: addDescription
         })
         .then(() => {
-            this.$router.push({ name: "MyApplications" });
+            this.$router.push({ name: "Volunteer" });
             //router.push('/')
-          });
-      
+        });
+        alert("Your review has been submitted.")
     },
+
+    async addApply() {
+      var addDescription = document.getElementById("applicationEntry").value;
+      const db = getFirestore(firebaseApp);
+
+        await setDoc(doc(db, "Applicants/" + this.user.email), {
+            Applied_date: new Date(),
+            Description: addDescription,
+            Email: this.user.email,
+            Listing: this.activityTitle,
+            Listing_ref: this.activityId,
+            Name: this.fullname,
+            Status: "Pending"
+        })
+
+        await updateDoc(doc(db, "volunteers/" + this.user.email), {
+            PendingListings: arrayUnion(this.activityId),
+            applied: true
+        })
+        .then(() => {
+            this.$router.push({ name: "Volunteer" });
+            //router.push('/')
+        });
+        alert("Your application has been submitted.")
+    },
+
   },
 };
 </script>
@@ -494,7 +537,7 @@ a {
 
 .bottombanner {
     background-color: #fff9e9;
-    min-height: 500px;
+    min-height:1000px
 }
 
 .title {
@@ -633,7 +676,6 @@ canvas {
     padding-top: 10px;
     padding-bottom: 10px;
     text-align: center;
-    margin-left: 35%;
 }
 
 .reward {
@@ -709,8 +751,9 @@ img.avatar {
 }
 
 .container {
-    margin-left: 10%;
-    margin-right: 10%;
+    margin-left: 3%;
+    margin-right: 3%;
+    margin-bottom: 3%;
     padding: 16px;
 }
 
@@ -776,7 +819,7 @@ span.psw {
     right: 25px;
     top: 0;
     color: #000;
-    font-size: 35px;
+    font-size: 25px;
     font-weight: bold;
 }
 

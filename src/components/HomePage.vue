@@ -55,6 +55,8 @@
       Helping your community is an opportunity for you to grow as a person, to better understand how you fit into the world around you. Let's go!</b>
     </div>
 
+    <email-detail email="98"></email-detail>
+
     <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
   </div>
 
@@ -237,6 +239,8 @@
 </template>
 
 <script>
+
+
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -328,7 +332,8 @@ export default {
           });
       }
     },
-  },
+  }
+
 };
 </script>
 <style scoped>

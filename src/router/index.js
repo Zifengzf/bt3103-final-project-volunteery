@@ -13,7 +13,6 @@ import OrgDetailedListing from "@/views/OrgDetailedListing.vue";
 import Profile from "@/views/Profile.vue";
 import ProfileOrg from "@/views/ProfileOrg.vue";
 
-
 const routes = [{
         path: "/",
         name: "Home",
@@ -23,12 +22,12 @@ const routes = [{
         path: "/profile",
         name: "Profile",
         component: Profile,
-    },    
+    },
     {
         path: "/profileorg",
         name: "ProfileOrg",
         component: ProfileOrg,
-    },    
+    },
     {
         path: "/about",
         name: "About",
@@ -80,13 +79,13 @@ const routes = [{
         component: OrgDetailedListing,
     },
     /** 
-             * Wait for more routes to be added
-            {
-              path: "/profit",
-              name: "OnlyProfit",
-              component: OnlyProfit,
-            },
-            */
+                 * Wait for more routes to be added
+                {
+                  path: "/profit",
+                  name: "OnlyProfit",
+                  component: OnlyProfit,
+                },
+                */
 ];
 
 const router = createRouter({
