@@ -7,8 +7,7 @@
             color: #ff9213;
             text-align: center;
             font-size: 50px;
-            font-family: Georgia, 'Times New Roman', Times, serif;
-          "
+            font-family: Georgia, 'Times New Roman', Times, serif;"
         >
           Volunteer
         </div>
@@ -20,133 +19,89 @@
         <br />
       </div>
     </div>
-    <br />
-    {{listing}}
+    <br>
+    
     <div class="bottombanner">
-        <div class="left">
-            <h1>
-                <div class="title" id="activityTitle">{{activityTitle}}</div>
-            </h1>
-            <div class="organisation" style="margin-left:15px">by ABC Elderly Home</div> <br>
+      <div class="left">
+          <h1>
+              <div class="title" id="activityTitle">{{activityTitle}}</div>
+          </h1>
+          <div class="organisation" style="margin-left:15px">by ABC Elderly Home</div>
+          <br>
+          <div class="description" style="margin-left:15px" id="activityContent">{{activityContent}}</div>
+          <br>
+          <div style="opacity:0">{{listing}}</div>
+      </div>
 
-            <div class="description" style="margin-left:15px" id="activityContent">{{activityContent}}</div>
-            <br>
-
-        </div>
-
-
-        <div class="right" style="width: 400px; padding-right:100px; margin-top:5px">
-            <br><br><br><br>
-            <img src="../assets/calendar.png" alt="" style="width: 40px; height: 40px; float: left; margin-right: 10px">
-            <div id="activityDate">17 March 2022</div>
-            <div class="buttonclass" style="margin-left:200px; float:left; margin-top:-15px, hover:true" v-on:click="displayLogin()">
-                <a class="redeemclass">Apply!</a>
-            </div>
-            <br><br>
-            <img src="../assets/location.png" alt="" style="width: 40px; height: 40px; float: left; margin-right: 10px">
-            <div id="activityRegion">Kent Ridge</div><br><br>
-            <img src="../assets/vacancy.png" alt="" style="width: 40px; height: 40px; float: left; margin-right: 10px">
-            <div id="activityVacancy">8 Vacancies Left</div>
-        </div>
+      <div class="right" style="width: 400px; padding-right:100px; margin-top:-20px">
+          <br><br><br><br>
+          <img src="../assets/calendar.png" alt="" style="width: 40px; height: 40px; float: left; margin-right: 10px">
+          <div id="activityDate" style="margin-top:12px">Duration : {{duration}} months</div>
+          <br><br>
+          <img src="../assets/location.png" alt="" style="width: 40px; height: 40px; float: left; margin-right: 10px">
+          <div id="activityRegion" style="margin-top:12px">Region: {{region}}</div>
+          <br><br>
+          <img src="../assets/vacancy.png" alt="" style="width: 40px; height: 40px; float: left; margin-right: 10px">
+          <div id="activityVacancy" style="margin-top:12px">Vacancy: {{vacancy}} / {{needed}} left</div>
+      </div>
    
         
-        <div class="listingcontainer" style="margin-top: 50px;">
-            <div style="float: left; margin-left:20px; margin-top:10px; width:1050px">
-                <div class="title" style="float: left;">Our Reviews</div><br>
-                <div style="width:100px; margin-top: 5px; margin-left:20px; float:left">
-                    <img class="divimg2" src="../assets/stars.png">
-                </div>
-                <span style="margin-left:15px; margin-top: 7px; float:left;">5 Star Rating</span>
-                <div class="buttonclass" style="margin-left:1250px; float:left; margin-top:-15px; width:300px" v-on:click="displayLogin2()">
-                    <a class="redeemclass">Leave a Review</a>
-                </div>
-            </div>
-            <br><br><br><br>
+      <div class="listingcontainer" style="margin-top: 20px; height:auto">
+        <div style="float: left; margin-left:20px; margin-top:10px; width:500px">
+          <div class="title" style="float: left">Our Reviews</div>
 
-            <div v-for="message in messages" class="card" :key="message">
-            <div class="reward">
-                <div class="imgcontainer">
-                    <img class="divimg2" src="../assets/stars.png">
-                </div>
-                <div style="font: Sansation">
-                    <h4 class="centeredtext"><span>{{ message.reviewRate }} Star Rating</span></h4>
-                </div>
-                <div class="buttonclass" style="margin-left:20px; margin-right:20px">
-                    <span id="reviewDescription">{{ message.reviewDescription }}</span>
-                </div>
-            </div>
-            
-            </div>
+          <div style="width:100px; margin-top: 15px; margin-left:15px; float:left" v-if="Math.round(avgRate)==5">
+              <img class="divimg2" src="../assets/stars.png">
+          </div>
+          <div style="width:100px; margin-top: 15px; margin-left:15px; float:left" v-else-if="Math.round(avgRate)==4">
+              <img class="divimg2" src="../assets/stars4.png">
+          </div>
+          <div style="width:100px; margin-top: 15px; margin-left:15px; float:left" v-else-if="Math.round(avgRate)==3">
+              <img class="divimg2" src="../assets/stars3.png">
+          </div>
+          <div style="width:100px; margin-top: 15px; margin-left:15px; float:left" v-else-if="Math.round(avgRate)==2">
+              <img class="divimg2" src="../assets/stars2.png">
+          </div>
+          <div style="width:100px; margin-top: 15px; margin-left:15px; float:left" v-else>
+              <img class="divimg2" src="../assets/stars1.png">
+          </div>
 
-
+          <div style="margin-left:15px; margin-top: 18px; float:left;">{{avgRate}} Star Rating</div>
         </div>
+        
 
-    </div>
+        <br><br><br><br>
 
-
-
-  <div id="id01" class="modal">
-    <form class="modal-content animate">
-
-      <div class="container">
-        <div class="overlay"></div>
-        <div class="content">
-            <div class="imgcontainer" style="margin-left:500px">
-                <span
-                onclick="document.getElementById('id01').style.display='none'"
-                class="close"
-                title="Close Modal">&times;</span>
-            </div>
-
-            <br><br>
-            <div class="title" id="activityTitle">Interact and Socialise with Our Elderly</div>
-            <p>by ABC Elderly Home</p>
-
-            <h3>Tell us why you would like to join us!</h3>
-            <textarea rows="5" cols="70" name="Enter description" style="height:220px;"></textarea>
-            <br><br><br>
-            <div class="buttonclass" style="margin-left:200px; float:left; margin-top:-15px">
-                <a class="redeemclass">Submit</a>
-            </div>
+        <div v-for="message in messages" class="card" :key="message">
+          <div class="reward">
+              <div class="imgcontainer" v-if="message.reviewRate==5">
+                  <img class="divimg2" src="../assets/stars.png">
+              </div>
+              <div class="imgcontainer" v-else-if="message.reviewRate==4">
+                  <img class="divimg2" src="../assets/stars4.png">
+              </div>
+              <div class="imgcontainer" v-else-if="message.reviewRate==3">
+                  <img class="divimg2" src="../assets/stars3.png">
+              </div>
+              <div class="imgcontainer" v-else-if="message.reviewRate==2">
+                  <img class="divimg2" src="../assets/stars2.png">
+              </div>
+              <div class="imgcontainer" v-else>
+                  <img class="divimg2" src="../assets/stars1.png">
+              </div>
+              <div style="font: Sansation">
+                  <h4 class="centeredtext"><span>{{ message.reviewRate }} Star Rating</span></h4>
+              </div>
+              <div class="buttonclass" style="margin-left:20px; margin-right:20px">
+                  <span id="reviewDescription">{{ message.reviewDescription }}</span>
+              </div>
+          </div>
         </div>
 
       </div>
-    </form>
-  </div>
+    </div>
 
-
-<div id="id02" class="modal">
-    <form class="modal-content animate">
-        <div class="overlay"></div>
-        <div class="content">
-            <div class="imgcontainer" style="margin-left:800px">
-                <span
-                onclick="document.getElementById('id02').style.display='none'"
-                class="close"
-                title="Close Modal">&times;</span>
-            </div>
-
-            <br><br>
-            <form>
-                <div class="title" id="activityTitle">Interact and Socialise with Our Elderly</div>
-                <p>by ABC Elderly Home</p>
-                <h3>Rating (out of 5 stars):</h3>
-                <input type="text" id="rateEntry" required="" placeholder="" style="width: 50px;">
-                <h3>Describe your overall experience!</h3>
-                <textarea rows="5" cols="70" name="Enter description" style="height:170px;" id="descriptionEntry"></textarea>
-                <br><br><br>
-                <div class="buttonclass" style="margin-left:200px; float:left; margin-top:-15px" v-on:click="addReview()">
-                    <a class="redeemclass">Submit</a>
-                </div>
-            </form>
-        </div>
-    </form>
-  </div>
-    
-
-  </div>
-
-
+</div>
 
 </template>
 
@@ -155,7 +110,8 @@ import { computed } from "vue";
 import { useRoute } from "vue-router";
 import firebaseApp from "@/firebase.js";
 import { getFirestore } from "firebase/firestore";
-import { collection, getDocs, query, setDoc, doc } from "firebase/firestore";
+import { collection, getDocs, query, doc, getDoc } from "firebase/firestore";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const db = getFirestore(firebaseApp);
 
@@ -163,19 +119,38 @@ export default {
   data() {
     return {
       listing: computed(() => useRoute().params.sn),
-      activityTitle: "x",
-      activityContent: "x",
+      activityTitle: "",
+      activityContent: "",
       activityId: 0,
+      activitySN: 0,
+      avgRate: 0,
       reviewRate: [],
       reviewDescription: [],
       messages: [],
+      docname: "",
+      duration: "",
+      region: "",
+      vacancy: "",
+      needed: "",
+
+      user: "",
+      fullname: "",
     };
   },
   mounted() {
     this.storeMessage();
     console.log(this.list);
     //this.retrieveemployees()
+
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        this.user = user;
+      }
+    });
   },
+
+
   methods: {
     displayLogin() {
       return (document.getElementById("id01").style.display = "block");
@@ -192,35 +167,36 @@ export default {
             this.activityTitle = yy.Title;
             this.activityContent = yy.Content;
             this.activityId = doc.id;
+            this.activitySN = doc.sn;
+            this.duration = yy.Duration;
+            this.region = yy.Region;
+            this.vacancy = yy.Vacancy;
+            this.needed = yy["Volunteers Needed"];
         }
       });
 
       const q2 = query(collection(db, "Opportunities/" + this.activityId + "/Reviews"));
       const querySnapshot2 = await getDocs(q2);
+      let count = 0;
+      let totalRate = 0;
       querySnapshot2.forEach((doc) => {
         let zz = doc.data();
+        count = count + 1;
+        totalRate = totalRate + Number(zz.rating);
         this.messages.push({
           reviewRate: zz.rating,
           reviewDescription: zz.description,
         });
       });
+      this.avgRate = (totalRate/count).toFixed(1);
 
-    },
-    async addReview() {
-      var addRating = document.getElementById("rateEntry").value;
-      var addDescription = document.getElementById("descriptionEntry").value;
-      const db = getFirestore(firebaseApp);
+      const auth = getAuth();
+      var z = await getDoc(doc(db, "volunteers", auth.currentUser.email));
+      var userInfo = z.data();
+      this.fullname =  userInfo.name;
 
-        await setDoc(doc(db, "Opportunities/bonemarrow/Reviews", "r3"), {
-            rating: addRating,
-            description: addDescription
-        })
-        .then(() => {
-            this.$router.push({ name: "MyApplications" });
-            //router.push('/')
-          });
-      
-    },
+    }
+
   },
 };
 </script>
@@ -494,7 +470,7 @@ a {
 
 .bottombanner {
     background-color: #fff9e9;
-    min-height: 500px;
+    min-height:1000px
 }
 
 .title {
@@ -633,7 +609,6 @@ canvas {
     padding-top: 10px;
     padding-bottom: 10px;
     text-align: center;
-    margin-left: 35%;
 }
 
 .reward {
@@ -709,8 +684,9 @@ img.avatar {
 }
 
 .container {
-    margin-left: 10%;
-    margin-right: 10%;
+    margin-left: 3%;
+    margin-right: 3%;
+    margin-bottom: 3%;
     padding: 16px;
 }
 
@@ -755,135 +731,6 @@ span.psw {
     padding-top: 60px;
 }
 
-
-/* Modal Content/Box */
-
-.modal-content {
-    background-color: #fff9e9;
-    margin: 10% auto 15% auto;
-    /* 10% from the top, 15% from the bottom and centered */
-    border: 1px solid #888;
-    border-radius: 25px;
-    width: 60%;
-    /* Could be more or less, depending on screen size */
-}
-
-
-/* The Close Button (x) */
-
-.close {
-    position: absolute;
-    right: 25px;
-    top: 0;
-    color: #000;
-    font-size: 35px;
-    font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: red;
-    cursor: pointer;
-}
-
-#myinfo {
-    width: 200px;
-    height: 80px;
-}
-
-
-/* Add Zoom Animation */
-
-.animate {
-    -webkit-animation: animatezoom 0.6s;
-    animation: animatezoom 0.6s;
-}
-
-@-webkit-keyframes animatezoom {
-    from {
-        -webkit-transform: scale(0);
-    }
-    to {
-        -webkit-transform: scale(1);
-    }
-}
-
-@keyframes animatezoom {
-    from {
-        transform: scale(0);
-    }
-    to {
-        transform: scale(1);
-    }
-}
-
-
-/* Change styles for span and cancel button on extra small screens */
-
-@media screen and (max-width: 300px) {
-    span.psw {
-        display: block;
-        float: none;
-    }
-    .cancelbtn {
-        width: 100%;
-    }
-    .mainbutton {
-        width: 200px;
-        color: fuchsia;
-    }
-}
-
-.popup .overlay {
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.7);
-    z-index: 1;
-    display: none;
-}
-
-.popup .content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    border-radius: 10px;
-    transform: translate(-50%, -50%) scale(0);
-    background: #fff9e9;
-    width: 650px;
-    height: 450px;
-    z-index: 2;
-    text-align: center;
-    padding: 20px;
-    box-sizing: border-box;
-}
-
-.popup .close-btn {
-    cursor: pointer;
-    position: absolute;
-    right: 20px;
-    top: 20px;
-    width: 30px;
-    height: 30px;
-    background: #222;
-    color: #fff9e9;
-    font-size: 25px;
-    font-weight: 600;
-    line-height: 30px;
-    text-align: center;
-    border-radius: 50%;
-}
-
-.popup.active .overlay {
-    display: block;
-}
-
-.popup.active .content {
-    transition: all 300ms ease-in-out;
-    transform: translate(-50%, -50%) scale(1);
-}
 
 
 </style>
