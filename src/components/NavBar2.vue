@@ -6,17 +6,13 @@
       alt=""
       style="margin-left: 0px; height: 60; float: left; padding-top: 11px"
     />
-    <div class="dropdown">
-      <button class="dropbtn">Organisation</button>
-      <div class="dropdown-content">
-        <router-link to="/profileorg">Profile</router-link>
-        <router-link to="/" class="router-link">Sign out</router-link>
-      </div>
-    </div>
+
     <div id="nav">
-      <router-link to="/opportunitiespage">All Opportunities</router-link> |
-      <router-link to="/mypostings">My Postings</router-link> |
-      <router-link to="/applicants">Applicants Review</router-link>
+      <router-link class="rl" to="/opportunitiespage">All Opportunities</router-link>
+      <router-link class="rl" to="/mypostings">My Postings</router-link>
+      <router-link class="rl" to="/applicants">Applicants Review</router-link>
+      <router-link class="rl" to="/profileorg">My Profile</router-link>
+      <router-link class="rl" to="/">Sign out</router-link>
     </div>
 
     <!-- </div> -->
@@ -63,7 +59,11 @@ export default {
   font-weight: bold;
   color: black;
 }
-
+.rl {
+  padding: 10px;
+  color: #D3B566; 
+  text-decoration:none;
+}
 #nav a.router-link-exact-active {
   color: #fff9e9;
 }

@@ -6,18 +6,21 @@
       alt=""
       style="margin-left: 0px; height: 60; float: left; padding-top: 11px"
     />
-    <div class="dropdown">
+
+    <div id="nav">
+      <router-link class="rl" to="/volunteer">Volunteer Opportunities</router-link> 
+      <router-link class="rl" to="/myapplications">My Applications</router-link> 
+      <router-link class="rl" to="/reward">My Rewards</router-link>
+      <router-link class="rl" to="/profile">My Profile</router-link>
+      <router-link class="rl" to="/">Sign out</router-link>
+    </div>
+    <!-- <div class="dropdown">
       <button class="dropbtn">User</button>
       <div class="dropdown-content">
         <router-link to="/profile">Profile</router-link>
         <router-link to="/" class="router-link">Sign out</router-link>
       </div>
-    </div>
-    <div id="nav">
-      <router-link to="/volunteer">Volunteer Opportunities</router-link> |
-      <router-link to="/myapplications">My Applications</router-link> |
-      <router-link to="/reward">My Rewards</router-link>
-    </div>
+    </div> -->
 
     <!-- </div> -->
   </div>
@@ -57,6 +60,7 @@ export default {
   padding: 30px 10px 30px 0px;
   text-align: right;
   font-size: 20px;
+  color: #D3B566;
 }
 
 #nav a {
@@ -69,8 +73,13 @@ export default {
 }
 .dropdown {
   overflow: hidden;
-  float: left;
+  float: right;
   /* padding: 15px; */
+}
+.rl {
+  padding: 10px;
+  color: #D3B566; 
+  text-decoration:none;
 }
 
 .dropdown .dropbtn {
