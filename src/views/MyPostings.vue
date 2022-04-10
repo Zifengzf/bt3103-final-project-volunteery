@@ -211,7 +211,6 @@
               placeholder=""
               style="width: 100px; float: left; margin-left: 10px"
             />
-            <v-date-picker v-model="date" />
             <br /><br />
             <input
               type="text"
@@ -220,19 +219,6 @@
               placeholder=""
               style="width: 100px; float: left; margin-left: 10px"
             />
-              <select
-                v-model="selectedPeriod"
-                name="filterbyperiod"
-                id="filterbyperiod"
-                style="font-size: 18px"
-              >
-                <option value="">-- Duration --</option>
-                <option value="0,1">Less than 1 month</option>
-                <option value="1,3">1 - 3 months</option>
-                <option value="3,6">3 - 6 months</option>
-                <option value="6,12">6 months - 1 year</option>
-                <option value="12,999">More than 1 year</option>
-              </select>
             <br /><br />
             <input
               type="text"
@@ -241,23 +227,6 @@
               placeholder=""
               style="width: 100px; float: left; margin-left: 10px"
             />
-            <select
-              v-model="selectedPosting"
-              name="filterbyregion"
-              id="filterbyregion"
-              style="font-size: 18px"
-            >
-              <option value="">-- Region --</option>
-              <option value="central">Central</option>
-              <option value="north">North</option>
-              <option value="north-east">North-East</option>
-              <option value="east">East</option>
-              <option value="south-east">South-East</option>
-              <option value="south">South</option>
-              <option value="south-west">South-West</option>
-              <option value="west">West</option>
-              <option value="north-west">North-West</option>
-            </select>
             <br /><br />
             <input
               type="text"
@@ -304,14 +273,9 @@ import {
   updateDoc,
   increment,
   arrayRemove,
-  getDoc,
   setDoc,
-<<<<<<< Updated upstream
   getDoc,
-  arrayUnion
-=======
   arrayUnion,
->>>>>>> Stashed changes
 } from "firebase/firestore";
 
 const db = getFirestore(firebaseApp);
@@ -570,7 +534,6 @@ export default {
       var orgName = z.data().Name;
 
       await setDoc(doc(db, "Opportunities/" + addTitle.trim()), {
-<<<<<<< Updated upstream
         Content: addContent,
         Date: addDate,
         Duration: addDuration,
@@ -583,40 +546,19 @@ export default {
         Pending: 0,
         Organiser: orgName,
         sn: size + 1,
-=======
-          Content: addContent,
-          Date: addDate,
-          Duration: addDuration,
-          Region: addRegion,
-          Status: "Pending",
-          Title: addTitle,
-          Vacancy: 0,
-          "Volunteers Needed": addVolunteers,
-          Accepted: 0,
-          Pending: 0,
-          Organiser: orgName,
-          sn: size + 1,
->>>>>>> Stashed changes
       });
 
       await updateDoc(doc(db, "Organisation", email), {
         MyPostings: arrayUnion(addTitle.trim()),
-<<<<<<< Updated upstream
       }).then(() => {
         this.$router.push({ name: "MyPostings" });
       });
       alert("Your listing has been submitted.");
-=======
-      })
-      .then(() => {
-          this.$router.push({ name: "MyPostings" });
-      });
-      alert("Your listing has been submitted.")
->>>>>>> Stashed changes
     },
   },
 };
 </script>
+
 <style scoped>
 .modal {
   display: none; /* Hidden by default */
