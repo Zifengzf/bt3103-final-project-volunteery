@@ -271,6 +271,7 @@ import {
   increment,
   arrayRemove,
   setDoc,
+  getDoc
 } from "firebase/firestore";
 
 const db = getFirestore(firebaseApp);
@@ -519,11 +520,14 @@ export default {
       var addContent = document.getElementById("contentEntry").value;
 
       const db = getFirestore(firebaseApp);
-
-      const querySnapshot = await getDocs(
-        query(collection(db, "Opportunities"))
-      );
+      
+      const querySnapshot = await getDocs(query(collection(db, "Opportunities")));
       const size = querySnapshot.size;
+
+      const auth = getAuth();
+      var email = auth.currentUser.email;
+      var z = await getDoc(doc(db, "Organisation", email));
+      var orgName = z.data().Name;
 
       await setDoc(doc(db, "Opportunities/" + addTitle.trim()), {
         Content: addContent,
@@ -536,6 +540,7 @@ export default {
         "Volunteers Needed": addVolunteers,
         Accepted: 0,
         Pending: 0,
+        Organiser: orgName,
         sn: size + 1,
       }).then(() => {
         this.$router.push({ name: "MyPostings" });
