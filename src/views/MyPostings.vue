@@ -258,7 +258,7 @@
 <script>
 import NavBar2 from "@/components/NavBar2.vue";
 import firebaseApp from "@/firebase.js";
-import { getAuth } from "firebase/auth";
+import { deleteDoc, getAuth } from "firebase/auth";
 
 import { getFirestore } from "firebase/firestore";
 import {
@@ -493,7 +493,7 @@ export default {
       await updateDoc(doc(db, "Organisation", email), {
         MyPostings: arrayRemove(listing),
       });
-      //await deleteDoc(doc(db, "Opportunities", listing));
+      await deleteDoc(doc(db, "Opportunities", listing));
       // Remove listing from approvedlistings or pendinglistings
       let k = await getDocs(collection(db, "volunteers"));
       var volunteers = [];
