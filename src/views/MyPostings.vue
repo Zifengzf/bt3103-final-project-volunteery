@@ -261,9 +261,9 @@
 <script>
 import NavBar2 from "@/components/NavBar2.vue";
 import firebaseApp from "@/firebase.js";
-import { deleteDoc, getAuth } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 
-import { getFirestore } from "firebase/firestore";
+import { deleteDoc, getFirestore } from "firebase/firestore";
 import {
   collection,
   getDocs,
@@ -520,12 +520,16 @@ export default {
       var addDate = document.getElementById("dateEntry").value;
       var addDuration = Number(document.getElementById("durationEntry").value);
       var addRegion = document.getElementById("regionEntry").value;
-      var addVolunteers = Number(document.getElementById("volunteersEntry").value);
+      var addVolunteers = Number(
+        document.getElementById("volunteersEntry").value
+      );
       var addContent = document.getElementById("contentEntry").value;
 
       const db = getFirestore(firebaseApp);
-      
-      const querySnapshot = await getDocs(query(collection(db, "Opportunities")));
+
+      const querySnapshot = await getDocs(
+        query(collection(db, "Opportunities"))
+      );
       const size = querySnapshot.size;
 
       const auth = getAuth();
