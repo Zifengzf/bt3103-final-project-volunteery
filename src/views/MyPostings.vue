@@ -260,7 +260,7 @@ import NavBar2 from "@/components/NavBar2.vue";
 import firebaseApp from "@/firebase.js";
 import { getAuth } from "firebase/auth";
 
-import { deleteDoc, getFirestore } from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
 import {
   collection,
   getDocs,
@@ -493,15 +493,22 @@ export default {
       await updateDoc(doc(db, "Organisation", email), {
         MyPostings: arrayRemove(listing),
       });
-      await deleteDoc(doc(db, "Opportunities", listing));
+      //await deleteDoc(doc(db, "Opportunities", listing));
       // Remove listing from approvedlistings or pendinglistings
       let k = await getDocs(collection(db, "volunteers"));
+      var volunteers = [];
       k.forEach((document) => {
-        updateDoc(doc(db, "volunteer", document.id), {
-          ApprovedListings: arrayRemove(listing),
-          PendingListings: arrayRemove(listing),
-        });
+        var data = document.data();
+        var approved = data.ApprovedListings;
+        if (approved.includes(listing)) {
+          volunteers.push(document.id);
+        }
       });
+      for (var id of volunteers) {
+        await updateDoc(doc(db, "volunteers", id), {
+          ApprovedListings: arrayRemove(listing),
+        });
+      }
     },
     async submitListing() {
       var addTitle = document.getElementById("titleEntry").value;
