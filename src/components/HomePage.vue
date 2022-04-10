@@ -26,7 +26,7 @@
     </div>
   </div>
 
-  <div class="bottombanner" style="padding:50px">
+  <div class="bottombanner" style="padding: 50px">
     <div style="color: #fff9e9">Placeholder to takeup space</div>
     <img
       src="@/assets/volunteer_clip.png"
@@ -42,11 +42,9 @@
         to seek volunteer opportunities, leave reviews and also redeem rewards.
         Helping your community is an opportunity for you to grow as a person, to
         better understand how you fit into the world around you. Let's go!
-        <br><br>
+        <br /><br />
         For new organisations, please email volunteery@u.nus.edu
-
-        </b
-      >
+      </b>
     </div>
 
     <email-detail email="98"></email-detail>
@@ -312,7 +310,7 @@ export default {
         const auth = getAuth();
         signInWithEmailAndPassword(auth, username, password)
           .then(() => {
-            this.$router.push({ name: "OpportunitiesPage" });
+            this.$router.push({ name: "MyPostings" });
           })
           .catch((error) => {
             console.log(error.message);
@@ -320,7 +318,6 @@ export default {
       } else {
         alert("You're not an organisation!");
       }
-
     },
     async userSignUp() {
       var name = document.getElementById("full_name").value;
