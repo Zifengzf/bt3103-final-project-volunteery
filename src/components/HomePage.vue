@@ -1,4 +1,19 @@
 <template>
+  <!-- <div class="topnav">
+    <img src="@/assets/volunteery_copy.png" alt="" style="margin-left: 0px" />
+    <a
+      href=""
+      style="
+        font-size: 15px;
+        color: #d3b566;
+        float: right;
+        margin-top: 20px;
+        margin-right: 15px;
+      "
+      >VIEW VOLUNTEERING OPPORTUNITIES</a
+    >
+  </div> -->
+
   <div class="mainbanner">
     <div class="maintext">
       <div
@@ -26,7 +41,7 @@
     </div>
   </div>
 
-  <div class="bottombanner" style="padding: 50px">
+  <div class="bottombanner">
     <div style="color: #fff9e9">Placeholder to takeup space</div>
     <img
       src="@/assets/volunteer_clip.png"
@@ -34,20 +49,11 @@
       style="float: right; height: 200px"
     />
     <div class="abouttext" style="color: #ff9213">ABOUT VOLUNTEERY</div>
-    <div class="abouttext" style="padding: 0px 400px 0px 0px">
-      <b>
-        Volunteery is a platform that matches volunteers to organizations.
-        Organisations would list relevant oppotunties and review applicants
-        through this platform. For volunteers, it is a one-stop platform for you
-        to seek volunteer opportunities, leave reviews and also redeem rewards.
-        Helping your community is an opportunity for you to grow as a person, to
-        better understand how you fit into the world around you. Let's go!
-        <br /><br />
-        For new organisations, please email volunteery@u.nus.edu
-      </b>
+    <div class="abouttext">
+      Volunteery is a platform that matches volunteers to organizations. Organisations would list relevant oppotunties and review applicants through this platform.
+      For volunteers, it is a one-stop platform for you to seek volunteer opportunities, leave reviews and also redeem rewards. 
+      Helping your community is an opportunity for you to grow as a person, to better understand how you fit into the world around you. Let's go!
     </div>
-
-    <email-detail email="98"></email-detail>
 
     <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
   </div>
@@ -238,7 +244,6 @@ import {
 } from "firebase/auth";
 import firebaseApp from "@/main.js";
 import { getFirestore, setDoc, doc, getDoc } from "firebase/firestore";
-import { query, collection, getDocs } from "firebase/firestore";
 var modal = document.getElementById("id01");
 window.onclick = function (event) {
   if (event.target == modal) {
@@ -262,62 +267,29 @@ export default {
       document.getElementById("id01").style.display = "block";
       document.getElementById("id01b").style.display = "none";
     },
-    async volunteerLogin() {
-      const db = getFirestore(firebaseApp);
-
+    volunteerLogin() {
       var username = document.getElementById("v_username").value;
       var password = document.getElementById("v_password").value;
-      var isVolunteer = false;
-
-      const q = query(collection(db, "volunteers"));
-      const querySnapshot = await getDocs(q);
-      querySnapshot.forEach((doc) => {
-        if (username == doc.id) {
-          console.log(doc.id);
-          isVolunteer = true;
-        }
-      });
-      if (isVolunteer) {
-        const auth = getAuth();
-        signInWithEmailAndPassword(auth, username, password)
-          .then(() => {
-            this.$router.push({ name: "Volunteer" });
-          })
-          .catch((error) => {
-            console.log(error.message);
-          });
-      } else {
-        alert("You're not a volunteer!");
-      }
+      const auth = getAuth();
+      signInWithEmailAndPassword(auth, username, password)
+        .then(() => {
+          this.$router.push({ name: "Volunteer" });
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
     },
-    async organizationLogin() {
-      const db = getFirestore(firebaseApp);
-
+    organizationLogin() {
       var username = document.getElementById("o_username").value;
       var password = document.getElementById("o_password").value;
-      var isOrganisation = false;
-
-      const q = query(collection(db, "Organisation"));
-      const querySnapshot = await getDocs(q);
-      // this.messages.clear();
-      querySnapshot.forEach((doc) => {
-        if (username == doc.id) {
-          console.log(doc.id);
-          isOrganisation = true;
-        }
-      });
-      if (isOrganisation) {
-        const auth = getAuth();
-        signInWithEmailAndPassword(auth, username, password)
-          .then(() => {
-            this.$router.push({ name: "MyPostings" });
-          })
-          .catch((error) => {
-            console.log(error.message);
-          });
-      } else {
-        alert("You're not an organisation!");
-      }
+      const auth = getAuth();
+      signInWithEmailAndPassword(auth, username, password)
+        .then(() => {
+          this.$router.push({ name: "OpportunitiesPage" });
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
     },
     async userSignUp() {
       var name = document.getElementById("full_name").value;
@@ -342,11 +314,9 @@ export default {
           nric: nric,
           nationality: nationality,
           email: email,
+          password: password,
           currentPoints: 0,
           totalPoints: 0,
-          applied: false,
-          ApprovedListings: [],
-          PendingListings: [],
         });
         const auth = getAuth();
         createUserWithEmailAndPassword(auth, email, password)
@@ -358,7 +328,8 @@ export default {
           });
       }
     },
-  },
+  }
+
 };
 </script>
 <style scoped>
