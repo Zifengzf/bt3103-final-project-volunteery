@@ -208,7 +208,7 @@ export default {
       review_button.className = "bwt4";
       review_button.innerHTML = "Review";
       review_button.onclick = function () {
-        review(listing_ref, email);
+        review(name, listing_ref, email);
       };
 
       cell4.appendChild(review_button);
@@ -297,10 +297,8 @@ export default {
     }
 
     async function review(name, listing_ref, email) {
-      var z = await getDoc(doc(db, "Applicants", email));
-      var userDescription = z.data().Description;
-      console.log(name);
-      console.log(userDescription);
+      const z = await getDoc(doc(db, "volunteers/" + email + "/applications/" + listing_ref));
+      var userDescription = z.data().description;
       alert(name + ": " + userDescription);
     }
 

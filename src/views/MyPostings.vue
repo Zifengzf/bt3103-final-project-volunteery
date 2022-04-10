@@ -196,7 +196,7 @@
             <br><br><br><br><br><br><br><br><br>
           </div>
           <br><br><br><br>
-          <div class="buttonclass" style="float:centre" v-on:click="addReview()">
+          <div class="buttonclass" style="float:centre" v-on:click="submitListing()">
             <a class="redeemclass">Submit</a>
           </div>
         </form>
@@ -220,6 +220,7 @@ import {
   updateDoc,
   increment,
   arrayRemove,
+  setDoc,
 } from "firebase/firestore";
 
 const db = getFirestore(firebaseApp);
@@ -455,9 +456,40 @@ export default {
         }
       });
     },
+    async submitListing() {
+      var addTitle = document.getElementById("titleEntry").value;
+      var addDate = document.getElementById("dateEntry").value;
+      var addDuration = document.getElementById("durationEntry").value;
+      var addRegion = document.getElementById("regionEntry").value;
+      var addVolunteers = document.getElementById("volunteersEntry").value;
+      var addContent = document.getElementById("contentEntry").value;
+    
+      const db = getFirestore(firebaseApp);
+      
+      const querySnapshot = await getDocs(query(collection(db, "Opportunities")));
+      const size = querySnapshot.size;
 
+        await setDoc(doc(db, "Opportunities/" + addTitle.trim()), {
+            Content: addContent,
+            Date: addDate,
+            Duration: addDuration,
+            Region: addRegion,
+            Status: "Pending",
+            Title: addTitle,
+            Vacancy: 0,
+            "Volunteers Needed": addVolunteers,
+            Accepted: 0,
+            Pending: 0,
+            sn: size + 1,
+        })
+        .then(() => {
+            this.$router.push({ name: "MyPostings" });
+        });
+        alert("Your listing has been submitted.")
+    },
   },
 };
+
 </script>
 <style scoped>
 .modal {

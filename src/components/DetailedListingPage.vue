@@ -72,7 +72,7 @@
           <div style="margin-left:15px; margin-top: 18px; float:left;">{{avgRate}} Star Rating</div>
         </div>
         
-        <div class="buttonclass" style="float:right; margin-top:28px; margin-right:-70px; width:300px" v-on:click="displayLogin2()">
+        <div class="buttonclass" style="float:right; margin-top:28px; margin-right:-70px; width:300px" v-if="approved" v-on:click="displayLogin2()">
             <a class="redeemclass">Leave a Review</a>
         </div>
 
@@ -197,6 +197,7 @@ export default {
       region: "",
       vacancy: "",
       needed: "",
+      approved: false,
 
       user: "",
       fullname: "",
@@ -260,6 +261,12 @@ export default {
       var userInfo = z.data();
       this.fullname =  userInfo.name;
 
+      for (var list_ref of userInfo.ApprovedListings) {
+        if (this.activityId == list_ref) {
+          this.approved = true;
+        }
+      }
+
     },
     async addReview() {
       var addRating = document.getElementById("rateEntry").value;
@@ -281,16 +288,9 @@ export default {
       var addDescription = document.getElementById("applicationEntry").value;
       const db = getFirestore(firebaseApp);
 
-        await setDoc(doc(db, "Applicants/" + this.user.email), {
-            Applied_date: new Date(),
-            Description: addDescription,
-            Email: this.user.email,
-            Listing: this.activityTitle,
-            Listing_ref: this.activityId,
-            Name: this.fullname,
-            Status: "Pending"
+        await setDoc(doc(db, "volunteers/" + this.user.email + "/applications/" + this.activityId), {
+            description: addDescription,
         })
-
         await updateDoc(doc(db, "volunteers/" + this.user.email), {
             PendingListings: arrayUnion(this.activityId),
             applied: true
