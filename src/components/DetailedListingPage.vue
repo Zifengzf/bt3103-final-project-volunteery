@@ -65,10 +65,12 @@
           <div style="width:100px; margin-top: 15px; margin-left:15px; float:left" v-else-if="Math.round(avgRate)==2">
               <img class="divimg2" src="../assets/stars2.png">
           </div>
-          <div style="width:100px; margin-top: 15px; margin-left:15px; float:left" v-else>
+          <div style="width:100px; margin-top: 15px; margin-left:15px; float:left" v-else-if="Math.round(avgRate)==1">
               <img class="divimg2" src="../assets/stars1.png">
           </div>
-
+          <div style="width:100px; margin-top: 15px; margin-left:15px; float:left" v-else-if="Math.round(avgRate)==0">
+              <img class="divimg2" src="../assets/stars0.png">
+          </div>
           <div style="margin-left:15px; margin-top: 18px; float:left;">{{avgRate}} Star Rating</div>
         </div>
         
@@ -92,7 +94,7 @@
               <div class="imgcontainer" v-else-if="message.reviewRate==2">
                   <img class="divimg2" src="../assets/stars2.png">
               </div>
-              <div class="imgcontainer" v-else>
+              <div class="imgcontainer" v-else-if="message.reviewRate==1">
                   <img class="divimg2" src="../assets/stars1.png">
               </div>
               <div style="font: Sansation">
@@ -254,7 +256,9 @@ export default {
           reviewDescription: zz.description,
         });
       });
-      this.avgRate = (totalRate/count).toFixed(1);
+      if (count > 0) {
+        this.avgRate = (totalRate/count).toFixed(1);
+      }
 
       const auth = getAuth();
       var z = await getDoc(doc(db, "volunteers", auth.currentUser.email));
