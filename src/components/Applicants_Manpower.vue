@@ -138,7 +138,7 @@ export default {
           title: data.Title,
           date: data.Date,
           volunteers_needed: doc.get("Volunteers Needed"),
-          approved: data.Approved,
+          approved: data.Accepted,
           pending: data.Pending,
           remaining: data.Vacancy,
           id: data.sn,
@@ -297,7 +297,9 @@ export default {
     }
 
     async function review(name, listing_ref, email) {
-      const z = await getDoc(doc(db, "volunteers/" + email + "/applications/" + listing_ref));
+      const z = await getDoc(
+        doc(db, "volunteers/" + email + "/applications/" + listing_ref)
+      );
       var userDescription = z.data().description;
       alert(name + ": " + userDescription);
     }
