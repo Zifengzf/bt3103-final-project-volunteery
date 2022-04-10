@@ -7,8 +7,10 @@
     />
 
     <div id="nav">
-      <router-link class="rl" to="/opportunitiespage">All Opportunities</router-link>
       <router-link class="rl" to="/mypostings">My Postings</router-link>
+      <router-link class="rl" to="/opportunitiespage"
+        >All Opportunities</router-link
+      >
       <router-link class="rl" to="/applicants">Applicants Review</router-link>
       <router-link class="rl" to="/profileorg">My Profile</router-link>
       <router-link class="rl" to="/">Sign out</router-link>
@@ -27,7 +29,6 @@ export default {
       user: false,
     };
   },
-
 };
 </script>
 
@@ -49,8 +50,8 @@ export default {
 }
 .rl {
   padding: 10px;
-  color: #D3B566; 
-  text-decoration:none;
+  color: #d3b566;
+  text-decoration: none;
 }
 #nav a.router-link-exact-active {
   color: #fff9e9;
