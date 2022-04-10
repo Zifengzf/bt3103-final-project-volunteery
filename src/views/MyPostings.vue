@@ -540,7 +540,7 @@ export default {
         Region: addRegion,
         Status: "Pending",
         Title: addTitle,
-        Vacancy: 0,
+        Vacancy: addVolunteers,
         "Volunteers Needed": addVolunteers,
         Accepted: 0,
         Pending: 0,
