@@ -48,13 +48,18 @@
       alt=""
       style="float: right; height: 200px"
     />
-    <div class="abouttext" style="color: #ff9213">ABOUT VOLUNTEERY</div>
+    <b><div class="abouttext" style="color: #ff9213">ABOUT VOLUNTEERY</div></b>
     <div class="abouttext">
-      Volunteery is a platform that matches volunteers to organizations. Organisations would list relevant oppotunties and review applicants through this platform.
-      For volunteers, it is a one-stop platform for you to seek volunteer opportunities, leave reviews and also redeem rewards. 
-      Helping your community is an opportunity for you to grow as a person, to better understand how you fit into the world around you. Let's go!
-      <br /><br />
-      For new organisations, please email volunteery@u.nus.edu    
+      <b>
+        Volunteery is a platform that matches volunteers to organizations.
+        Organisations would list relevant oppotunties and review applicants
+        through this platform. For volunteers, it is a one-stop platform for you
+        to seek volunteer opportunities, leave reviews and also redeem rewards.
+        Helping your community is an opportunity for you to grow as a person, to
+        better understand how you fit into the world around you. Let's go!
+        <br /><br />
+        For new organisations, please email volunteery@u.nus.edu
+      </b> 
     </div>
 
     <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
