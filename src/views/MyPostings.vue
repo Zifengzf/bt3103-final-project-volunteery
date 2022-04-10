@@ -271,7 +271,8 @@ import {
   increment,
   arrayRemove,
   setDoc,
-  getDoc
+  getDoc,
+  arrayUnion
 } from "firebase/firestore";
 
 const db = getFirestore(firebaseApp);
@@ -514,9 +515,9 @@ export default {
     async submitListing() {
       var addTitle = document.getElementById("titleEntry").value;
       var addDate = document.getElementById("dateEntry").value;
-      var addDuration = document.getElementById("durationEntry").value;
+      var addDuration = Number(document.getElementById("durationEntry").value);
       var addRegion = document.getElementById("regionEntry").value;
-      var addVolunteers = document.getElementById("volunteersEntry").value;
+      var addVolunteers = Number(document.getElementById("volunteersEntry").value);
       var addContent = document.getElementById("contentEntry").value;
 
       const db = getFirestore(firebaseApp);
@@ -542,6 +543,10 @@ export default {
         Pending: 0,
         Organiser: orgName,
         sn: size + 1,
+      });
+
+      await updateDoc(doc(db, "Organisation", email), {
+        MyPostings: arrayUnion(addTitle.trim()),
       }).then(() => {
         this.$router.push({ name: "MyPostings" });
       });
