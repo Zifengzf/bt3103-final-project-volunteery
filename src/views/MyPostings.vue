@@ -304,9 +304,14 @@ import {
   updateDoc,
   increment,
   arrayRemove,
+  getDoc,
   setDoc,
+<<<<<<< Updated upstream
   getDoc,
   arrayUnion
+=======
+  arrayUnion,
+>>>>>>> Stashed changes
 } from "firebase/firestore";
 
 const db = getFirestore(firebaseApp);
@@ -565,6 +570,7 @@ export default {
       var orgName = z.data().Name;
 
       await setDoc(doc(db, "Opportunities/" + addTitle.trim()), {
+<<<<<<< Updated upstream
         Content: addContent,
         Date: addDate,
         Duration: addDuration,
@@ -577,14 +583,36 @@ export default {
         Pending: 0,
         Organiser: orgName,
         sn: size + 1,
+=======
+          Content: addContent,
+          Date: addDate,
+          Duration: addDuration,
+          Region: addRegion,
+          Status: "Pending",
+          Title: addTitle,
+          Vacancy: 0,
+          "Volunteers Needed": addVolunteers,
+          Accepted: 0,
+          Pending: 0,
+          Organiser: orgName,
+          sn: size + 1,
+>>>>>>> Stashed changes
       });
 
       await updateDoc(doc(db, "Organisation", email), {
         MyPostings: arrayUnion(addTitle.trim()),
+<<<<<<< Updated upstream
       }).then(() => {
         this.$router.push({ name: "MyPostings" });
       });
       alert("Your listing has been submitted.");
+=======
+      })
+      .then(() => {
+          this.$router.push({ name: "MyPostings" });
+      });
+      alert("Your listing has been submitted.")
+>>>>>>> Stashed changes
     },
   },
 };

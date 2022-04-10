@@ -151,7 +151,7 @@
               class="viewmore"
               type="button"
               style="hover: true"
-              v-on:click="displayLogin()"
+              v-on:click="displayLogin(), infoTitle = message.title, infoOrg = message.organiser"
             >
               Apply Now
             </button>
@@ -167,35 +167,26 @@
       <div class="container">
         <div class="overlay"></div>
         <div class="content">
-          <div class="imgcontainer" style="margin-left: 500px">
-            <span
-              onclick="document.getElementById('id01').style.display='none'"
-              class="close"
-              title="Close Modal"
-              >&times;</span
-            >
-          </div>
+            <div class="imgcontainer" style="float:right">
+                <span
+                onclick="document.getElementById('id01').style.display='none'"
+                class="close" title="Close Modal">&times;</span>
+              <br>
+            </div>
 
-          <br /><br />
+          <br><br><br>
+
           <div class="title" id="activityTitle">
-            Interact and Socialise with Our Elderly
+            {{ infoTitle }}
           </div>
-          <p>by ABC Elderly Home</p>
+          <p>by {{infoOrg}}</p>
 
-          <h3>Tell us why you would like to join us!</h3>
-          <textarea
-            rows="5"
-            cols="70"
-            name="Enter description"
-            style="height: 220px"
-          ></textarea>
-          <br /><br /><br />
-          <div
-            class="buttonclass"
-            style="margin-left: 200px; float: left; margin-top: -15px"
-          >
-            <a class="redeemclass">Submit</a>
-          </div>
+            <h3>Tell us why you would like to join us!</h3>
+            <textarea rows="5" cols="70" name="Enter description" style="height:220px;" id="applicationEntry"></textarea>
+            <br><br><br>
+            <div class="buttonclass" style="margin-top:-15px" v-on:click="addApply()">
+                <a class="redeemclass">Submit</a>
+            </div>
         </div>
       </div>
     </form>
@@ -205,7 +196,7 @@
 <script>
 import firebaseApp from "@/firebase.js";
 import { getFirestore } from "firebase/firestore";
-import { collection, getDocs, query, orderBy } from "firebase/firestore";
+import { collection, getDocs, query, orderBy, setDoc, doc, updateDoc, arrayUnion, getDoc } from "firebase/firestore";
 
 
 const db = getFirestore(firebaseApp);
@@ -223,6 +214,8 @@ export default {
       selectedPeriod: "",
       selectedSorting: "Vacancy",
       holder: [],
+      infoTitle: "",
+      infoOrg: "",
     };
   },
   mounted() {
@@ -320,6 +313,7 @@ export default {
           vacancy: yy.Vacancy,
           needed: yy["Volunteers Needed"],
           url: yy.sn,
+          organiser: yy.Organiser,
         });
         this.messageText = "";
       });
@@ -341,6 +335,31 @@ export default {
         });
       }
     },
+    async addApply() {
+      var addDescription = document.getElementById("applicationEntry").value;
+      const db = getFirestore(firebaseApp);
+
+      await setDoc(doc(db, "volunteers/" + this.user.email + "/applications/" + this.activityId), {
+          description: addDescription,
+      });
+      await updateDoc(doc(db, "volunteers/" + this.user.email), {
+          PendingListings: arrayUnion(this.activityId),
+          applied: true,
+      });
+
+      var z = await getDoc(doc(db, "Opportunities/" + this.activityId));
+      var info = z.data();
+      await updateDoc(doc(db, "Opportunities/" + this.activityId), {
+          Pending: info.Pending + 1,
+          Vacancy: info.Vacancy - 1,
+      })
+      .then(() => {
+          this.$router.push({ name: "Volunteer" });
+          //router.push('/')
+      });
+      alert("Your application has been submitted.")
+    },
+
   },
 
 };
@@ -969,7 +988,7 @@ canvas {
 }
 
 .redeemclass {
-  background-color: #ff9213;
+  background-color: #FF9213;
   box-shadow: 4px 3px 4px rgba(0, 0, 0, 0.25);
   width: 300px;
   height: 42px;
@@ -978,7 +997,6 @@ canvas {
   padding-top: 10px;
   padding-bottom: 10px;
   text-align: center;
-  margin-left: 35%;
 }
 
 .reward {
@@ -1072,152 +1090,159 @@ span.psw {
   font-size: 16px;
 }
 
+
 /* The Modal (background) */
 
 .modal {
-  display: none;
-  /* Hidden by default */
-  position: fixed;
-  /* Stay in place */
-  z-index: 1;
-  /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%;
-  /* Full width */
-  height: 100%;
-  /* Full height */
-  overflow: auto;
-  /* Enable scroll if needed */
-  background-color: #fff9e9;
-  /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.4);
-  /* Black w/ opacity */
-  padding-top: 60px;
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1;
+    /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: #fff9e9;
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
+    padding-top: 60px;
 }
+
 
 /* Modal Content/Box */
 
 .modal-content {
-  background-color: #fff9e9;
-  margin: 10% auto 15% auto;
-  /* 10% from the top, 15% from the bottom and centered */
-  border: 1px solid #888;
-  border-radius: 25px;
-  width: 60%;
-  /* Could be more or less, depending on screen size */
+    background-color: #fff9e9;
+    margin: 10% auto 15% auto;
+    /* 10% from the top, 15% from the bottom and centered */
+    border: 1px solid #888;
+    border-radius: 25px;
+    width: 60%;
+    /* Could be more or less, depending on screen size */
 }
+
 
 /* The Close Button (x) */
 
 .close {
-  position: absolute;
-  right: 25px;
-  top: 0;
-  color: #000;
-  font-size: 35px;
-  font-weight: bold;
+    position: absolute;
+    right: 25px;
+    top: 0;
+    color: #000;
+    font-size: 25px;
+    font-weight: bold;
 }
 
 .close:hover,
 .close:focus {
-  color: red;
-  cursor: pointer;
+    color: red;
+    cursor: pointer;
 }
 
 #myinfo {
-  width: 200px;
-  height: 80px;
+    width: 200px;
+    height: 80px;
 }
+
 
 /* Add Zoom Animation */
 
 .animate {
-  -webkit-animation: animatezoom 0.6s;
-  animation: animatezoom 0.6s;
+    -webkit-animation: animatezoom 0.6s;
+    animation: animatezoom 0.6s;
 }
 
 @-webkit-keyframes animatezoom {
-  from {
-    -webkit-transform: scale(0);
-  }
-  to {
-    -webkit-transform: scale(1);
-  }
+    from {
+        -webkit-transform: scale(0);
+    }
+    to {
+        -webkit-transform: scale(1);
+    }
 }
 
 @keyframes animatezoom {
-  from {
-    transform: scale(0);
-  }
-  to {
-    transform: scale(1);
-  }
+    from {
+        transform: scale(0);
+    }
+    to {
+        transform: scale(1);
+    }
 }
+
 
 /* Change styles for span and cancel button on extra small screens */
 
 @media screen and (max-width: 300px) {
-  span.psw {
-    display: block;
-    float: none;
-  }
-  .cancelbtn {
-    width: 100%;
-  }
-  .mainbutton {
-    width: 200px;
-    color: fuchsia;
-  }
+    span.psw {
+        display: block;
+        float: none;
+    }
+    .cancelbtn {
+        width: 100%;
+    }
+    .mainbutton {
+        width: 200px;
+        color: fuchsia;
+    }
 }
+
 .popup .overlay {
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.7);
-  z-index: 1;
-  display: none;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+    display: none;
 }
 
 .popup .content {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  border-radius: 10px;
-  transform: translate(-50%, -50%) scale(0);
-  background: #fff9e9;
-  width: 650px;
-  height: 450px;
-  z-index: 2;
-  text-align: center;
-  padding: 20px;
-  box-sizing: border-box;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 10px;
+    transform: translate(-50%, -50%) scale(0);
+    background: #fff9e9;
+    width: 650px;
+    height: 500px;
+    z-index: 2;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 .popup .close-btn {
-  cursor: pointer;
-  position: absolute;
-  right: 20px;
-  top: 20px;
-  width: 30px;
-  height: 30px;
-  background: #222;
-  color: #fff9e9;
-  font-size: 25px;
-  font-weight: 600;
-  line-height: 30px;
-  text-align: center;
-  border-radius: 50%;
+    cursor: pointer;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    width: 30px;
+    height: 30px;
+    background: #222;
+    color: #fff9e9;
+    font-size: 25px;
+    font-weight: 600;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 50%;
 }
 
 .popup.active .overlay {
-  display: block;
+    display: block;
 }
 
 .popup.active .content {
-  transition: all 300ms ease-in-out;
-  transform: translate(-50%, -50%) scale(1);
+    transition: all 300ms ease-in-out;
+    transform: translate(-50%, -50%) scale(1);
 }
+
 </style>

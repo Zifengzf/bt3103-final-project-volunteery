@@ -26,7 +26,7 @@
           <h1>
               <div class="title" id="activityTitle">{{activityTitle}}</div>
           </h1>
-          <div class="organisation" style="margin-left:15px">by ABC Elderly Home</div>
+          <div class="organisation" style="margin-left:15px">by {{organiser}}</div>
           <br>
           <div class="description" style="margin-left:15px" id="activityContent">{{activityContent}}</div>
           <br>
@@ -68,10 +68,11 @@
           <div style="width:100px; margin-top: 15px; margin-left:15px; float:left" v-else-if="Math.round(avgRate)==1">
               <img class="divimg2" src="../assets/stars1.png">
           </div>
-          <div style="width:100px; margin-top: 15px; margin-left:15px; float:left" v-else-if="Math.round(avgRate)==0">
+          <div style="width:100px; margin-top: 15px; margin-left:15px; float:left" v-else-if="Math.round(avgRate)==0 & reviewCount > 0">
               <img class="divimg2" src="../assets/stars0.png">
           </div>
-          <div style="margin-left:15px; margin-top: 18px; float:left;">{{avgRate}} Star Rating</div>
+          <div style="margin-left:30px; margin-top: 18px; float:left;" v-if="reviewCount == 0">No reviews at the moment</div>
+          <div style="margin-left:15px; margin-top: 18px; float:left;" v-else>{{avgRate}} Star Rating</div>
         </div>
         
         <div class="buttonclass" style="float:right; margin-top:28px; margin-right:-70px; width:300px" v-if="approved" v-on:click="displayLogin2()">
@@ -127,7 +128,7 @@
             <br><br><br>
 
             <div class="title" id="activityTitle">{{activityTitle}}</div>
-            <p>by ABC Elderly Home</p>
+            <p>by {{organiser}}</p>
             <h3>Tell us why you would like to join us!</h3>
             <textarea rows="5" cols="70" name="Enter description" style="height:220px;" id="applicationEntry"></textarea>
             <br><br><br>
@@ -156,7 +157,7 @@
 
         <form style="margin-bottom:30px">
             <div class="title" id="activityTitle">{{activityTitle}}</div>
-            <p>by ABC Elderly Home</p>
+            <p>by {{organiser}}</p>
             <h3>Rating (out of 5 stars):</h3>
             <input type="text" id="rateEntry" required="" placeholder="" style="width: 50px;">
             <h3>Describe your overall experience!</h3>
@@ -190,7 +191,9 @@ export default {
       activityContent: "",
       activityId: 0,
       activitySN: 0,
+      organiser: "",
       avgRate: 0,
+      reviewCount: 0,
       reviewRate: [],
       reviewDescription: [],
       messages: [],
@@ -236,6 +239,7 @@ export default {
             this.activityContent = yy.Content;
             this.activityId = doc.id;
             this.activitySN = doc.sn;
+            this.organiser = yy.Organiser;
             this.duration = yy.Duration;
             this.region = yy.Region;
             this.vacancy = yy.Vacancy;
@@ -245,19 +249,18 @@ export default {
 
       const q2 = query(collection(db, "Opportunities/" + this.activityId + "/Reviews"));
       const querySnapshot2 = await getDocs(q2);
-      let count = 0;
       let totalRate = 0;
       querySnapshot2.forEach((doc) => {
         let zz = doc.data();
-        count = count + 1;
+        this.reviewCount = this.reviewCount + 1;
         totalRate = totalRate + Number(zz.rating);
         this.messages.push({
           reviewRate: zz.rating,
           reviewDescription: zz.description,
         });
       });
-      if (count > 0) {
-        this.avgRate = (totalRate/count).toFixed(1);
+      if (this.reviewCount > 0) {
+        this.avgRate = (totalRate/this.reviewCount).toFixed(1);
       }
 
       const auth = getAuth();
@@ -273,7 +276,7 @@ export default {
 
     },
     async addReview() {
-      var addRating = document.getElementById("rateEntry").value;
+      var addRating = Number(document.getElementById("rateEntry").value);
       var addDescription = document.getElementById("descriptionEntry").value;
       const db = getFirestore(firebaseApp);
 
@@ -292,18 +295,25 @@ export default {
       var addDescription = document.getElementById("applicationEntry").value;
       const db = getFirestore(firebaseApp);
 
-        await setDoc(doc(db, "volunteers/" + this.user.email + "/applications/" + this.activityId), {
-            description: addDescription,
-        })
-        await updateDoc(doc(db, "volunteers/" + this.user.email), {
-            PendingListings: arrayUnion(this.activityId),
-            applied: true
-        })
-        .then(() => {
-            this.$router.push({ name: "Volunteer" });
-            //router.push('/')
-        });
-        alert("Your application has been submitted.")
+      await setDoc(doc(db, "volunteers/" + this.user.email + "/applications/" + this.activityId), {
+          description: addDescription,
+      });
+      await updateDoc(doc(db, "volunteers/" + this.user.email), {
+          PendingListings: arrayUnion(this.activityId),
+          applied: true,
+      });
+
+      var z = await getDoc(doc(db, "Opportunities/" + this.activityId));
+      var info = z.data();
+      await updateDoc(doc(db, "Opportunities/" + this.activityId), {
+          Pending: info.Pending + 1,
+          Vacancy: info.Vacancy - 1,
+      })
+      .then(() => {
+          this.$router.push({ name: "Volunteer" });
+          //router.push('/')
+      });
+      alert("Your application has been submitted.")
     },
 
   },
