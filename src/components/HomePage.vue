@@ -321,7 +321,6 @@ export default {
           nric: nric,
           nationality: nationality,
           email: email,
-          password: password,
           currentPoints: 0,
           totalPoints: 0,
           PendingListings: [],
