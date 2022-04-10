@@ -59,7 +59,7 @@
         better understand how you fit into the world around you. Let's go!
         <br /><br />
         For new organisations, please email volunteery@u.nus.edu
-      </b> 
+      </b>
     </div>
 
     <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
@@ -324,6 +324,8 @@ export default {
           password: password,
           currentPoints: 0,
           totalPoints: 0,
+          PendingListings: [],
+          ApprovedListings: [],
         });
         const auth = getAuth();
         createUserWithEmailAndPassword(auth, email, password)
@@ -335,8 +337,7 @@ export default {
           });
       }
     },
-  }
-
+  },
 };
 </script>
 <style scoped>
