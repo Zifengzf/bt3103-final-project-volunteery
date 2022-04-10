@@ -70,8 +70,15 @@
         <option value="Duration">Duration</option>
         <option value="DurationDescending">Duration (descending)</option>
       </select>
-    <div>
-        <button class="addlisting" type="button" v-on:click="addNewListing()"  style="margin-left:50px">Add Listing</button>
+      <div>
+        <button
+          class="addlisting"
+          type="button"
+          v-on:click="addNewListing()"
+          style="margin-left: 50px"
+        >
+          Add Listing
+        </button>
       </div>
     </div>
     <div v-for="(result, index) in results" :key="result">
@@ -166,37 +173,80 @@
     <form class="modal-content animate">
       <div class="overlay"></div>
       <div class="content">
-        <div class="imgcontainer" style="float:right; margin-right:30px">
-            <span
+        <div class="imgcontainer" style="float: right; margin-right: 30px">
+          <span
             onclick="document.getElementById('id0').style.display='none'"
-            class="close" 
-            title="Close Modal">&times;</span>
+            class="close"
+            title="Close Modal"
+            >&times;</span
+          >
         </div>
 
-        <br><br><br>
+        <br /><br /><br />
         <div class="title" id="activityTitle">Add New Listing</div>
-        
-        <form style="margin:50px; margin-top:10px;">
+
+        <form style="margin: 50px; margin-top: 10px">
           <div class="left">
-            <b style="float:left">Title: </b> <br><br>
-            <b style="float:left">Date: </b> <br><br>
-            <b style="float:left">Duration: </b> <br><br>
-            <b style="float:left">Region: </b> <br><br>
-            <b style="float:left">Volunteers Needed: </b> <br><br>
-            <b style="float:left">Content: </b> <br><br>
-              <br><br><br><br><br><br><br>
+            <b style="float: left">Title: </b> <br /><br />
+            <b style="float: left">Date: </b> <br /><br />
+            <b style="float: left">Duration: </b> <br /><br />
+            <b style="float: left">Region: </b> <br /><br />
+            <b style="float: left">Volunteers Needed: </b> <br /><br />
+            <b style="float: left">Content: </b> <br /><br />
+            <br /><br /><br /><br /><br /><br /><br />
           </div>
           <div class="right">
-            <input type="text" id="titleEntry" required="" placeholder="" style="width: 350px; float:left; margin-left:10px"> <br><br>
-            <input type="text" id="dateEntry" required="" placeholder="" style="width: 100px; float:left; margin-left:10px"><br><br>
-            <input type="text" id="durationEntry" required="" placeholder="" style="width: 100px; float:left; margin-left:10px"><br><br>
-            <input type="text" id="regionEntry" required="" placeholder="" style="width: 100px; float:left; margin-left:10px"><br><br> 
-            <input type="text" id="volunteersEntry" required="" placeholder="" style="width: 100px; float:left; margin-left:10px"><br><br>
-            <textarea rows="5" cols="60" name="Enter description" style="height:130px;float:left; margin-left:10px" id="contentEntry"></textarea>
-            <br><br><br><br><br><br><br><br><br>
+            <input
+              type="text"
+              id="titleEntry"
+              required=""
+              placeholder=""
+              style="width: 350px; float: left; margin-left: 10px"
+            />
+            <br /><br />
+            <input
+              type="text"
+              id="dateEntry"
+              required=""
+              placeholder=""
+              style="width: 100px; float: left; margin-left: 10px"
+            /><br /><br />
+            <input
+              type="text"
+              id="durationEntry"
+              required=""
+              placeholder=""
+              style="width: 100px; float: left; margin-left: 10px"
+            /><br /><br />
+            <input
+              type="text"
+              id="regionEntry"
+              required=""
+              placeholder=""
+              style="width: 100px; float: left; margin-left: 10px"
+            /><br /><br />
+            <input
+              type="text"
+              id="volunteersEntry"
+              required=""
+              placeholder=""
+              style="width: 100px; float: left; margin-left: 10px"
+            /><br /><br />
+            <textarea
+              rows="5"
+              cols="60"
+              name="Enter description"
+              style="height: 130px; float: left; margin-left: 10px"
+              id="contentEntry"
+            ></textarea>
+            <br /><br /><br /><br /><br /><br /><br /><br /><br />
           </div>
-          <br><br><br><br>
-          <div class="buttonclass" style="float:centre" v-on:click="submitListing()">
+          <br /><br /><br /><br />
+          <div
+            class="buttonclass"
+            style="float: centre"
+            v-on:click="submitListing()"
+          >
             <a class="redeemclass">Submit</a>
           </div>
         </form>
@@ -355,7 +405,6 @@ export default {
         this.filteredPostings = this.messages;
       }
       if (sort != "") {
-
         if (sort == "Vacancy") {
           this.filteredPostings.sort(function (a, b) {
             return a.vacancy - b.vacancy;
@@ -445,15 +494,13 @@ export default {
         MyPostings: arrayRemove(listing),
       });
       await deleteDoc(doc(db, "Opportunities", listing));
-      let k = await getDocs(collection(db, "Applicants"));
+      // Remove listing from approvedlistings or pendinglistings
+      let k = await getDocs(collection(db, "volunteers"));
       k.forEach((document) => {
-        console.log(document.id);
-        let data = document.data();
-        var listing_ref = data.Listing_ref;
-        var id = document.id;
-        if (listing_ref === listing) {
-          deleteDoc(doc(db, "Applicants", id));
-        }
+        updateDoc(doc(db, "volunteer", document.id), {
+          ApprovedListings: arrayRemove(listing),
+          PendingListings: arrayRemove(listing),
+        });
       });
     },
     async submitListing() {
@@ -463,33 +510,33 @@ export default {
       var addRegion = document.getElementById("regionEntry").value;
       var addVolunteers = document.getElementById("volunteersEntry").value;
       var addContent = document.getElementById("contentEntry").value;
-    
+
       const db = getFirestore(firebaseApp);
-      
-      const querySnapshot = await getDocs(query(collection(db, "Opportunities")));
+
+      const querySnapshot = await getDocs(
+        query(collection(db, "Opportunities"))
+      );
       const size = querySnapshot.size;
 
-        await setDoc(doc(db, "Opportunities/" + addTitle.trim()), {
-            Content: addContent,
-            Date: addDate,
-            Duration: addDuration,
-            Region: addRegion,
-            Status: "Pending",
-            Title: addTitle,
-            Vacancy: 0,
-            "Volunteers Needed": addVolunteers,
-            Accepted: 0,
-            Pending: 0,
-            sn: size + 1,
-        })
-        .then(() => {
-            this.$router.push({ name: "MyPostings" });
-        });
-        alert("Your listing has been submitted.")
+      await setDoc(doc(db, "Opportunities/" + addTitle.trim()), {
+        Content: addContent,
+        Date: addDate,
+        Duration: addDuration,
+        Region: addRegion,
+        Status: "Pending",
+        Title: addTitle,
+        Vacancy: 0,
+        "Volunteers Needed": addVolunteers,
+        Accepted: 0,
+        Pending: 0,
+        sn: size + 1,
+      }).then(() => {
+        this.$router.push({ name: "MyPostings" });
+      });
+      alert("Your listing has been submitted.");
     },
   },
 };
-
 </script>
 <style scoped>
 .modal {
@@ -782,201 +829,195 @@ input:hover {
   justify-content: space-evenly;
 }
 .title {
-    font-family: Sansation;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 26px;
-    line-height: 29px;
-    color: #FF9213;
-    margin-top: 2%;
-    margin-left: 2%;
+  font-family: Sansation;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 26px;
+  line-height: 29px;
+  color: #ff9213;
+  margin-top: 2%;
+  margin-left: 2%;
 }
 .left {
-    float: left;
-    width: 20%;
-    margin-left: 30px;
-    margin-top: 30px;
-    /* background-color: brown; */
+  float: left;
+  width: 20%;
+  margin-left: 30px;
+  margin-top: 30px;
+  /* background-color: brown; */
 }
 
 .right {
-    float: right;
-    width: 70%;
-    margin-top: 30px;
-    /* background-color: lightblue; */
+  float: right;
+  width: 70%;
+  margin-top: 30px;
+  /* background-color: lightblue; */
 }
 
 .buttonclass {
-    float: center;
-    border-radius: 12px;
-    cursor: pointer;
+  float: center;
+  border-radius: 12px;
+  cursor: pointer;
 }
 
 .redeemclass {
-    background-color: #FF9213;
-    box-shadow: 4px 3px 4px rgba(0, 0, 0, 0.25);
-    width: 300px;
-    height: 42px;
-    padding-left: 40px;
-    padding-right: 40px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    text-align: center;
+  background-color: #ff9213;
+  box-shadow: 4px 3px 4px rgba(0, 0, 0, 0.25);
+  width: 300px;
+  height: 42px;
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-align: center;
 }
 
 /* The Modal (background) */
 
 .modal {
-    display: none;
-    /* Hidden by default */
-    position: fixed;
-    /* Stay in place */
-    z-index: 1;
-    /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%;
-    /* Full width */
-    height: 100%;
-    /* Full height */
-    overflow: auto;
-    /* Enable scroll if needed */
-    background-color: #fff9e9;
-    /* Fallback color */
-    background-color: rgba(0, 0, 0, 0.4);
-    /* Black w/ opacity */
-    padding-top: 60px;
+  display: none;
+  /* Hidden by default */
+  position: fixed;
+  /* Stay in place */
+  z-index: 1;
+  /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
+  overflow: auto;
+  /* Enable scroll if needed */
+  background-color: #fff9e9;
+  /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4);
+  /* Black w/ opacity */
+  padding-top: 60px;
 }
-
 
 /* Modal Content/Box */
 
 .modal-content {
-    background-color: #fff9e9;
-    margin: 10% auto 15% auto;
-    /* 10% from the top, 15% from the bottom and centered */
-    border: 1px solid #888;
-    border-radius: 25px;
-    width: 60%;
-    /* Could be more or less, depending on screen size */
+  background-color: #fff9e9;
+  margin: 10% auto 15% auto;
+  /* 10% from the top, 15% from the bottom and centered */
+  border: 1px solid #888;
+  border-radius: 25px;
+  width: 60%;
+  /* Could be more or less, depending on screen size */
 }
-
 
 /* The Close Button (x) */
 
 .close {
-    position: absolute;
-    right: 25px;
-    top: 0;
-    color: #000;
-    font-size: 25px;
-    font-weight: bold;
+  position: absolute;
+  right: 25px;
+  top: 0;
+  color: #000;
+  font-size: 25px;
+  font-weight: bold;
 }
 
 .close:hover,
 .close:focus {
-    color: red;
-    cursor: pointer;
+  color: red;
+  cursor: pointer;
 }
 
 #myinfo {
-    width: 200px;
-    height: 80px;
+  width: 200px;
+  height: 80px;
 }
-
 
 /* Add Zoom Animation */
 
 .animate {
-    -webkit-animation: animatezoom 0.6s;
-    animation: animatezoom 0.6s;
+  -webkit-animation: animatezoom 0.6s;
+  animation: animatezoom 0.6s;
 }
 
 @-webkit-keyframes animatezoom {
-    from {
-        -webkit-transform: scale(0);
-    }
-    to {
-        -webkit-transform: scale(1);
-    }
+  from {
+    -webkit-transform: scale(0);
+  }
+  to {
+    -webkit-transform: scale(1);
+  }
 }
 
 @keyframes animatezoom {
-    from {
-        transform: scale(0);
-    }
-    to {
-        transform: scale(1);
-    }
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
 }
-
 
 /* Change styles for span and cancel button on extra small screens */
 
 @media screen and (max-width: 300px) {
-    span.psw {
-        display: block;
-        float: none;
-    }
-    .cancelbtn {
-        width: 100%;
-    }
-    .mainbutton {
-        width: 200px;
-        color: fuchsia;
-    }
+  span.psw {
+    display: block;
+    float: none;
+  }
+  .cancelbtn {
+    width: 100%;
+  }
+  .mainbutton {
+    width: 200px;
+    color: fuchsia;
+  }
 }
 
 .popup .overlay {
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.7);
-    z-index: 1;
-    display: none;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 1;
+  display: none;
 }
 
 .popup .content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    border-radius: 10px;
-    transform: translate(-50%, -50%) scale(0);
-    background: #fff9e9;
-    width: 650px;
-    height: 500px;
-    z-index: 2;
-    text-align: center;
-    padding: 20px;
-    box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 10px;
+  transform: translate(-50%, -50%) scale(0);
+  background: #fff9e9;
+  width: 650px;
+  height: 500px;
+  z-index: 2;
+  text-align: center;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .popup .close-btn {
-    cursor: pointer;
-    position: absolute;
-    right: 20px;
-    top: 20px;
-    width: 30px;
-    height: 30px;
-    background: #222;
-    color: #fff9e9;
-    font-size: 25px;
-    font-weight: 600;
-    line-height: 30px;
-    text-align: center;
-    border-radius: 50%;
+  cursor: pointer;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  width: 30px;
+  height: 30px;
+  background: #222;
+  color: #fff9e9;
+  font-size: 25px;
+  font-weight: 600;
+  line-height: 30px;
+  text-align: center;
+  border-radius: 50%;
 }
 
 .popup.active .overlay {
-    display: block;
+  display: block;
 }
 
 .popup.active .content {
-    transition: all 300ms ease-in-out;
-    transform: translate(-50%, -50%) scale(1);
+  transition: all 300ms ease-in-out;
+  transform: translate(-50%, -50%) scale(1);
 }
-
-
 </style>
